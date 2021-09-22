@@ -1,0 +1,33 @@
+@import "./variables.scss";
+
+body {
+    margin: 0 auto;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.sidebar {
+    background: #151B1F;
+    flex-basis: 5%;
+}
+
+.left-wrp,
+.right-wrp {
+    flex-basis: 50%;
+}
+
+.title {
+    color: $color-title;
+}
+
+.title-text {
+    color: $color-text;
+}
+
+// slider {
+//     height: 100vh;
+// }
