@@ -1,6 +1,22 @@
 <template>
   <div class="wrapper">
-    <div class="sidebar"></div>
+    <div class="sidebar">
+      <Slide width="1000">
+        <a id="home" href="#">
+          <span>Парковка</span>
+        </a>
+        <a id="home" href="#">
+          <span>Страховка</span>
+        </a>
+        <a id="home" href="#">
+          <span>Бензин</span>
+        </a>
+        <a id="home" href="#">
+          <span>Обслуживание</span>
+        </a>
+      </Slide>
+      <button class="sidebar-button">Eng</button>
+    </div>
     <div class="left-wrp">
       <header class="header">
         <p class="logo">Need for drive</p>
@@ -18,7 +34,7 @@
       </footer>
     </div>
     <div class="right-wrp">
-      <slider style="height: 100vh" animation="fade">
+      <slider height="100%" animation="normal">
         <slider-item
           v-for="(i, index) in list"
           :key="index"
@@ -28,7 +44,7 @@
           <!-- <p style="line-height: 280px; font-size: 5rem; text-align: center">
             Page{{ index + 1 }}
           </p> -->
-          <div>
+          <div class="slider-about">
             <p class="slider-title">
               {{ i.title }}
             </p>
@@ -45,41 +61,55 @@
 
 <script>
 import { Slider, SliderItem } from "vue-easy-slider";
+import { Slide } from "vue-burger-menu";
 
 export default {
   name: "About",
   components: {
     Slider,
     SliderItem,
+    Slide,
   },
   data() {
     return {
       list: [
         {
-          backgroundColor: "#3f51b5",
+          backgroundImage: `url(${require("../assets/slide_parking.jpg")})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
           width: "100%",
           height: "100%",
           title: "Бесплатная парковка",
           text: "Оставляйте машину на платных городских парковках и разрешенных местах, не нарушая ПДД, а также в аэропортах.",
         },
-        { backgroundColor: "#eee", width: "100%", height: "100%" },
-        { backgroundColor: "#f44336", width: "100%", height: "100%" },
         {
-          backgroundImage: "url('./assets/first_pic_slide.png')",
+          backgroundImage: `url(${require("../assets/slide_insurance.jpg")})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           width: "100%",
           height: "100%",
+          title: "Страховка",
+          text: "Полная страховка страховка автомобиля",
         },
         {
-          backgroundImage: "url('https://sebhastian.com/img/default.png')",
+          backgroundImage: `url(${require("../assets/slide_petrol.jpg")})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           width: "100%",
           height: "100%",
+          title: "Бензин",
+          text: "Полный бак на любой заправке города за наш счёт",
+        },
+        {
+          backgroundImage: `url(${require("../assets/slide_service.jpg")})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          width: "100%",
+          height: "100%",
+          title: "Обслуживание",
+          text: "Автомобиль проходит еженедельное ТО",
         },
       ],
-      // title1: "Бесплатная парковка",
     };
   },
   methods: {
@@ -91,121 +121,12 @@ export default {
 </script>
 
 <style lang="scss">
-.header,
-.footer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 30px;
-  line-height: 35px;
-  color: #0ec261;
-}
-
-.map-icon {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 16px;
-  color: #999999;
-}
-
-/* .map-icon:before {
-  content: "";
-  background-image: url("./assets/Group.svg");
-} */
-
-.title {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 70px;
-  line-height: 66px;
-  // color: #121212;
-}
-
-.text {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 26px;
-  line-height: 30px;
-  color: #999999;
-}
-
-.button {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 21px;
-  text-align: center;
-  color: #ffffff;
-  background: linear-gradient(90deg, #0ec261 2.61%, #039f67 112.6%);
-  background-blend-mode: darken;
-  border-radius: 8px;
-  padding: 0.5em 2.5em;
-}
-
-.copyright {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 13px;
-  line-height: 15px;
-  color: #999999;
-}
-
-.phone {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 13px;
-  line-height: 15px;
-  color: #121212;
-}
-
-.slider-title {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 40px;
-  line-height: 47px;
-  color: #ffffff;
-}
-
-.slider-text {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 24px;
-  line-height: 100%;
-  color: #ffffff;
-}
-
-.slider-button {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 21px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  color: #eeeeee;
-  background: linear-gradient(90deg, #13493f 0%, #0c7b1b 100%);
-  border-radius: 4px;
-  padding: 0.5em 1em;
-}
-
-.slider {
-  height: 100vh;
+.bm-burger-button {
+  position: fixed;
+  width: 36px;
+  height: 30px;
+  left: 16px;
+  top: 32px;
+  cursor: pointer;
 }
 </style>
