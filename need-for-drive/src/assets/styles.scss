@@ -66,8 +66,9 @@ body {
 .sidebar {
     position: relative;
     background: #151B1F;
-    flex-basis: 60px;
+    // flex-basis: 60px;
     // width: 5%;
+    min-width: 60px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -439,20 +440,8 @@ svg {
     max-width: 768px;
   }
 
-  .sidebar {
-    flex-basis: 100px;
-  }
-
   //Наименование стилей заданы в библиотеке v-burger-menu
   //START burger-menu
-  .bm-burger-button {
-    margin: 5px 0 0 0;
-    width: 32px;
-    height: 25px;
-    top: 32px;
-    left: 28px;
-  }
-
   .bm-menu {
     background: linear-gradient(
     to right,
