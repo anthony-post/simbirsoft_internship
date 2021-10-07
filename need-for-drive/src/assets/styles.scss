@@ -66,8 +66,6 @@ body {
 .sidebar {
     position: relative;
     background: #151B1F;
-    // flex-basis: 60px;
-    // width: 5%;
     min-width: 60px;
     display: flex;
     flex-direction: column;
@@ -81,11 +79,10 @@ body {
   position: absolute;
   width: 30px;
   height: 30px;
-  left: 16px;
+  left: 16px !important; //чтобы не сдвигалась кнопка бургер-меню при build;
   top: 32px;
   cursor: pointer;
 }
-
 .bm-burger-bars {
   background-color: #ffffff;
 }
@@ -115,15 +112,13 @@ body {
   z-index: 1000; /* Stay on top */
   top: 0;
   left: 0;
-  // background-color: rgb(63, 63, 65); /* Black*/
   background: linear-gradient(
     to right,
     #111518 52.3%,
     rgba(21, 27, 31, 0.81) 50%
   );
   overflow-x: hidden; /* Disable horizontal scroll */
-  // padding-top: 60px; /* Place content 60px from the top */
-  padding: 20% 0 0 0;
+  padding: 20% 0 0 0; /* Place content 60px from the top */
   transition: 0.5s; /*0.5 second transition effect to slide in the sidenav*/
 }
 .bm-overlay {
@@ -151,7 +146,6 @@ body {
   color: #ffffff;
   text-transform: uppercase;
 }
-
 .bm-item-list > * > span:hover {
   color: $color-text;
 }
@@ -201,24 +195,16 @@ svg {
   align-items: center;
 }
 
-// .header {
-//   padding: 32px 64px 0 64px;
-// }
-
 .header__logo {
   margin: 32px 0 0 64px;
 }
 
-.header__map-icon {
+.header__map {
   margin: 32px 64px 0 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
-
-// .header__logo,
-// .header__map-icon,
-// .footer__copyright,
-// .footer__phone {
-//   margin: 0;
-// }
 
 .header__logo {
   font-family: 'Roboto', sans-serif;
@@ -229,26 +215,18 @@ svg {
   color: $color-text;
 }
 
-.header__map-icon {
+.header__icon {
+  margin: 0;
+}
+
+.header__city {
   font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
   line-height: 16px;
   color: #999999;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-//не срабатывает псевдоэлемент иконки???
-
-// .map-icon:before {
-//   content: "";
-//   background-image: url("../assets/map_icon.svg");
-// }
-
-.header__city {
+  text-decoration: none;
   padding: 0 0 0 5px;
 }
 
@@ -257,10 +235,6 @@ svg {
     flex-direction: column;
     align-items: flex-start;
 }
-
-// .about {
-//   padding: 0 64px;
-// }
 
 .about__title {
   font-family: 'Roboto', sans-serif;
@@ -301,11 +275,8 @@ svg {
   border: none;
   padding: 1em 3em;
   margin: 0 64px;
+  cursor: pointer;
 }
-
-// .footer {
-//   padding: 0 64px 32px 64px;
-// }
 
 .footer__copyright {
   font-family: 'Roboto', sans-serif;
@@ -395,12 +366,11 @@ svg {
     flex-basis: 60%;
   }
 
-  //Как правильнее - задавать отступы элементам margin или блоку-контейнеру padding (см. ниже)?
   .header__logo {
     margin: 32px 0 0 32px;
   }
   
-  .header__map-icon {
+  .header__map {
     margin: 32px 32px 0 0;
   }
 
@@ -417,18 +387,6 @@ svg {
   .footer__phone {
     margin: 0 32px 32px 0;
   }
-
-  // .header {  
-  //   padding: 32px 32px 0 32px;
-  // }
-  
-  // .about {
-  //   padding: 0 32px;
-  // }
-  
-  // .footer {
-  //   padding: 0 32px 32px 32px;
-  // }
 
   .right-wrp {
     flex-basis: 40%;
@@ -479,7 +437,7 @@ svg {
     margin: 5px 0 0 0;
     width: 25px;
     height: 25px;
-    top: 16px !important; //чтобы не сдвигалась кнопка бургер-меню при build
+    top: 16px;
     left: 16px;
   }
 
@@ -511,7 +469,6 @@ svg {
   }
 
   .header {
-    // padding: 16px 16px 0 16px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -519,11 +476,10 @@ svg {
 
   .header__logo {
     line-height: 100%;
-    // padding: 0 0 8px 0;
     margin: 16px 16px 0 0;
   }
 
-  .header__map-icon {
+  .header__map {
     margin: 16px 16px 0 0;
   }
   
@@ -539,13 +495,11 @@ svg {
   .about__title {
     font-size: 32px;
     line-height: 100%;
-    // padding: 0 16px;
   }
 
   .about__text {
     font-size: 18px;
     line-height: 21px;
-    // padding: 0 16px 16px 16px;
   }
 
   .about__button {
@@ -555,7 +509,6 @@ svg {
   }
   
   .footer {
-    // padding: 16px;
     background: #151B1F;
     display: flex;
     flex-direction: column;
@@ -570,7 +523,6 @@ svg {
   .footer__phone {
     color: #0ec261;
     order: 0;
-    // padding: 0 0 8px 0;
   }
 
   .footer__copyright {

@@ -3,16 +3,11 @@
     xmlns="http://www.w3.org/2000/svg"
     :width="width"
     :height="height"
-    viewBox="0 0 32 32"
     :aria-labelledby="iconName"
     role="presentation"
   >
     <title :id="iconName" lang="en">{{ iconName }} icon</title>
     <slot />
-    <!--Добавление цвета реализовано через CSS-->
-    <!-- <g :fill="iconColor">
-      <slot />
-    </g> -->
   </svg>
 </template>
 
@@ -31,10 +26,6 @@ export default {
       type: [Number, String],
       default: 32,
     },
-    // iconColor: {
-    //   type: String,
-    //   default: "white",
-    // },
   },
 };
 </script>
