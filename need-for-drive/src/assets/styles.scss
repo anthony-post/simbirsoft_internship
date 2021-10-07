@@ -58,7 +58,6 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    // height: calc(100vh-78px);
     height: 100vh;
     max-width: 1440px;
 }
@@ -84,7 +83,7 @@ body {
   cursor: pointer;
 }
 .bm-burger-bars {
-  background-color: #ffffff;
+  background-color: #ffffff !important;
 }
 .line-style {
   position: absolute;
@@ -116,7 +115,7 @@ body {
     to right,
     #111518 52.3%,
     rgba(21, 27, 31, 0.81) 50%
-  );
+  ) !important;
   overflow-x: hidden; /* Disable horizontal scroll */
   padding: 20% 0 0 0; /* Place content 60px from the top */
   transition: 0.5s; /*0.5 second transition effect to slide in the sidenav*/
@@ -137,7 +136,7 @@ body {
   padding: 1.5em 0 0 0;
 }
 .bm-item-list > * > span {
-  margin-left: 0;
+  margin-left: 0 !important;
   font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -423,7 +422,6 @@ svg {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: calc(100vh-78px);
     width: 100vw;
   }
 
