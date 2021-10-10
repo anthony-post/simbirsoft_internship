@@ -1,6 +1,6 @@
+// TO DO переключение
 import Vue from "vue";
 import VueRouter from "vue-router";
-// import Vmain from "@/views/v-main.vue";
 import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);

@@ -1,4 +1,4 @@
-<!--Пока неиспользуемый компонет-->
+<!--TO DO Пока неиспользуемый компонет-->
 <template>
   <div class="wrapper">About</div>
 </template>

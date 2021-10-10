@@ -73,12 +73,13 @@ body {
 }
 
 //Наименование стилей заданы в библиотеке v-burger-menu
+//important указан для тех стилей, которые совпадают с библиотечными v-burger-menu для того, что при сборке не применялись по-умолчанию библиотечные стили 
 //START_burger-menu
 .bm-burger-button {
-  position: absolute;
+  position: absolute !important;
   width: 30px !important;
   height: 30px !important;
-  left: 16px !important; //чтобы не сдвигалась кнопка бургер-меню при build;
+  left: 16px !important;
   top: 32px !important;;
   cursor: pointer;
 }
@@ -94,12 +95,12 @@ body {
 }
 .cross-style {
   position: absolute;
-  top: 32px;
-  left: 32px;
+  top: 32px !important;
+  left: 32px !important;
   cursor: pointer;
 }
 .bm-cross {
-  background: #ffffff;
+  background: #ffffff !important;
 }
 .bm-cross-button {
   height: 24px;
@@ -118,7 +119,7 @@ body {
     rgba(21, 27, 31, 0.81) 50%
   ) !important;
   overflow-x: hidden; /* Disable horizontal scroll */
-  padding: 20% 0 0 0 !important; /* Place content 60px from the top */
+  padding-top: 20% !important; /* Place content 60px from the top */
   transition: 0.5s; /*0.5 second transition effect to slide in the sidenav*/
 }
 .bm-overlay {
@@ -138,10 +139,10 @@ body {
 }
 .bm-item-list > * > span {
   margin-left: 0 !important;
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", sans-serif !important;
   font-style: normal;
-  font-weight: 500;
-  font-size: 32px;
+  font-weight: 500 !important;
+  font-size: 32px !important;
   line-height: 37px;
   color: #ffffff;
   text-transform: uppercase;
