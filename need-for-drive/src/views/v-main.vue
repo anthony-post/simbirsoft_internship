@@ -12,14 +12,14 @@
         </a>
         <div>
           <a class="socialicons" href="#"
-            ><vicon icon-name="telegram"><icontelegram /></vicon
-          ></a>
+            ><vicon iconId="icon-telegram" width="32" height="32"
+          /></a>
           <a class="socialicons" href="#"
-            ><vicon icon-name="facebook"><iconfacebook /></vicon
-          ></a>
+            ><vicon iconId="icon-facebook" width="32" height="32"
+          /></a>
           <a class="socialicons" href="#"
-            ><vicon icon-name="instagram"><iconinstagram /></vicon
-          ></a>
+            ><vicon iconId="icon-instagram" width="32" height="32"
+          /></a>
         </div>
       </slide>
       <button class="sidebar__button">Eng</button>
@@ -28,9 +28,12 @@
       <header class="header">
         <p class="header__logo">Need for drive</p>
         <p class="header__map">
-          <vicon class="header__icon" icon-name="map" width="20" height="20"
-            ><iconmap
-          /></vicon>
+          <vicon
+            class="header__icon"
+            iconId="icon-map"
+            width="20"
+            height="20"
+          />
           <a class="header__city" href="#"><span>Ульяновск</span></a>
         </p>
       </header>
@@ -38,14 +41,7 @@
         <h1 class="about__title">Каршеринг</h1>
         <p class="about__title about__title-text">Need for drive</p>
         <p class="about__text">Поминутная аренда авто твоего города</p>
-        <!-- <button class="about__button">Забронировать</button> -->
-        <!-- <router-link to="/about"
-          ><button class="about__button">Забронировать</button></router-link
-        > -->
-        <button @click="$router.push('about')" class="about__button">
-          Забронировать
-        </button>
-        <!-- <button @click="onOrder" class="about__button">Забронировать</button> -->
+        <button class="about__button">Забронировать</button>
       </div>
       <footer class="footer">
         <p class="footer__copyright">&#169; 2016-2019 «Need for drive»</p>
@@ -78,10 +74,6 @@
 import { Slider, SliderItem } from "vue-easy-slider";
 import { Slide } from "vue-burger-menu";
 import Vicon from "@/components/v-icon.vue";
-import Icontelegram from "@/components/icons/icon-telegram.vue";
-import Iconfacebook from "@/components/icons/icon-facebook.vue";
-import Iconinstagram from "@/components/icons/icon-instagram.vue";
-import Iconmap from "@/components/icons/icon-map.vue";
 
 const BASE_SLIDER_ITEM = {
   backgroundRepeat: "no-repeat",
@@ -97,10 +89,6 @@ export default {
     SliderItem,
     Slide,
     Vicon,
-    Iconmap,
-    Icontelegram,
-    Iconfacebook,
-    Iconinstagram,
   },
   data() {
     return {
@@ -138,11 +126,6 @@ export default {
       ],
     };
   },
-  // methods: {
-  //   onOrder() {
-  //     this.$router.replace("/about");
-  //   },
-  // },
 };
 </script>
 

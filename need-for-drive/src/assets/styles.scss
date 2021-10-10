@@ -76,18 +76,19 @@ body {
 //START_burger-menu
 .bm-burger-button {
   position: absolute;
-  width: 30px;
-  height: 30px;
+  width: 30px !important;
+  height: 30px !important;
   left: 16px !important; //чтобы не сдвигалась кнопка бургер-меню при build;
-  top: 32px;
+  top: 32px !important;;
   cursor: pointer;
 }
 .bm-burger-bars {
   background-color: #ffffff !important;
+  border-radius: 50px !important;
 }
 .line-style {
   position: absolute;
-  height: 10%;
+  height: 10% !important;
   left: 0;
   right: 0;
 }
@@ -117,7 +118,7 @@ body {
     rgba(21, 27, 31, 0.81) 50%
   ) !important;
   overflow-x: hidden; /* Disable horizontal scroll */
-  padding: 20% 0 0 0; /* Place content 60px from the top */
+  padding: 20% 0 0 0 !important; /* Place content 60px from the top */
   transition: 0.5s; /*0.5 second transition effect to slide in the sidenav*/
 }
 .bm-overlay {
@@ -130,10 +131,10 @@ body {
 .bm-item-list > * {
   display: flex;
   text-decoration: none;
-  padding: 0 0 0.5em 0;
+  padding: 0 0 0.5em 0 !important;
 }
 .bm-item-list > *:last-child {
-  padding: 1.5em 0 0 0;
+  padding: 1.5em 0 0 0 !important;
 }
 .bm-item-list > * > span {
   margin-left: 0 !important;
@@ -343,6 +344,7 @@ svg {
   border-radius: 4px;
   border: none;
   padding: 1em 2em;
+  cursor: pointer;
 }
 
 @media #{$media} and (max-width: $desktop-min) {
@@ -357,7 +359,7 @@ svg {
     to right,
     #111518 44.5%,
     rgba(21, 27, 31, 0.81) 40%
-  );
+  ) !important;
   }
   //END burger-menu
 
@@ -404,7 +406,7 @@ svg {
     to right,
     #111518 100%,
     rgba(21, 27, 31, 0.81) 50%
-  );
+  ) !important;
   }
   //END burger-menu
 
@@ -413,7 +415,7 @@ svg {
   }
 
   .right-wrp {
-    flex-basis: 0%;
+    flex-basis: 0;
   }
 }
 
@@ -432,29 +434,29 @@ svg {
 //Наименование стилей заданы в библиотеке v-burger-menu
 //START burger-menu
   .bm-burger-button {
-    margin: 5px 0 0 0;
-    width: 25px;
-    height: 25px;
-    top: 16px;
-    left: 16px;
+    margin: 5px 0 0 0 !important;
+    width: 25px !important;
+    height: 25px !important;
+    top: 16px !important;
+    left: 16px !important;
   }
 
   .bm-burger-bars {
-    background-color: #000000;
+    background-color: #000000 !important;
   }
 
   .line-style {
-    height: 15%;
+    height: 15% !important;
   }
 
   .bm-item-list {
-    margin-left: 30px;
-    padding: 10px 0 0 0;
+    margin-left: 30px !important;
+    padding: 10px 0 0 0 !important;
   }
 
   .bm-item-list > * > span {
-    font-size: 22px;
-    line-height: 26px;
+    font-size: 22px !important;
+    line-height: 26px !important;
   }
   //END burger-menu
 
