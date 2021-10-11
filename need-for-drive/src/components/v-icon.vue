@@ -8,7 +8,7 @@
 import spriteUrl from "@/assets/sprite.svg";
 
 export default {
-  name: "VIcons",
+  name: "v-icon",
   props: {
     iconId: {
       type: String,

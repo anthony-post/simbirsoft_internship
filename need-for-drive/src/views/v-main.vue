@@ -12,13 +12,13 @@
         </a>
         <div>
           <a class="socialicons" href="#"
-            ><vicon iconId="icon-telegram" width="32" height="32"
+            ><vicon icon-id="icon-telegram" width="32" height="32"
           /></a>
           <a class="socialicons" href="#"
-            ><vicon iconId="icon-facebook" width="32" height="32"
+            ><vicon icon-id="icon-facebook" width="32" height="32"
           /></a>
           <a class="socialicons" href="#"
-            ><vicon iconId="icon-instagram" width="32" height="32"
+            ><vicon icon-id="icon-instagram" width="32" height="32"
           /></a>
         </div>
       </slide>
@@ -30,7 +30,7 @@
         <p class="header__map">
           <vicon
             class="header__icon"
-            iconId="icon-map"
+            icon-id="icon-map"
             width="20"
             height="20"
           />
