@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="sidebar">
-      <slide width="1440">
+      <slide width="2000">
         <a
           v-for="(bmMenuItem, index) in bmMenuList"
           :key="index"
