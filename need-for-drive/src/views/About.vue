@@ -1,6 +1,6 @@
 <!--TO DO Пока неиспользуемый компонет-->
 <template>
-  <div class="wrapper">About</div>
+  <div>About</div>
 </template>
 
 <script>
