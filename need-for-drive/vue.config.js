@@ -1,5 +1,4 @@
 module.exports = {
-    publicPath: process.env.NODE_ENV === 'production'
-      ? '/simbirsoft_internship/'
-      : '/'
-  }
+  publicPath:
+    process.env.NODE_ENV === "production" ? "/simbirsoft_internship/" : "/",
+};
