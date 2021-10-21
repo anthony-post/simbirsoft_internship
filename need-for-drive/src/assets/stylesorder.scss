@@ -5,15 +5,16 @@
     flex-direction: column;
     justify-content: space-between;
     width: calc(100vw - 60px);
+    height: 100vh;
 }
 
-.order-center {
-    width: 1376px;
-    margin: 0 auto;
+.tabs {
+    flex-basis: 100%;
 }
 
 .tabs__border {
-    border: 1px solid #EEEEEE;
+    border-top: 1px solid $color-grey-light;
+    border-bottom: 1px solid $color-grey-light;
 }
 
 .tab-list {
@@ -21,22 +22,19 @@
     flex-direction: row;
     justify-content: flex-start;
     list-style-type:none;
-    padding: 0;
+    padding: 0 64px;
+    margin: 0;
 }
 
 .tab__item {
-    font-family: 'Roboto', sans-serif;
+    font-family: $ff;
     font-style: normal;
     font-weight: bold;
     font-size: 14px;
     line-height: 16px;
-    color: #999999;
+    color: $color-grey;
     margin: 7px 0;
     cursor: pointer;
-}
-
-.tab__item:first-child {
-    margin: 7px 0 7px 64px;
 }
 
 .tab__item > span {
@@ -44,7 +42,7 @@
 }
 
 .tab__item_active {
-    color: #0EC261;
+    color: $color-text;
 }
 
 .order {
@@ -56,6 +54,12 @@
 .order__window {
     flex-basis: 70%;
     padding: 32px 150px 0 64px;
+}
+
+.place {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .input-block {
@@ -82,7 +86,7 @@
 .input-block__input {
     width: 224px;
     border: none;
-    border-bottom: 1px solid #999999;
+    border-bottom: 1px solid $color-grey;
 }
 
 .place__text {
@@ -95,10 +99,14 @@
     padding: 30px 0 0 0;
 }
 
+.place__pic img {
+    max-width: 100%;
+}
+
 .total {
     width: 288px;
     padding: 32px 64px 0 32px;
-    border-left: 1px solid #EEEEEE;
+    border-left: 1px solid $color-grey-light;
     height: calc(100vh - 165px);
 }
 
@@ -136,7 +144,7 @@
     font-weight: 300;
     font-size: 14px;
     line-height: 16px;
-    color: #999999;
+    color: $color-grey;
 }
 
 .total__price {
@@ -155,10 +163,71 @@
     font-size: 18px;
     line-height: 21px;
     text-align: center;
-    color: #FFFFFF;
-    background: #EEEEEE;
+    color: $color-white;
+    background: $color-grey-light;
     border-radius: 8px;
     border: none;
     padding: 15px 0;
     width: 100%;
+}
+
+@media #{$media} and (min-width: 1024px) and (max-width: 1439px) { 
+
+    .order__window {
+        padding: 32px 32px 0 32px;
+    }
+
+    .tab-list {
+        padding: 0 32px;
+    }
+
+    .total {
+        padding: 32px 32px 0 32px;
+    }
+
+}
+
+@media #{$media} and (min-width: 768px) and (max-width: 1023px) {
+
+    .order__window {
+        padding: 32px 32px 0 64px;
+    }
+
+    .total__button {
+        font-size: 16px;
+    }
+
+}
+
+@media #{$media} and (min-width: 320px) and (max-width: 767px) {
+
+    .order-wrp {
+        width: 100vw;
+    }
+
+    .order {
+        flex-wrap: wrap;
+    }
+
+    .order__window {
+        flex-basis: 100%;
+        padding: 16px 16px 0 16px;
+    }
+
+    .tab-list {
+        padding: 0 16px;
+        flex-wrap: wrap;
+    }
+
+    .input-block {
+        width: 250px;
+        margin: 0 auto;
+    }
+
+    .total {
+        width: 100vw;
+        height: auto;
+        padding: 16px 16px 16px 16px;
+    }
+
 }

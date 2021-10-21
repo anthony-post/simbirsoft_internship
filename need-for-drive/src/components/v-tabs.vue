@@ -21,7 +21,7 @@
         v-show="selectedTab === 'Местоположение'"
       >
         <!--TO DO Place-->
-        <div>
+        <div class="place">
           <div class="input-block">
             <div class="input-wrp">
               <label class="input-block__label" for="city">Город</label>
@@ -46,11 +46,22 @@
             </div>
           </div>
           <p class="place__text">Выбрать на карте</p>
-          <img src="../assets/map.jpg" alt="карта" />
+          <div class="place__pic">
+            <img src="../assets/map.jpg" alt="map" />
+          </div>
         </div>
         <!--TO DO Model-->
       </div>
       <div class="order__window model" v-show="selectedTab === 'Модель'">
+        <div class="input-wrp">
+          <label class="input-block__label" for="model">Все модели</label>
+          <input
+            class="input-block__input"
+            type="text"
+            id="model"
+            v-model="model"
+          />
+        </div>
         <vordermodel />
       </div>
       <!--TO DO Additional-->
@@ -99,9 +110,22 @@ export default {
     return {
       city: "",
       street: "",
+      model: "",
       tabs: ["Местоположение", "Модель", "Дополнительно", "Итого"], //загаловки вкладок
       selectedTab: "Местоположение", //см. выше - по клику @click на вкладку в это свойство будет записываться значение tab с названием активной вкладки
     };
   },
+  //TO DO последовательное переключение вкладок
+  // methods: {
+  //   switchTab() {
+  //     if (this.city && this.street) {
+  //       // this.selectedTab = "Модель";
+  //       this.selectedTab = this.tabs[1];
+  //     }
+  //     if (this.model) {
+  //       this.selectedTab = "Дополнительно";
+  //     }
+  //   },
+  // },
 };
 </script>

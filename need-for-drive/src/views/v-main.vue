@@ -7,8 +7,8 @@
         <p class="about__title about__title-text">Need for drive</p>
         <p class="about__text">Поминутная аренда авто твоего города</p>
         <router-link :to="{ name: 'v-order' }"
-          ><button class="about__button">Забронировать</button></router-link
-        >
+          ><button class="about__button">Забронировать</button>
+        </router-link>
       </div>
       <footer class="footer">
         <p class="footer__copyright">&#169; 2016-2019 «Need for drive»</p>
