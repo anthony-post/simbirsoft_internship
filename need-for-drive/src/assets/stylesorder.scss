@@ -8,10 +8,6 @@
     height: 100vh;
 }
 
-.tabs {
-    flex-basis: 100%;
-}
-
 .tabs__border {
     border-top: 1px solid $color-grey-light;
     border-bottom: 1px solid $color-grey-light;
@@ -26,7 +22,7 @@
     margin: 0;
 }
 
-.tab__item {
+.tab__item-btn {
     font-family: $ff;
     font-style: normal;
     font-weight: bold;
@@ -35,9 +31,12 @@
     color: $color-grey;
     margin: 7px 0;
     cursor: pointer;
+    border: none;
+    background-color: $color-white;
+    padding: 0;
 }
 
-.tab__item > span {
+.tab__item-icon {
     padding: 0 0 0 20px;
 }
 
@@ -54,12 +53,6 @@
 .order__window {
     flex-basis: 70%;
     padding: 32px 150px 0 64px;
-}
-
-.place {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
 }
 
 .input-block {
@@ -126,10 +119,39 @@
     justify-content: space-between;
 }
 
+.total-wrp .total__text,
+.total-wrp .total__city {
+    flex: 1 0 auto;
+}
+
+.total-wrp .dots {
+    flex: 0 1 auto;
+    /*Allows too long content to be hidden.*/
+    overflow: hidden;
+}
+
+.dots  {
+    font-family: $ff;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 16px;
+    color: $color-grey;
+}
+
+.dots::before {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+    content: 
+      ". . . . . . . . . . . . . . . . . . . . "
+      ". . . . . . . . . . . . . . . . . . . . "
+      ". . . . . . . . . . . . . . . . . . . . "
+      ". . . . . . . . . . . . . . . . . . . . "
+}
+
 .total__text {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     font-family: $ff;
     font-style: normal;
     font-weight: 300;
@@ -197,6 +219,10 @@
         font-size: 16px;
     }
 
+    .total {
+        width: 25vw;
+    }
+
 }
 
 @media #{$media} and (min-width: 320px) and (max-width: 767px) {
@@ -227,7 +253,14 @@
     .total {
         width: 100vw;
         height: auto;
-        padding: 16px 16px 16px 16px;
+        border: none;
+        padding: 16px 0;
+    }
+
+    .total__title,
+    .total-wrp,
+    .total__price {
+        padding: 0 16px;
     }
 
 }

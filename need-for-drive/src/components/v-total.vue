@@ -1,10 +1,11 @@
-<!--TO DO-->
 <template>
   <div class="total">
     <p class="total__title">Ваш заказ:</p>
     <div>
-      <p class="total__text">
-        Пункт выдачи___<span>{{ name }}</span>
+      <p class="total-wrp">
+        <span class="total__text">Пункт выдачи</span>
+        <span class="dots"></span>
+        <span class="total__city">{{ chosenCity }}</span>
       </p>
     </div>
     <p class="total__price">Цена:</p>
@@ -15,6 +16,10 @@
 <script>
 export default {
   name: "v-total",
-  props: ["name"],
+  computed: {
+    chosenCity() {
+      return this.$store.state.city.name;
+    },
+  },
 };
 </script>

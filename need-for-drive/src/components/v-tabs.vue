@@ -2,130 +2,67 @@
   <div class="tabs">
     <div class="tabs__border">
       <ul class="tab-list order-center">
-        <li
-          class="tab__item"
-          v-for="(tab, index) in tabs"
-          :key="index"
-          @click="selectedTab = tab"
-          :class="{ tab__item_active: selectedTab === tab }"
-        >
-          {{ tab
-          }}<span><vicon icon-id="icon-arrow" width="6" height="8" /></span>
+        <li class="tab__item">
+          <button
+            class="tab__item-btn"
+            v-for="(tab, index) in tabs"
+            :key="index"
+            :disabled="!filledUpData"
+            :class="{ tab__item_active: selectedTab === tab.id }"
+            @click="selectedTab = tab.id"
+          >
+            {{ tab.label }}
+            <span class="tab__item-icon">
+              <vicon icon-id="icon-arrow" width="6" height="8" />
+            </span>
+          </button>
         </li>
       </ul>
     </div>
-    <div class="order order-center">
-      <!--при выполнении условия v-show блоки (см. ниже Place, Model, Additional, Summary) показываются-->
-      <div
-        class="order__window place"
-        v-show="selectedTab === 'Местоположение'"
-      >
-        <!--TO DO Place-->
-        <div class="place">
-          <div class="input-block">
-            <div class="input-wrp">
-              <label class="input-block__label" for="city">Город</label>
-              <input
-                class="input-block__input"
-                type="text"
-                id="city"
-                v-model="city"
-              />
-            </div>
-            <div class="input-wrp">
-              <label class="input-block__label" for="delivery-point"
-                >Пункт выдачи</label
-              >
-              <input
-                class="input-block__input"
-                type="text"
-                id="delivery-point"
-                placeholder="Начните вводить пункт ..."
-                v-model="street"
-              />
-            </div>
-          </div>
-          <p class="place__text">Выбрать на карте</p>
-          <div class="place__pic">
-            <img src="../assets/map.jpg" alt="map" />
-          </div>
-        </div>
-        <!--TO DO Model-->
+    <div class="order">
+      <div class="order__window">
+        <component :is="selectedTab"></component>
       </div>
-      <div class="order__window model" v-show="selectedTab === 'Модель'">
-        <div class="input-wrp">
-          <label class="input-block__label" for="model">Все модели</label>
-          <input
-            class="input-block__input"
-            type="text"
-            id="model"
-            v-model="model"
-          />
-        </div>
-        <vordermodel />
-      </div>
-      <!--TO DO Additional-->
-      <div
-        class="order__window additional"
-        v-show="selectedTab === 'Дополнительно'"
-      >
-        <vorderadditional />
-      </div>
-      <!--TO DO Summary-->
-      <div class="order__window summary" v-show="selectedTab === 'Итого'">
-        <vordersummary />
-      </div>
-      <!--TO DO Total-->
-      <div class="total">
-        <p class="total__title">Ваш заказ:</p>
-        <div>
-          <p class="total-wrp">
-            <span class="total__text">Пункт выдачи</span
-            ><span class="total__city">......................</span
-            ><span class="total__city">{{ city }} {{ street }}</span>
-          </p>
-        </div>
-        <p class="total__price">Цена:</p>
-        <button class="total__button">Выбрать модель</button>
-      </div>
+      <VTotal />
     </div>
   </div>
 </template>
 
 <script>
 import Vicon from "@/components/v-icon.vue";
-import Vordermodel from "@/components/v-order-model.vue";
-import Vorderadditional from "@/components/v-order-additional.vue";
-import Vordersummary from "@/components/v-order-summary.vue";
+import OrderPlace from "@/components/order-place.vue";
+import OrderModel from "@/components/order-model.vue";
+import OrderAdditional from "@/components/order-additional.vue";
+import OrderSummary from "@/components/order-summary.vue";
+import VTotal from "@/components/v-total.vue";
 
 export default {
   name: "v-tabs",
   components: {
     Vicon,
-    Vordermodel,
-    Vorderadditional,
-    Vordersummary,
+    OrderPlace,
+    OrderModel,
+    OrderAdditional,
+    OrderSummary,
+    VTotal,
   },
   data() {
     return {
-      city: "",
-      street: "",
-      model: "",
-      tabs: ["Местоположение", "Модель", "Дополнительно", "Итого"], //загаловки вкладок
-      selectedTab: "Местоположение", //см. выше - по клику @click на вкладку в это свойство будет записываться значение tab с названием активной вкладки
+      tabs: [
+        { label: "Местоположение", id: "order-place" },
+        { label: "Модель", id: "order-model" },
+        { label: "Дополнительно", id: "order-additional" },
+        { label: "Итого", id: "order-summary" },
+      ],
+      selectedTab: "order-place",
     };
   },
-  //TO DO последовательное переключение вкладок
-  // methods: {
-  //   switchTab() {
-  //     if (this.city && this.street) {
-  //       // this.selectedTab = "Модель";
-  //       this.selectedTab = this.tabs[1];
-  //     }
-  //     if (this.model) {
-  //       this.selectedTab = "Дополнительно";
-  //     }
-  //   },
-  // },
+  computed: {
+    //TO DO последовательное переключение вкладок
+    filledUpData() {
+      if (this.$store.state.city.name) return true;
+      else return false;
+    },
+  },
 };
 </script>
