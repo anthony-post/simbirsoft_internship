@@ -5,7 +5,8 @@
       <p class="total-wrp">
         <span class="total__text">Пункт выдачи</span>
         <span class="dots"></span>
-        <span class="total__city">{{ chosenCity }}</span>
+        <span class="total__city">{{ chosenCityName }}</span>
+        <span class="total__city">{{ chosenAddress }}</span>
       </p>
     </div>
     <p class="total__price">Цена:</p>
@@ -17,8 +18,11 @@
 export default {
   name: "v-total",
   computed: {
-    chosenCity() {
+    chosenCityName() {
       return this.$store.state.city.name;
+    },
+    chosenAddress() {
+      return this.$store.state.city.address;
     },
   },
 };

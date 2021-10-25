@@ -1,4 +1,3 @@
-// TO DO
 import Vue from "vue";
 import Vuex from "vuex";
 
@@ -7,12 +6,18 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     city: {
-      id: "abc",
-      name: "Ульяновск",
-      address: { id: "123", street: "Комарова", building: "13" },
+      name: "",
+      address: "",
     },
   },
-  mutations: {},
+  mutations: {
+    updateCityName(state, name) {
+      state.city.name = name;
+    },
+    updateAddress(state, address) {
+      state.city.address = address;
+    },
+  },
   actions: {},
   modules: {},
 });

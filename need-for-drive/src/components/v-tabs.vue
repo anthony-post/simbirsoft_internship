@@ -9,7 +9,7 @@
             :key="index"
             :disabled="!filledUpData"
             :class="{ tab__item_active: selectedTab === tab.id }"
-            @click="selectedTab = tab.id"
+            @click="switchTab"
           >
             {{ tab.label }}
             <span class="tab__item-icon">
@@ -57,11 +57,19 @@ export default {
       selectedTab: "order-place",
     };
   },
+  //TO DO последовательное переключение вкладок
   computed: {
-    //TO DO последовательное переключение вкладок
     filledUpData() {
-      if (this.$store.state.city.name) return true;
+      if (this.$store.state.city.name && this.$store.state.city.address)
+        return true;
       else return false;
+    },
+  },
+  methods: {
+    switchTab() {
+      if (this.filledUpData) {
+        this.selectedTab = "order-model";
+      }
     },
   },
 };
