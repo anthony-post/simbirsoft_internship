@@ -5,10 +5,10 @@
         <li class="tab__item">
           <button
             class="tab__item-btn"
-            v-for="(tab, index) in tabs"
-            :key="index"
-            :disabled="!filledUpData"
+            v-for="tab in filledUpData"
+            :key="tab.id"
             :class="{ tab__item_active: selectedTab === tab.id }"
+            :disabled="filledUpData.isDisabled"
             @click="switchTab"
           >
             {{ tab.label }}
@@ -49,26 +49,35 @@ export default {
   data() {
     return {
       tabs: [
-        { label: "Местоположение", id: "order-place" },
-        { label: "Модель", id: "order-model" },
-        { label: "Дополнительно", id: "order-additional" },
-        { label: "Итого", id: "order-summary" },
+        { label: "Местоположение", id: "order-place", isDisabled: true },
+        { label: "Модель", id: "order-model", isDisabled: true },
+        { label: "Дополнительно", id: "order-additional", isDisabled: true },
+        { label: "Итого", id: "order-summary", isDisabled: true },
       ],
       selectedTab: "order-place",
+      selectedId: 0,
     };
   },
   //TO DO последовательное переключение вкладок
   computed: {
     filledUpData() {
-      if (this.$store.state.city.name && this.$store.state.city.address)
-        return true;
-      else return false;
+      if (this.$store.state.city.name && this.$store.state.city.address) {
+        const arr = [...this.tabs];
+        arr[this.selectedId].isDisabled = false;
+        arr[this.selectedId + 1].isDisabled = false;
+        return arr;
+      }
+      return this.tabs;
     },
   },
   methods: {
     switchTab() {
-      if (this.filledUpData) {
-        this.selectedTab = "order-model";
+      // если без проверки наличия заполненных input на первой вкладке, то есть возможность переключиться сразу на следующую вкладку даже если поля input не заполнены
+      // this.selectedTab = this.tabs[this.selectedId + 1].id;
+
+      // переключает на следующую вкладку, при нажатии на лубую из вкладок
+      if (!this.filledUpData[this.selectedId].isDisabled) {
+        this.selectedTab = this.tabs[this.selectedId + 1].id;
       }
     },
   },
