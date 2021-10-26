@@ -8,7 +8,7 @@
             v-for="tab in filledUpData"
             :key="tab.id"
             :class="{ tab__item_active: selectedTab === tab.id }"
-            :disabled="filledUpData.isDisabled"
+            :disabled="tab.isDisabled"
             @click="switchTab"
           >
             {{ tab.label }}
@@ -63,22 +63,19 @@ export default {
     filledUpData() {
       if (this.$store.state.city.name && this.$store.state.city.address) {
         const arr = [...this.tabs];
-        arr[this.selectedId].isDisabled = false;
+        // arr[this.selectedId].isDisabled = false; //если менять у первой вкладки, то тогда switchTab срабатывает при нажатии либо на первую вкладку либо на вторую
         arr[this.selectedId + 1].isDisabled = false;
         return arr;
       }
+      //TO DO условие для вкладки Модель
+      //TO DO условие для вкладки Дополнительно
+      //TO DO условие для вкладки Итого
       return this.tabs;
     },
   },
   methods: {
     switchTab() {
-      // если без проверки наличия заполненных input на первой вкладке, то есть возможность переключиться сразу на следующую вкладку даже если поля input не заполнены
-      // this.selectedTab = this.tabs[this.selectedId + 1].id;
-
-      // переключает на следующую вкладку, при нажатии на лубую из вкладок
-      if (!this.filledUpData[this.selectedId].isDisabled) {
-        this.selectedTab = this.tabs[this.selectedId + 1].id;
-      }
+      this.selectedTab = this.tabs[this.selectedId + 1].id;
     },
   },
 };
