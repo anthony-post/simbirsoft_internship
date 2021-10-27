@@ -10,19 +10,48 @@
       </p>
     </div>
     <p class="total__price">Цена:</p>
-    <button class="total__button">Выбрать модель</button>
+    <button
+      class="total__button"
+      :class="{ total__button_active: chosenCityName && chosenAddress }"
+      :disabled="!chosenCityName && !chosenAddress"
+      @click="switchNextTab"
+    >
+      Выбрать модель
+    </button>
   </div>
 </template>
 
 <script>
 export default {
   name: "v-total",
+  props: {
+    tabs: {
+      type: Array,
+      required: true,
+    },
+    selectedTab: {
+      type: String,
+      required: true,
+    },
+    selectedId: {
+      type: Number,
+      required: true,
+    },
+  },
   computed: {
     chosenCityName() {
       return this.$store.state.city.name;
     },
     chosenAddress() {
       return this.$store.state.city.address;
+    },
+    selectedTabTotal() {
+      return this.selectedTab;
+    },
+  },
+  methods: {
+    switchNextTab() {
+      this.selectedTabTotal = this.tabs[this.selectedId + 1].id;
     },
   },
 };

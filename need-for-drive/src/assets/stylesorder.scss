@@ -193,6 +193,11 @@
     width: 100%;
 }
 
+.total__button_active {
+    background: $color-text;
+    cursor: pointer;
+}
+
 @media #{$media} and (min-width: 1024px) and (max-width: 1439px) { 
 
     .order__window {

@@ -23,7 +23,11 @@
       <div class="order__window">
         <component :is="selectedTab"></component>
       </div>
-      <VTotal />
+      <VTotal
+        :tabs="tabs"
+        :selectedTab="selectedTab"
+        :selectedId="selectedId"
+      />
     </div>
   </div>
 </template>
