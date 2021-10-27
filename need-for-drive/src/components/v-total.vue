@@ -14,7 +14,6 @@
       class="total__button"
       :class="{ total__button_active: chosenCityName && chosenAddress }"
       :disabled="!chosenCityName && !chosenAddress"
-      @click="switchNextTab"
     >
       Выбрать модель
     </button>
@@ -45,14 +44,14 @@ export default {
     chosenAddress() {
       return this.$store.state.city.address;
     },
-    selectedTabTotal() {
-      return this.selectedTab;
-    },
+    // selectedTabTotal() {
+    //   return this.selectedTab;
+    // },
   },
-  methods: {
-    switchNextTab() {
-      this.selectedTabTotal = this.tabs[this.selectedId + 1].id;
-    },
-  },
+  // methods: {
+  //   switchNextTab() {
+  //     this.selectedTabTotal = this.tabs[this.selectedId + 1].id;
+  //   },
+  // },
 };
 </script>

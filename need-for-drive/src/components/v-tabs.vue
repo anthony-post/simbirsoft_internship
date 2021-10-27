@@ -9,7 +9,7 @@
             :key="tab.id"
             :class="{ tab__item_active: selectedTab === tab.id }"
             :disabled="tab.isDisabled"
-            @click="switchTab"
+            @click="selectedTab = tab.id"
           >
             {{ tab.label }}
             <span class="tab__item-icon">
@@ -23,6 +23,7 @@
       <div class="order__window">
         <component :is="selectedTab"></component>
       </div>
+      <!-- <VTotal /> -->
       <VTotal
         :tabs="tabs"
         :selectedTab="selectedTab"
@@ -67,7 +68,7 @@ export default {
     filledUpData() {
       if (this.$store.state.city.name && this.$store.state.city.address) {
         const arr = [...this.tabs];
-        // arr[this.selectedId].isDisabled = false; //если менять у первой вкладки, то тогда switchTab срабатывает при нажатии либо на первую вкладку либо на вторую
+        arr[this.selectedId].isDisabled = false;
         arr[this.selectedId + 1].isDisabled = false;
         return arr;
       }
@@ -78,9 +79,10 @@ export default {
     },
   },
   methods: {
-    switchTab() {
-      this.selectedTab = this.tabs[this.selectedId + 1].id;
-    },
+    // переход на следующую вкладку
+    //   switchTab() {
+    //     this.selectedTab = this.tabs[this.selectedId + 1].id;
+    //   },
   },
 };
 </script>
