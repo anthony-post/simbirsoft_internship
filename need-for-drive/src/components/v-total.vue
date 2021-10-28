@@ -14,6 +14,7 @@
       class="total__button"
       :class="{ total__button_active: chosenCityName && chosenAddress }"
       :disabled="!chosenCityName && !chosenAddress"
+      @updateSelectedTab="onChange"
     >
       Выбрать модель
     </button>
@@ -24,18 +25,18 @@
 export default {
   name: "v-total",
   props: {
-    tabs: {
-      type: Array,
-      required: true,
-    },
-    selectedTab: {
-      type: String,
-      required: true,
-    },
-    selectedId: {
-      type: Number,
-      required: true,
-    },
+    // tabs: {
+    //   type: Array,
+    //   required: true,
+    // },
+    // selectedId: {
+    //   type: Number,
+    //   required: true,
+    // },
+    // selectedTab: {
+    //   type: String,
+    //   required: true,
+    // },
   },
   computed: {
     chosenCityName() {
@@ -44,14 +45,17 @@ export default {
     chosenAddress() {
       return this.$store.state.city.address;
     },
-    // selectedTabTotal() {
-    //   return this.selectedTab;
-    // },
   },
-  // methods: {
-  //   switchNextTab() {
-  //     this.selectedTabTotal = this.tabs[this.selectedId + 1].id;
-  //   },
-  // },
+  // TO DO переключение на следующую вкладку
+  methods: {
+    // switchNextTab() {
+    //   this.$root.selectedTab = this.$root.tabs[this.$root.selectedId + 1].id;
+    // },
+
+    onChange() {
+      const newValue = "order-model";
+      this.$emit("updateSelectedTab", newValue);
+    },
+  },
 };
 </script>
