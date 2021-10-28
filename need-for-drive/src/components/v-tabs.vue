@@ -23,34 +23,11 @@
       <div class="order__window">
         <component :is="selectedTab"></component>
       </div>
-      <VTotal @updateSelectedTab="updateSelectedTab" />
-
-      <!-- <div class="total">
-        <p class="total__title">Ваш заказ:</p>
-        <div>
-          <p class="total-wrp">
-            <span class="total__text">Пункт выдачи</span>
-            <span class="dots"></span>
-            <span class="total__city">{{ chosenCityName }}</span>
-            <span class="total__city">{{ chosenAddress }}</span>
-          </p>
-        </div>
-        <p class="total__price">Цена:</p>
-        <button
-          class="total__button"
-          :class="{ total__button_active: chosenCityName && chosenAddress }"
-          :disabled="!chosenCityName && !chosenAddress"
-          @click="switchTab"
-        >
-          Выбрать модель
-        </button>
-      </div> -->
-
-      <!-- <VTotal
+      <VTotal
         :tabs="tabs"
         :selectedId="selectedId"
-        :selectedTab="selectedTab"
-      /> -->
+        @updateSelectedTab="updateSelectedTab"
+      />
     </div>
   </div>
 </template>
@@ -99,20 +76,10 @@ export default {
       //TO DO условие для вкладки Итого
       return this.tabs;
     },
-    // chosenCityName() {
-    //   return this.$store.state.city.name;
-    // },
-    // chosenAddress() {
-    //   return this.$store.state.city.address;
-    // },
   },
   methods: {
-    // switchTab() {
-    //   this.selectedTab = this.tabs[this.selectedId + 1].id;
-    // },
-
-    updateSelectedTab(newValue) {
-      this.selectedTab = newValue;
+    updateSelectedTab(newSelectedTab) {
+      this.selectedTab = newSelectedTab;
     },
   },
 };
