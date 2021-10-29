@@ -1,7 +1,7 @@
 <template>
   <header class="header">
-    <p class="header__logo">Need for drive</p>
-    <p class="header__map">
+    <p class="header__logo header__logo-order">Need for drive</p>
+    <p class="header__map header__map-order">
       <vicon class="header__icon" icon-id="icon-map" width="20" height="20" />
       <a class="header__city" href="#"><span>Ульяновск</span></a>
     </p>

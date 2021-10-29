@@ -58,7 +58,6 @@ body {
 .wrapper {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     height: 100vh;
     max-width: 100vw;
     min-width: 1440px;
@@ -72,6 +71,14 @@ body {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+}
+
+.main-wrp {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: calc(100vw - 60px);
+  height: 100vh;
 }
 
 //Наименование стилей заданы в библиотеке v-burger-menu
@@ -372,11 +379,11 @@ svg {
   }
 
   .header__logo {
-    margin: 32px 0 0 32px;
+    margin: 32px 0 32px 32px;
   }
   
   .header__map {
-    margin: 32px 32px 0 0;
+    margin: 32px 32px 32px 0;
   }
 
   .about__title,
@@ -429,7 +436,6 @@ svg {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    // width: 100vw;
     min-width: 320px;
     max-width: 767px;
   }
@@ -495,7 +501,7 @@ svg {
   }
 
   .header__map {
-    margin: 16px 16px 0 0;
+    margin: 16px 16px 16px 0;
   }
   
   .about {
