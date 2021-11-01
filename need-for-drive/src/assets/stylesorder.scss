@@ -59,6 +59,7 @@
     padding: 32px 150px 0 64px;
 }
 
+//Place start
 .input-block {
     width: 320px;
     display: flex;
@@ -99,6 +100,67 @@
 .place__pic img {
     max-width: 100%;
 }
+//Place end
+
+//Model start
+.radio-list {
+    display: flex;
+}
+
+.radio__item {
+    font-family: $ff;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 16px;
+    color: $color-grey;
+    margin-right: 10px;
+}
+
+// .radio__input {
+//     border: $color-text;
+// }
+
+.cars-list {
+    margin: 0;
+    padding: 48px 0 0 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.cars__item {
+    list-style: none;
+    border: 1px solid $color-grey-light;
+    box-sizing: border-box;
+    padding: 16px;
+}
+
+.cars__model {
+    font-family: $ff;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    color: $color;
+    margin: 0;
+}
+
+.cars__price {
+    font-family: $ff;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    color: $color-grey;
+    margin: 0;
+}
+
+.cars__img {
+    margin-left: 50px;
+    overflow: hidden;
+}
+//Model end
 
 .total {
     width: 288px;
@@ -115,6 +177,7 @@
     line-height: 21px;
     text-align: right;
     color: $color-title;
+    margin-top: 0;
 }
 
 .total-wrp {
