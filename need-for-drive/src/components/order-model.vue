@@ -1,10 +1,36 @@
-<!--TO DO-->
 <template>
   <div>
     <div class="radio-list">
-      <BaseRadio label="Все модели" />
-      <BaseRadio label="Эконом" />
-      <BaseRadio label="Премиум" />
+      <div class="radio__item">
+        <input class="radio__input" type="radio" name="cars" />
+        <label for="cars">Все модели</label>
+      </div>
+      <div class="radio__item">
+        <input class="radio__input" type="radio" name="cars" />
+        <label for="cars">Эконом</label>
+      </div>
+      <div class="radio__item">
+        <input class="radio__input" type="radio" name="cars" />
+        <label for="cars">Премиум</label>
+      </div>
+      <!-- <BaseRadio
+        v-model="cars.category"
+        :value="cars.category"
+        label="Все модели"
+        name="cars"
+      />
+      <BaseRadio
+        v-model="cars.category"
+        :value="Econom"
+        label="Эконом"
+        name="cars"
+      />
+      <BaseRadio
+        v-model="cars.category"
+        :value="Premium"
+        label="Премиум"
+        name="cars"
+      /> -->
     </div>
     <ul class="cars-list">
       <li class="cars__item" v-for="car in cars" :key="car.id">
@@ -22,12 +48,12 @@
 </template>
 
 <script>
-import BaseRadio from "@/components/base-radio.vue";
+// import BaseRadio from "@/components/base-radio.vue";
 
 export default {
   name: "order-model",
   components: {
-    BaseRadio,
+    // BaseRadio,
   },
   data() {
     return {
@@ -38,6 +64,7 @@ export default {
           model: "ELANTRA",
           pricemin: "12 000",
           pricemax: "25 000",
+          category: "Econom",
         },
         {
           id: "2",
@@ -45,6 +72,7 @@ export default {
           model: "i30 N",
           pricemin: "18 000",
           pricemax: "32 000",
+          category: "Premium",
         },
         {
           id: "3",
@@ -52,6 +80,7 @@ export default {
           model: "CRETA",
           pricemin: "12 000",
           pricemax: "25 000",
+          category: "Econom",
         },
         {
           id: "4",
@@ -59,6 +88,7 @@ export default {
           model: "SONATA",
           pricemin: "18 000",
           pricemax: "32 000",
+          category: "Premium",
         },
         {
           id: "5",
@@ -66,6 +96,7 @@ export default {
           model: "ELANTRA",
           pricemin: "12 000",
           pricemax: "25 000",
+          category: "Econom",
         },
         {
           id: "6",
@@ -73,6 +104,7 @@ export default {
           model: "i30 N",
           pricemin: "18 000",
           pricemax: "32 000",
+          category: "Premium",
         },
       ],
     };

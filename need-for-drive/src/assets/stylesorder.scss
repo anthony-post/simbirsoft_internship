@@ -136,6 +136,10 @@
     padding: 16px;
 }
 
+.cars__item:active {
+    border: 1px solid $color-text;
+}
+
 .cars__model {
     font-family: $ff;
     font-style: normal;
