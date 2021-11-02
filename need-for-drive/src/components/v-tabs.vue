@@ -26,6 +26,7 @@
       <VTotal
         :tabs="tabs"
         :selectedId="selectedId"
+        :selectedTab="selectedTab"
         @updateSelectedTab="updateSelectedTab"
       />
     </div>

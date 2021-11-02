@@ -1,22 +1,29 @@
 <template>
   <div class="total">
     <p class="total__title">Ваш заказ:</p>
-    <div>
-      <p class="total-wrp">
-        <span class="total__text">Пункт выдачи</span>
-        <span class="dots"></span>
-        <span class="total__city">{{ chosenCityName }}</span>
-        <span class="total__city">{{ chosenAddress }}</span>
-      </p>
-    </div>
+    <p class="total-wrp">
+      <span class="total__text">Пункт выдачи</span>
+      <span class="dots"></span>
+      <span class="total__city">{{ chosenCityName }}</span>
+      <span class="total__city">{{ chosenAddress }}</span>
+    </p>
+    <p class="total-wrp" v-if="this.selectedTab === 'order-model'">
+      <span class="total__text">Модель</span>
+      <span class="dots"></span>
+      <span class="total__city"></span>
+    </p>
     <p class="total__price">Цена:</p>
     <button
       class="total__button"
+      v-if="this.selectedTab === 'order-place'"
       :class="{ total__button_active: chosenCityName && chosenAddress }"
       :disabled="!chosenCityName && !chosenAddress"
       @click="changeSelectedTab"
     >
       Выбрать модель
+    </button>
+    <button class="total__button" v-if="this.selectedTab === 'order-model'">
+      Дополнительно
     </button>
   </div>
 </template>
@@ -31,6 +38,10 @@ export default {
     },
     selectedId: {
       type: Number,
+      required: true,
+    },
+    selectedTab: {
+      type: String,
       required: true,
     },
   },
