@@ -67,4 +67,55 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+@import "@/assets/variables.scss";
+
+.slider-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.slider-about {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 96px 0 96px;
+}
+
+.slider-title {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 47px;
+  color: #ffffff;
+  margin: 0;
+}
+
+.slider-text {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 100%;
+  color: #ffffff;
+}
+
+.slider-button {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #eeeeee;
+  background: linear-gradient(90deg, #13493f 0%, #0c7b1b 100%);
+  border-radius: 4px;
+  border: none;
+  padding: 1em 2em;
+  cursor: pointer;
+}
+</style>
