@@ -26,6 +26,7 @@
       <VTotal
         :tabs="tabs"
         :selectedId="selectedId"
+        :selectedTab="selectedTab"
         @updateSelectedTab="updateSelectedTab"
       />
     </div>
@@ -84,3 +85,90 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+@import "@/assets/variables.scss";
+
+.tabs__border {
+  border-top: 1px solid $color-grey-light;
+  border-bottom: 1px solid $color-grey-light;
+}
+
+.tab-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  list-style-type: none;
+  padding: 0 64px;
+  margin: 0;
+}
+
+.tab__item-btn {
+  font-family: $ff;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 16px;
+  color: $color-grey;
+  margin: 7px 0;
+  cursor: pointer;
+  border: none;
+  background-color: $color-white;
+  padding: 0;
+}
+
+.tab__item-icon {
+  padding: 0 0 0 20px;
+}
+
+.tab__item_active {
+  color: $color-text;
+}
+
+// .tab__item_filledup {
+//     color: $color;
+// }
+
+.order {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.order__window {
+  flex-basis: 70%;
+  padding: 32px 150px 0 64px;
+}
+
+@media #{$media} and (min-width: 1024px) and (max-width: 1439px) {
+  .order__window {
+    padding: 32px 32px 0 32px;
+  }
+
+  .tab-list {
+    padding: 0 32px;
+  }
+}
+
+@media #{$media} and (min-width: 768px) and (max-width: 1023px) {
+  .order__window {
+    padding: 32px 32px 0 64px;
+  }
+}
+
+@media #{$media} and (min-width: 320px) and (max-width: 767px) {
+  .order {
+    flex-wrap: wrap;
+  }
+
+  .order__window {
+    flex-basis: 100%;
+    padding: 16px 16px 0 16px;
+  }
+
+  .tab-list {
+    padding: 0 16px;
+    flex-wrap: wrap;
+  }
+}
+</style>
