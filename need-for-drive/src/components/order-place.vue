@@ -1,21 +1,25 @@
 <template>
   <div>
     <div class="input-block">
-      <!--API start-->
-      <div class="input-wrp">
-        <div><span>ДАННЫЕ из API - </span>{{ CITYLIST }}</div>
-        <!-- <label class="input-block__label" for="city">Город</label>
-        <input class="input-block__input" type="text" id="city" value="name" /> -->
-      </div>
-      <!--API end-->
+      <DropdownList
+        @on-item-selected="dropdownSelection = $event"
+        @on-item-reset="dropdownSelection = {}"
+      />
 
-      <!--LOCAl start-->
+      <!--API from Vuex start-->
+      <!-- <div class="input-wrp">
+        <div><span>ДАННЫЕ из API - </span>{{ CITYLIST }}</div>
+      </div> -->
+      <!--API from Vuex end-->
+
+      <!--LOCAl from Vuex start-->
       <div class="input-wrp">
         <label class="input-block__label" for="city">Город</label>
         <input
           class="input-block__input"
           type="text"
           id="city"
+          placeholder="Начните вводить город ..."
           :value="name"
           @input="updateCityName"
         />
@@ -31,7 +35,7 @@
           @input="updateAddress"
         />
       </div>
-      <!--LOCAl end-->
+      <!--LOCAl from Vuex end-->
     </div>
     <p class="place__text">Выбрать на карте</p>
     <div class="place__pic">
@@ -41,16 +45,24 @@
 </template>
 
 <script>
-//API
-import { mapActions, mapGetters } from "vuex";
-//LOCAL
-import { mapState } from "vuex";
+import DropdownList from "@/components/dropdown-list.vue";
+import { mapActions, mapGetters } from "vuex"; //API
+import { mapState } from "vuex"; //LOCAL
 
 export default {
   name: "order-place",
+  components: {
+    DropdownList,
+  },
+  data() {
+    return {
+      dropdownSelection: {},
+    };
+  },
   computed: {
     //API
     ...mapGetters(["CITYLIST"]),
+
     //LOCAl
     ...mapState({
       name: (state) => state.city.name,
@@ -60,6 +72,7 @@ export default {
   methods: {
     //API
     ...mapActions(["GET_CITYLIST_FROM_API"]),
+
     //LOCAl
     updateCityName(e) {
       this.$store.commit("updateCityName", e.target.value);

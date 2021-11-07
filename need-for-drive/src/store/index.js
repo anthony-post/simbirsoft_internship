@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     //API
     cityList: [],
+
     //LOCAL
     city: {
       name: "",
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     SET_CITYLIST_TO_STATE: (state, cityList) => {
       state.cityList = cityList;
     },
+
     //LOCAL
     updateCityName(state, name) {
       state.city.name = name;
