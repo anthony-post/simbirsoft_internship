@@ -167,10 +167,6 @@ export default {
   margin-right: 10px;
 }
 
-// .radio__input {
-//     border: $color-text;
-// }
-
 .cars-list {
   margin: 0;
   padding: 48px 0 0 0;

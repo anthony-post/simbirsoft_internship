@@ -125,10 +125,6 @@ export default {
   color: $color-text;
 }
 
-// .tab__item_filledup {
-//     color: $color;
-// }
-
 .order {
   display: flex;
   flex-direction: row;

@@ -46,7 +46,7 @@
 
 <script>
 import DropdownList from "@/components/dropdown-list.vue";
-import { mapActions, mapGetters } from "vuex"; //API
+// import { mapActions, mapGetters } from "vuex"; //API
 import { mapState } from "vuex"; //LOCAL
 
 export default {
@@ -61,7 +61,7 @@ export default {
   },
   computed: {
     //API
-    ...mapGetters(["CITYLIST"]),
+    // ...mapGetters(["CITYLIST"]),
 
     //LOCAl
     ...mapState({
@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     //API
-    ...mapActions(["GET_CITYLIST_FROM_API"]),
+    // ...mapActions(["GET_CITYLIST_FROM_API"]),
 
     //LOCAl
     updateCityName(e) {
@@ -81,13 +81,13 @@ export default {
       this.$store.commit("updateAddress", e.target.value);
     },
   },
-  mounted() {
-    this.GET_CITYLIST_FROM_API().then((response) => {
-      if (response.data) {
-        console.log(response.data);
-      }
-    });
-  },
+  // mounted() {
+  //   this.GET_CITYLIST_FROM_API().then((response) => {
+  //     if (response.data) {
+  //       console.log(response.data);
+  //     }
+  //   });
+  // },
 };
 </script>
 

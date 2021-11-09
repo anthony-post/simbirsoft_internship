@@ -7,8 +7,7 @@
       type="text"
       name="city"
       placeholder="Найти город из списка"
-      v-if="Object.keys(selectedItem).length === 0"
-      ref="dropdowninput"
+      v-if="isItemSelected"
       v-model.trim="inputValue"
     />
 
@@ -20,6 +19,7 @@
       type="text"
       name="city"
       :value="selectedItem.name"
+      @input="updatePlaceCity"
     />
 
     <!-- Dropdown List -->
@@ -28,7 +28,7 @@
         class="dropdown-item"
         v-show="itemVisible(item)"
         v-for="item in itemList"
-        :key="item.name"
+        :key="item.id"
         @click="selectItem(item)"
       >
         {{ item.name }}
@@ -38,7 +38,8 @@
 </template>
 
 <script>
-// import axios from "axios";
+import { mapActions, mapGetters } from "vuex"; //API
+import { mapState } from "vuex";
 
 export default {
   name: "dropdown-list",
@@ -47,106 +48,39 @@ export default {
     return {
       selectedItem: {},
       inputValue: "",
-      //local city list
-      itemList: [
-        {
-          updatedAt: 1635503582168,
-          createdAt: 1587575824452,
-          name: "Казань",
-          id: "5ea07c10099b810b946c627a",
-        },
-        {
-          updatedAt: 1587575867061,
-          createdAt: 1587575867061,
-          name: "Саратов",
-          id: "5ea07c3b099b810b946c627b",
-        },
-        {
-          updatedAt: 1633210751464,
-          createdAt: 1610987769457,
-          name: "Санкт-Петербург",
-          id: "6005b8f9ad015e0bb6997778",
-        },
-        {
-          updatedAt: 1627312612415,
-          createdAt: 1611744559500,
-          name: "Уфа",
-          id: "6011452fad015e0bb6997e1d",
-        },
-        {
-          updatedAt: 1623412953849,
-          createdAt: 1622973004811,
-          name: "Москва",
-          id: "60bc9a4c2aed9a0b9b82fcb3",
-        },
-        {
-          updatedAt: 1629974715128,
-          createdAt: 1624696019457,
-          name: "Краснодар",
-          id: "60d6e4d32aed9a0b9b84fa82",
-        },
-        {
-          updatedAt: 1625498815763,
-          createdAt: 1625498815763,
-          name: "Городской",
-          id: "60e324bf2aed9a0b9b84fc7d",
-        },
-        {
-          updatedAt: 1634056299514,
-          createdAt: 1628758690202,
-          name: "Город X",
-          id: "6114e2a22aed9a0b9b85083e",
-        },
-        {
-          updatedAt: 1630250653585,
-          createdAt: 1630250653585,
-          name: "Омск",
-          id: "612ba69d9036850bb6e3e7b9",
-        },
-        {
-          updatedAt: 1632519880492,
-          createdAt: 1632519880492,
-          name: "Самара",
-          id: "614e46c818f5c2264119aeeb",
-        },
-        {
-          updatedAt: 1633180728873,
-          createdAt: 1633180728873,
-          name: "Сочи",
-          id: "61585c3818f5c2264119b859",
-        },
-        {
-          updatedAt: 1633329704978,
-          createdAt: 1633295634986,
-          name: "Саранск",
-          id: "615a1d1218f5c2264119b91a",
-        },
-        {
-          updatedAt: 1634055201858,
-          createdAt: 1634053959169,
-          name: "Ульяновcк",
-          id: "6165af4718f5c2264119c33e",
-        },
-        {
-          updatedAt: 1635517715561,
-          createdAt: 1635517688215,
-          name: "Орск",
-          id: "617c04f8ac4e7e1c84ab881f",
-        },
-      ],
-      apiLoaded: true,
-      // itemList: [], //для хранения данных из API
-      // apiLoaded: false,
-      // apiUrl: "http://api-factory.simbirsoft1.com/api/db/city", //url API Simbirsoft
+      itemList: [], //для хранения данных из API
+      apiLoaded: false,
     };
   },
-  // mounted() {
-  //   this.getList();
-  // },
+  mounted() {
+    this.GET_CITYLIST_FROM_API().then((response) => {
+      if (response.data) {
+        this.itemList = response.data.data;
+        this.apiLoaded = true;
+        console.log(response.data);
+      }
+    });
+  },
+  computed: {
+    ...mapGetters(["CITYLIST"]),
+
+    isItemSelected() {
+      //проверка объекта selectedItem пустой или нет
+      if (Object.keys(this.selectedItem).length === 0) {
+        return true;
+      }
+      return false;
+    },
+
+    ...mapState({
+      city: (state) => state.selectedCity.name,
+    }),
+  },
   methods: {
+    ...mapActions(["GET_CITYLIST_FROM_API"]),
+
     resetItem() {
       this.selectedItem = {};
-      this.$nextTick(() => this.$refs.dropdowninput.focus());
       this.$emit("on-item-reset");
     },
     selectItem(theItem) {
@@ -160,29 +94,9 @@ export default {
       return currentName.includes(currentInput);
     },
 
-    // getList() {
-    //   axios.get(this.apiUrl).then((response) => {
-    //     this.itemList = response.data;
-    //     this.apiLoaded = true;
-    //   });
-    // },
-
-    // getlist() {
-    //   return axios(this.apiUrl, {
-    //     method: "GET",
-    //     headers: {
-    //       "X-Api-Factory-Application-Id": "5e25c641099b810b946c5d5b",
-    //     },
-    //   })
-    //     .then((response) => {
-    //       this.itemList = response.data;
-    //       this.apiLoaded = true;
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //       return error;
-    //     });
-    // },
+    updatePlaceCity() {
+      this.$store.commit("updatePlaceCity", this.city);
+    },
   },
 };
 </script>
@@ -213,16 +127,6 @@ export default {
   border: none;
   border-bottom: 1px solid $color-grey;
 }
-
-// .dropdown-input{
-//   width: 100%;
-//   padding: 10px 16px;
-//   border: 1px solid transparent;
-//   background: #edf2f7;
-//   line-height: 1.5em;
-//   outline: none;
-//   border-radius: 8px;
-// }
 
 .dropdown-list {
   position: absolute;
