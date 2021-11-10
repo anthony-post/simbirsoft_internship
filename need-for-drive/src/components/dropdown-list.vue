@@ -19,7 +19,7 @@
       type="text"
       name="city"
       :value="selectedItem.name"
-      @input="updatePlaceCity"
+      @input="updatePlaceCity(selectedIted.name)"
     />
 
     <!-- Dropdown List -->
@@ -82,8 +82,8 @@ export default {
       return currentName.includes(currentInput);
     },
 
-    updatePlaceCity() {
-      this.$store.commit("updatePlaceCity", this.selectedItem.name);
+    updatePlaceCity(city) {
+      this.$store.commit("updatePlaceCity", city);
     },
   },
 };
