@@ -39,7 +39,7 @@ export default new Vuex.Store({
   actions: {
     //API
     GET_CITYLIST_FROM_API({ commit }) {
-      return axios("https://api-factory.simbirsoft1.com/api/db/city", {
+      axios("https://api-factory.simbirsoft1.com/api/db/city", {
         method: "GET",
         headers: {
           "X-Api-Factory-Application-Id": "5e25c641099b810b946c5d5b",
