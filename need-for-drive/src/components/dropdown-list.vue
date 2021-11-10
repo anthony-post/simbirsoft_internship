@@ -23,11 +23,11 @@
     />
 
     <!-- Dropdown List -->
-    <div class="dropdown-list" v-show="inputValue && apiLoaded">
+    <div class="dropdown-list" v-show="inputValue">
       <div
         class="dropdown-item"
         v-show="itemVisible(item)"
-        v-for="item in itemList"
+        v-for="item in CITYLIST.data.data"
         :key="item.id"
         @click="selectItem(item)"
       >
@@ -48,28 +48,16 @@ export default {
     return {
       selectedItem: {},
       inputValue: "",
-      itemList: [], //для хранения данных из API
-      apiLoaded: false,
     };
   },
-  mounted() {
-    this.GET_CITYLIST_FROM_API().then((response) => {
-      if (response.data) {
-        this.itemList = response.data.data;
-        this.apiLoaded = true;
-        console.log(response.data);
-      }
-    });
+  created() {
+    this.GET_CITYLIST_FROM_API();
   },
   computed: {
     ...mapGetters(["CITYLIST"]),
 
     isItemSelected() {
-      //проверка объекта selectedItem пустой или нет
-      if (Object.keys(this.selectedItem).length === 0) {
-        return true;
-      }
-      return false;
+      return Object.keys(this.selectedItem).length === 0; //проверка объекта selectedItem пустой или нет
     },
 
     ...mapState({
