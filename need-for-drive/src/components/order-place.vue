@@ -6,12 +6,6 @@
         @on-item-reset="dropdownSelection = {}"
       />
 
-      <!--API from Vuex start-->
-      <!-- <div class="input-wrp">
-        <div><span>ДАННЫЕ из API - </span>{{ CITYLIST }}</div>
-      </div> -->
-      <!--API from Vuex end-->
-
       <!--LOCAl from Vuex start-->
       <div class="input-wrp">
         <label class="input-block__label" for="city">Город</label>
@@ -46,7 +40,6 @@
 
 <script>
 import DropdownList from "@/components/dropdown-list.vue";
-// import { mapActions, mapGetters } from "vuex"; //API
 import { mapState } from "vuex"; //LOCAL
 
 export default {
@@ -60,9 +53,6 @@ export default {
     };
   },
   computed: {
-    //API
-    // ...mapGetters(["CITYLIST"]),
-
     //LOCAl
     ...mapState({
       name: (state) => state.city.name,
@@ -70,9 +60,6 @@ export default {
     }),
   },
   methods: {
-    //API
-    // ...mapActions(["GET_CITYLIST_FROM_API"]),
-
     //LOCAl
     updateCityName(e) {
       this.$store.commit("updateCityName", e.target.value);
@@ -81,13 +68,6 @@ export default {
       this.$store.commit("updateAddress", e.target.value);
     },
   },
-  // mounted() {
-  //   this.GET_CITYLIST_FROM_API().then((response) => {
-  //     if (response.data) {
-  //       console.log(response.data);
-  //     }
-  //   });
-  // },
 };
 </script>
 

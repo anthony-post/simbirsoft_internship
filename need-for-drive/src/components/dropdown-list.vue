@@ -83,7 +83,7 @@ export default {
     },
 
     updatePlaceCity() {
-      this.$store.commit("updatePlaceCity", this.city);
+      this.$store.commit("updatePlaceCity", this.selectedItem.name);
     },
   },
 };
