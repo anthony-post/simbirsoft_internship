@@ -8,7 +8,7 @@
       name="city"
       placeholder="Найти город из списка"
       v-if="isItemSelected"
-      v-model.trim="inputValue"
+      v-model.trim="city"
     />
 
     <!-- Dropdown Selected Input -->
@@ -23,7 +23,7 @@
     />
 
     <!-- Dropdown List -->
-    <div class="dropdown-list" v-show="inputValue">
+    <div class="dropdown-list" v-show="city">
       <div
         class="dropdown-item"
         v-show="itemVisible(item)"
@@ -44,11 +44,11 @@ import { mapState } from "vuex";
 export default {
   name: "dropdown-list",
   props: {},
-  data() {
-    return {
-      inputValue: "",
-    };
-  },
+  // data() {
+  //   return {
+  //     inputValue: "",
+  //   };
+  // },
   created() {
     this.GET_CITYLIST_FROM_API();
   },
@@ -68,16 +68,17 @@ export default {
 
     resetItem() {
       this.city = {};
-      this.$emit("on-item-reset");
+      // this.$emit("on-item-reset");
     },
-    selectItem(theItem) {
-      this.city = theItem;
-      this.inputValue = "";
-      this.$emit("on-item-selected", theItem);
+    selectItem(chosenItem) {
+      this.city = chosenItem;
+      // this.inputValue = "";
+      // this.$emit("on-item-selected", item);
     },
     itemVisible(item) {
       let currentName = item.name.toLowerCase();
-      let currentInput = this.inputValue.toLowerCase();
+      // let currentInput = this.inputValue.toLowerCase();
+      let currentInput = this.city.toLowerCase();
       return currentName.includes(currentInput);
     },
 
