@@ -1,10 +1,7 @@
 <template>
   <div>
     <div class="input-block">
-      <DropdownList
-        @on-item-selected="dropdownSelection = $event"
-        @on-item-reset="dropdownSelection = {}"
-      />
+      <DropdownList />
 
       <!--LOCAl from Vuex start-->
       <div class="input-wrp">
@@ -46,11 +43,6 @@ export default {
   name: "order-place",
   components: {
     DropdownList,
-  },
-  data() {
-    return {
-      dropdownSelection: {},
-    };
   },
   computed: {
     //LOCAl

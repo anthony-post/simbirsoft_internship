@@ -18,8 +18,8 @@
       class="dropdown-input input-block__input"
       type="text"
       name="city"
-      :value="selectedItem.name"
-      @input="updatePlaceCity(selectedIted.name)"
+      :value="city"
+      @input="updatePlaceCity"
     />
 
     <!-- Dropdown List -->
@@ -46,7 +46,6 @@ export default {
   props: {},
   data() {
     return {
-      selectedItem: {},
       inputValue: "",
     };
   },
@@ -57,7 +56,7 @@ export default {
     ...mapGetters(["CITYLIST"]),
 
     isItemSelected() {
-      return Object.keys(this.selectedItem).length === 0; //проверка объекта selectedItem пустой или нет
+      return Object.keys(this.city).length === 0; //проверка объекта selectedItem пустой или нет
     },
 
     ...mapState({
@@ -68,11 +67,11 @@ export default {
     ...mapActions(["GET_CITYLIST_FROM_API"]),
 
     resetItem() {
-      this.selectedItem = {};
+      this.city = {};
       this.$emit("on-item-reset");
     },
     selectItem(theItem) {
-      this.selectedItem = theItem;
+      this.city = theItem;
       this.inputValue = "";
       this.$emit("on-item-selected", theItem);
     },
@@ -82,8 +81,8 @@ export default {
       return currentName.includes(currentInput);
     },
 
-    updatePlaceCity(city) {
-      this.$store.commit("updatePlaceCity", city);
+    updatePlaceCity(e) {
+      this.$store.commit("updatePlaceCity", e.target.value);
     },
   },
 };
