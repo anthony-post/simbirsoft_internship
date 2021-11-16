@@ -4,7 +4,7 @@
       <DropdownList />
 
       <!--LOCAl from Vuex start-->
-      <div class="input-wrp">
+      <!-- <div class="input-wrp">
         <label class="input-block__label" for="city">Город</label>
         <input
           class="input-block__input"
@@ -14,7 +14,7 @@
           :value="name"
           @input="updateCityName"
         />
-      </div>
+      </div> -->
       <div class="input-wrp">
         <label class="input-block__label" for="address">Пункт выдачи</label>
         <input

@@ -4,7 +4,8 @@
     <p class="total-wrp">
       <span class="total__text">Пункт выдачи</span>
       <span class="dots"></span>
-      <span class="total__city">{{ chosenCityName }}</span>
+      <span class="total__city">{{ selectedItem.name }}</span>
+      <!-- <span class="total__city">{{ chosenCityName }}</span> -->
       <span class="total__city">{{ chosenAddress }}</span>
     </p>
     <p class="total-wrp" v-if="this.selectedTab === 'order-model'">
@@ -16,8 +17,8 @@
     <button
       class="total__button"
       v-if="this.selectedTab === 'order-place'"
-      :class="{ total__button_active: chosenCityName && chosenAddress }"
-      :disabled="!chosenCityName && !chosenAddress"
+      :class="{ total__button_active: selectedItem.name && chosenAddress }"
+      :disabled="!selectedItem.name && !chosenAddress"
       @click="changeSelectedTab"
     >
       Выбрать модель
@@ -29,6 +30,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "v-total",
   props: {
@@ -46,6 +49,12 @@ export default {
     },
   },
   computed: {
+    //API получаем состояние объекта (в который записывается выбранный город) из store
+    ...mapState({
+      selectedItem: (state) => state.selectedCity,
+    }),
+
+    //LOCAL
     chosenCityName() {
       return this.$store.state.city.name;
     },

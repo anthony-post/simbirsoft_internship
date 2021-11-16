@@ -8,7 +8,7 @@
       name="city"
       placeholder="Найти город из списка"
       v-if="isItemSelected"
-      v-model.trim="$store.state.selectedCity.name"
+      v-model.trim="inputValue"
     />
 
     <!-- Dropdown Selected Input -->
@@ -18,11 +18,11 @@
       class="dropdown-input input-block__input"
       type="text"
       name="city"
-      :value="city"
+      :value="selectedItem.name"
     />
 
     <!-- Dropdown List -->
-    <div class="dropdown-list" v-show="city">
+    <div class="dropdown-list" v-show="inputValue">
       <div
         class="dropdown-item"
         v-show="itemVisible(item)"
@@ -43,11 +43,11 @@ import { mapState } from "vuex";
 export default {
   name: "dropdown-list",
   props: {},
-  // data() {
-  //   return {
-  //     inputValue: "",
-  //   };
-  // },
+  data() {
+    return {
+      inputValue: "", //введенный город
+    };
+  },
   created() {
     this.GET_CITYLIST_FROM_API();
   },
@@ -56,50 +56,34 @@ export default {
 
     //проверка объекта пустой или нет
     isItemSelected() {
-      return Object.keys(this.city).length === 0;
-      // return Object.keys(this.$store.state.selectedCity).length === 0;
+      return Object.keys(this.selectedItem).length === 0;
     },
 
+    //получаем состояние объекта (в который записывается выбранный город) из store
     ...mapState({
-      city: (state) => state.selectedCity.name,
+      selectedItem: (state) => state.selectedCity,
     }),
-
-    //selectedCity
-    // selectedCity: {
-    //   get() {
-    //     return this.$state.getters.selectedCity;
-    //   },
-    //   set(value) {
-    //     this.$state.dispatch("setSelectedCity", value);
-    //   },
-    // },
-    // isItemSelected() {
-    //   return Object.keys(this.$state.selectedCity).length === 0; //проверка объекта selectedCity пустой или нет
-    // },
   },
   methods: {
     ...mapActions(["GET_CITYLIST_FROM_API"]),
 
+    //обнуляем состояние объекта при клике на input
     resetSelection() {
-      // this.city = {};
       this.$store.state.selectedCity = {};
-      // this.$emit("on-item-reset");
-    },
-    selectItem(chosenItem) {
-      this.$store.state.selectedCity = chosenItem;
-      // this.inputValue = "";
-      // this.$emit("on-item-selected", item);
-    },
-    //если введенный город соответствует тому который получен по API, то возвращается схожий город
-    itemVisible(item) {
-      let currentName = item.name.toLowerCase();
-      let currentInput = this.$store.state.selectedCity.name.toLowerCase();
-      return currentName.includes(currentInput);
     },
 
-    // updatePlaceCity(e) {
-    //   this.$store.commit("updatePlaceCity", e.target.value);
-    // },
+    //записываем выбранный объект в selectedCity в store
+    selectItem(chosenItem) {
+      this.$store.state.selectedCity = chosenItem;
+      this.inputValue = ""; //обнуляем для того, чтобы список городов полученный по API не отображался по-умолчанию
+    },
+
+    //если введенный город соответствует тому который есть в списке городов полученного по API, то возвращается схожий город
+    itemVisible(item) {
+      let currentName = item.name.toLowerCase();
+      let currentInput = this.inputValue.toLowerCase();
+      return currentName.includes(currentInput);
+    },
   },
 };
 </script>

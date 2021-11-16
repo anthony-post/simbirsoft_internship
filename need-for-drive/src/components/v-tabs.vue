@@ -40,6 +40,7 @@ import OrderModel from "@/components/order-model.vue";
 import OrderAdditional from "@/components/order-additional.vue";
 import OrderSummary from "@/components/order-summary.vue";
 import VTotal from "@/components/v-total.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "v-tabs",
@@ -65,8 +66,13 @@ export default {
   },
   //TO DO последовательное переключение вкладок
   computed: {
+    //получаем состояние объекта (в который записывается выбранный город) из store
+    ...mapState({
+      selectedItem: (state) => state.selectedCity,
+    }),
+
     filledUpData() {
-      if (this.$store.state.city.name && this.$store.state.city.address) {
+      if (this.selectedItem.name && this.$store.state.city.address) {
         const arr = [...this.tabs];
         arr[this.selectedId].isDisabled = false;
         arr[this.selectedId + 1].isDisabled = false;
