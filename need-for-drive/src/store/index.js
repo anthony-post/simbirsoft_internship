@@ -28,6 +28,11 @@ export default new Vuex.Store({
       state.selectedCity.name = city;
     },
 
+    //selectedCity
+    // setSelectedCity(state, payload) {
+    //   state.state.selectedCity.name = payload;
+    // },
+
     //LOCAL
     updateCityName(state, name) {
       state.city.name = name;
@@ -54,11 +59,21 @@ export default new Vuex.Store({
           return error;
         });
     },
+
+    //selectedCity
+    // doChangeSelectedCity: (context, payload) => {
+    //   context.commit("setSelectedCity", payload);
+    // },
   },
   getters: {
     CITYLIST(state) {
       return state.cityList;
     },
+
+    //selectedCity
+    // getSelectedCity(state) {
+    //   return state.selectedCity.name;
+    // },
   },
   modules: {},
 });

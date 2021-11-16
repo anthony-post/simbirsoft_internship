@@ -8,18 +8,17 @@
       name="city"
       placeholder="Найти город из списка"
       v-if="isItemSelected"
-      v-model.trim="city"
+      v-model.trim="$store.state.selectedCity.name"
     />
 
     <!-- Dropdown Selected Input -->
     <input
       v-else
-      @click="resetItem"
+      @click="resetSelection"
       class="dropdown-input input-block__input"
       type="text"
       name="city"
       :value="city"
-      @input="updatePlaceCity"
     />
 
     <!-- Dropdown List -->
@@ -55,36 +54,52 @@ export default {
   computed: {
     ...mapGetters(["CITYLIST"]),
 
+    //проверка объекта пустой или нет
     isItemSelected() {
-      return Object.keys(this.city).length === 0; //проверка объекта selectedItem пустой или нет
+      return Object.keys(this.city).length === 0;
+      // return Object.keys(this.$store.state.selectedCity).length === 0;
     },
 
     ...mapState({
       city: (state) => state.selectedCity.name,
     }),
+
+    //selectedCity
+    // selectedCity: {
+    //   get() {
+    //     return this.$state.getters.selectedCity;
+    //   },
+    //   set(value) {
+    //     this.$state.dispatch("setSelectedCity", value);
+    //   },
+    // },
+    // isItemSelected() {
+    //   return Object.keys(this.$state.selectedCity).length === 0; //проверка объекта selectedCity пустой или нет
+    // },
   },
   methods: {
     ...mapActions(["GET_CITYLIST_FROM_API"]),
 
-    resetItem() {
-      this.city = {};
+    resetSelection() {
+      // this.city = {};
+      this.$store.state.selectedCity = {};
       // this.$emit("on-item-reset");
     },
     selectItem(chosenItem) {
-      this.city = chosenItem;
+      this.$store.state.selectedCity = chosenItem;
       // this.inputValue = "";
       // this.$emit("on-item-selected", item);
     },
+    //если введенный город соответствует тому который получен по API, то возвращается схожий город
     itemVisible(item) {
       let currentName = item.name.toLowerCase();
-      // let currentInput = this.inputValue.toLowerCase();
-      let currentInput = this.city.toLowerCase();
+      let currentInput = this.$store.state.selectedCity.name.toLowerCase();
       return currentName.includes(currentInput);
     },
 
-    updatePlaceCity(e) {
-      this.$store.commit("updatePlaceCity", e.target.value);
-    },
+    // updatePlaceCity(e) {
+    //   this.$store.commit("updatePlaceCity", e.target.value);
+    // },
   },
 };
 </script>
