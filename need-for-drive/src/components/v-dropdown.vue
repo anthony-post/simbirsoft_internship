@@ -1,32 +1,30 @@
 <template>
   <div class="dropdown input-wrp">
-    <label class="input-block__label" for="city">Город</label>
+    <label class="input-block__label" :for="name">{{ label }}</label>
     <!-- Dropdown Input -->
     <input
       class="dropdown-input input-block__input"
       type="text"
-      name="city"
-      placeholder="Начните вводить город ..."
+      :name="name"
+      :placeholder="placeholder"
       v-if="isItemSelected"
       v-model.trim="inputValue"
     />
-
     <!-- Dropdown Selected Input -->
     <input
       v-else
       @click="resetSelection"
       class="dropdown-input input-block__input"
       type="text"
-      name="city"
+      :name="name"
       :value="selectedItem.name"
     />
-
     <!-- Dropdown List -->
     <div class="dropdown-list" v-show="inputValue">
       <div
         class="dropdown-item"
         v-show="itemVisible(item)"
-        v-for="item in CITYLIST.data.data"
+        v-for="item in itemList"
         :key="item.id"
         @click="selectItem(item)"
       >
@@ -37,47 +35,54 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex"; //API
-import { mapState } from "vuex";
-
 export default {
   name: "dropdown-list",
-  props: {},
+  props: {
+    itemList: {
+      type: Array,
+      required: true,
+    },
+    selectedItem: {
+      type: Object,
+      required: true,
+    },
+    placeholder: {
+      type: String,
+      required: true,
+    },
+    label: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
-      inputValue: "", //введенный город
+      inputValue: "", //введенное пользователем значение
     };
   },
-  created() {
-    this.GET_CITYLIST_FROM_API();
-  },
   computed: {
-    ...mapGetters(["CITYLIST"]),
-
-    //проверка объекта пустой или нет
+    //проверка объекта в props selectedItem пустой или нет
     isItemSelected() {
       return Object.keys(this.selectedItem).length === 0;
     },
-
-    //получаем состояние объекта (в который записывается выбранный город) из store
-    ...mapState({
-      selectedItem: (state) => state.selectedCity,
-    }),
   },
   methods: {
-    ...mapActions(["GET_CITYLIST_FROM_API"]),
-
-    //обнуляем состояние объекта при клике на input
+    //обнуляем состояние объекта props selectedItem при клике на input
     resetSelection() {
-      this.$store.state.selectedCity = {};
+      this.selectedItem = {};
+      this.$emit("on-item-reset");
     },
-
-    //записываем выбранный объект в selectedCity в store
+    //записываем выбранный объект в props selectedItem
     selectItem(chosenItem) {
-      this.$store.state.selectedCity = chosenItem;
+      // this.$store.state.selectedCity = chosenItem;
+      this.selectedItem = chosenItem;
       this.inputValue = ""; //обнуляем для того, чтобы список городов полученный по API не отображался по-умолчанию
+      this.$emit("on-item-selected", chosenItem);
     },
-
     //если введенный город соответствует тому который есть в списке городов полученного по API, то возвращается схожий город
     itemVisible(item) {
       let currentName = item.name.toLowerCase();

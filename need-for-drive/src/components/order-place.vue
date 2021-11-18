@@ -1,32 +1,26 @@
 <template>
   <div>
     <div class="input-block">
-      <DropdownList />
+      <!-- <DropdownList /> -->
+      <VDropdown
+        label="Город"
+        name="city"
+        placeholder="Начните вводить город ..."
+        :itemList="CITYLIST.data.data"
+        :selectedItem="selectedCity"
+        @on-item-selected="setSelectedCity"
+        @on-item-reset="resetSelectedCity"
+      />
 
-      <!--LOCAl from Vuex start-->
-      <!-- <div class="input-wrp">
-        <label class="input-block__label" for="city">Город</label>
-        <input
-          class="input-block__input"
-          type="text"
-          id="city"
-          placeholder="Начните вводить город ..."
-          :value="name"
-          @input="updateCityName"
-        />
-      </div> -->
-      <div class="input-wrp">
-        <label class="input-block__label" for="address">Пункт выдачи</label>
-        <input
-          class="input-block__input"
-          type="text"
-          id="address"
-          placeholder="Начните вводить пункт ..."
-          :value="address"
-          @input="updateAddress"
-        />
-      </div>
-      <!--LOCAl from Vuex end-->
+      <VDropdown
+        label="Пункт выдачи"
+        name="point"
+        placeholder="Начните вводить пункт ..."
+        :itemList="POINTLIST.data.data"
+        :selectedItem="selectedPoint"
+        @on-item-selected="setSelectedPoint"
+        @on-item-reset="resetSelectedPoint"
+      />
     </div>
     <p class="place__text">Выбрать на карте</p>
     <div class="place__pic">
@@ -36,29 +30,57 @@
 </template>
 
 <script>
-import DropdownList from "@/components/dropdown-list.vue";
+// import DropdownList from "@/components/dropdown-list.vue";
+import VDropdown from "@/components/v-dropdown.vue";
 import { mapState } from "vuex"; //LOCAL
+import { mapActions, mapGetters } from "vuex"; //API
 
 export default {
   name: "order-place",
   components: {
-    DropdownList,
+    // DropdownList,
+    VDropdown,
+  },
+  created() {
+    //API
+    this.GET_CITYLIST_FROM_API();
+    this.GET_POINTLIST_FROM_API();
   },
   computed: {
-    //LOCAl
+    //API
+    ...mapGetters(["CITYLIST"]),
+    ...mapGetters(["POINTLIST"]),
+
     ...mapState({
-      name: (state) => state.city.name,
-      address: (state) => state.city.address,
+      selectedCity: (state) => state.selectedCity,
+      selectedPoint: (state) => state.selectedPoint,
     }),
   },
   methods: {
-    //LOCAl
-    updateCityName(e) {
-      this.$store.commit("updateCityName", e.target.value);
+    //API
+    ...mapActions(["GET_CITYLIST_FROM_API"]),
+    ...mapActions(["GET_POINTLIST_FROM_API"]),
+    //CITY
+    setSelectedCity(chosenItem) {
+      this.$store.commit("SET_SELECTEDCITY", chosenItem);
     },
-    updateAddress(e) {
-      this.$store.commit("updateAddress", e.target.value);
+    resetSelectedCity() {
+      this.$store.commit("RESET_SELECTEDCITY");
     },
+    //POINT
+    setSelectedPoint(chosenItem) {
+      this.$store.commit("SET_SELECTEDPOINT", chosenItem);
+    },
+    resetSelectedPoint() {
+      this.$store.commit("RESET_SELECTEDPOINT");
+    },
+
+    // updateSelectedPoint(chosenItem) {
+    //   this.$store.state.selectedPoint = chosenItem;
+    // },
+    // resetSelectedPoint() {
+    //   this.$store.state.selectedPoint = {};
+    // },
   },
 };
 </script>

@@ -68,11 +68,12 @@ export default {
   computed: {
     //получаем состояние объекта (в который записывается выбранный город) из store
     ...mapState({
-      selectedItem: (state) => state.selectedCity,
+      selectedCity: (state) => state.selectedCity,
+      selectedPoint: (state) => state.selectedPoint,
     }),
 
     filledUpData() {
-      if (this.selectedItem.name && this.$store.state.city.address) {
+      if (this.selectedCity && this.selectedPoint) {
         const arr = [...this.tabs];
         arr[this.selectedId].isDisabled = false;
         arr[this.selectedId + 1].isDisabled = false;

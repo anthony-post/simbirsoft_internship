@@ -8,32 +8,32 @@ export default new Vuex.Store({
   state: {
     //API
     cityList: [],
-
-    selectedCity: {
-      name: "",
-    },
-
-    //LOCAL
-    city: {
-      name: "",
-      address: "",
-    },
+    pointList: [],
+    //SELECTED
+    selectedCity: {},
+    selectedPoint: {},
   },
   mutations: {
     //API
     SET_CITYLIST_TO_STATE: (state, cityList) => {
       state.cityList = cityList;
     },
-    updatePlaceCity(state, city) {
-      state.selectedCity.name = city;
+    SET_POINTLIST_TO_STATE: (state, pointList) => {
+      state.pointList = pointList;
     },
-
-    //LOCAL
-    updateCityName(state, name) {
-      state.city.name = name;
+    //CITY
+    SET_SELECTEDCITY(state, selectedCity) {
+      state.selectedCity = selectedCity;
     },
-    updateAddress(state, address) {
-      state.city.address = address;
+    RESET_SELECTEDCITY(state) {
+      state.selectedCity = {};
+    },
+    //POINT
+    SET_SELECTEDPOINT(state, selectedPoint) {
+      state.selectedPoint = selectedPoint;
+    },
+    RESET_SELECTEDPOINT(state) {
+      state.selectedPoint = {};
     },
   },
   actions: {
@@ -54,10 +54,29 @@ export default new Vuex.Store({
           return error;
         });
     },
+    GET_POINTLIST_FROM_API({ commit }) {
+      axios("https://api-factory.simbirsoft1.com/api/db/point", {
+        method: "GET",
+        headers: {
+          "X-Api-Factory-Application-Id": "5e25c641099b810b946c5d5b",
+        },
+      })
+        .then((pointList) => {
+          commit("SET_POINTLIST_TO_STATE", pointList);
+          return pointList;
+        })
+        .catch((error) => {
+          console.log(error);
+          return error;
+        });
+    },
   },
   getters: {
     CITYLIST(state) {
       return state.cityList;
+    },
+    POINTLIST(state) {
+      return state.pointList;
     },
   },
   modules: {},
