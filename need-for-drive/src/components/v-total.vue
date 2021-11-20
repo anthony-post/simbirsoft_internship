@@ -4,8 +4,8 @@
     <p class="total-wrp">
       <span class="total__text">Пункт выдачи</span>
       <span class="dots"></span>
-      <span class="total__city">{{ chosenCityName }}</span>
-      <span class="total__city">{{ chosenAddress }}</span>
+      <span class="total__city">{{ selectedCity.name }}</span>
+      <span class="total__city">{{ selectedPoint.name }}</span>
     </p>
     <p class="total-wrp" v-if="this.selectedTab === 'order-model'">
       <span class="total__text">Модель</span>
@@ -16,8 +16,8 @@
     <button
       class="total__button"
       v-if="this.selectedTab === 'order-place'"
-      :class="{ total__button_active: chosenCityName && chosenAddress }"
-      :disabled="!chosenCityName && !chosenAddress"
+      :class="{ total__button_active: selectedCity && selectedPoint }"
+      :disabled="!selectedCity && !selectedPoint"
       @click="changeSelectedTab"
     >
       Выбрать модель
@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "v-total",
   props: {
@@ -46,12 +48,19 @@ export default {
     },
   },
   computed: {
-    chosenCityName() {
-      return this.$store.state.city.name;
-    },
-    chosenAddress() {
-      return this.$store.state.city.address;
-    },
+    //API получаем состояние объекта (в который записывается выбранный город) из store
+    ...mapState({
+      selectedCity: (state) => state.selectedCity,
+      selectedPoint: (state) => state.selectedPoint,
+    }),
+
+    //LOCAL
+    // chosenCityName() {
+    //   return this.$store.state.city.name;
+    // },
+    // chosenAddress() {
+    //   return this.$store.state.city.address;
+    // },
   },
   // TO DO переключение на следующую вкладку
   methods: {

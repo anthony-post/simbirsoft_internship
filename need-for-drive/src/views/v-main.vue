@@ -40,7 +40,6 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  // width: calc(100vw - 60px);
   width: 100vw;
   height: 100vh;
 }

@@ -23,7 +23,6 @@ export default {
   flex-direction: row;
   max-width: 100vw;
   min-width: 1440px;
-  // height: 100vh;
 }
 
 @media #{$media} and (min-width: 1024px) and (max-width: 1439px) {

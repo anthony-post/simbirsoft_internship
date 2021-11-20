@@ -161,7 +161,6 @@ svg {
   font-weight: bold;
   font-size: 13px;
   line-height: 15px;
-  // color: #0ec261;
   color: $color-text;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border: none;
