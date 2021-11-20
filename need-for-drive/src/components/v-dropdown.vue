@@ -73,13 +73,12 @@ export default {
   methods: {
     //обнуляем состояние объекта props selectedItem при клике на input
     resetSelection() {
-      this.selectedItem = {};
+      // this.selectedItem = {};
       this.$emit("on-item-reset");
     },
     //записываем выбранный объект в props selectedItem
     selectItem(chosenItem) {
-      // this.$store.state.selectedCity = chosenItem;
-      this.selectedItem = chosenItem;
+      // this.selectedItem = chosenItem;
       this.inputValue = ""; //обнуляем для того, чтобы список городов полученный по API не отображался по-умолчанию
       this.$emit("on-item-selected", chosenItem);
     },

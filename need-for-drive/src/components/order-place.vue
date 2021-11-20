@@ -6,17 +6,16 @@
         label="Город"
         name="city"
         placeholder="Начните вводить город ..."
-        :itemList="CITYLIST.data.data"
+        :itemList="CITYLIST"
         :selectedItem="selectedCity"
         @on-item-selected="setSelectedCity"
         @on-item-reset="resetSelectedCity"
       />
-
       <VDropdown
         label="Пункт выдачи"
         name="point"
         placeholder="Начните вводить пункт ..."
-        :itemList="POINTLIST.data.data"
+        :itemList="FILTERED_POINTLIST"
         :selectedItem="selectedPoint"
         @on-item-selected="setSelectedPoint"
         @on-item-reset="resetSelectedPoint"
@@ -50,6 +49,7 @@ export default {
     //API
     ...mapGetters(["CITYLIST"]),
     ...mapGetters(["POINTLIST"]),
+    ...mapGetters(["FILTERED_POINTLIST"]),
 
     ...mapState({
       selectedCity: (state) => state.selectedCity,

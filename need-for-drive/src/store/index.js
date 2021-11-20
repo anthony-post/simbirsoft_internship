@@ -16,10 +16,10 @@ export default new Vuex.Store({
   mutations: {
     //API
     SET_CITYLIST_TO_STATE: (state, cityList) => {
-      state.cityList = cityList;
+      state.cityList = cityList.data.data;
     },
     SET_POINTLIST_TO_STATE: (state, pointList) => {
-      state.pointList = pointList;
+      state.pointList = pointList.data.data;
     },
     //CITY
     SET_SELECTEDCITY(state, selectedCity) {
@@ -77,6 +77,11 @@ export default new Vuex.Store({
     },
     POINTLIST(state) {
       return state.pointList;
+    },
+    FILTERED_POINTLIST(state) {
+      return state.pointList.filter((point) =>
+        point.cityId.id.includes(state.selectedCity.id)
+      );
     },
   },
   modules: {},
