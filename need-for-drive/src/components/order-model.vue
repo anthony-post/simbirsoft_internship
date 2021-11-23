@@ -12,7 +12,7 @@
             type="radio"
             name="cars"
             v-model="checkedCategoryCars"
-            :value="cars.category"
+            :value="car.category"
           />
           <label for="cars">{{ radio }}</label>
         </li>
@@ -22,32 +22,30 @@
         <input
           class="radio__input"
           type="radio"
-          name="cars"
-          checked
+          name="auto"
           v-model="checkedCategoryCars"
-          :value="cars.category"
         />
-        <label for="cars">Все модели</label>
+        <label for="auto">Все модели</label>
       </div>
       <div class="radio__item">
         <input
           class="radio__input"
           type="radio"
-          name="cars"
+          name="auto"
           v-model="checkedCategoryCars"
-          value="Econom"
+          value="600598a3ad015e0bb699774c"
         />
-        <label for="cars">Эконом</label>
+        <label for="auto">Эконом</label>
       </div>
       <div class="radio__item">
         <input
           class="radio__input"
           type="radio"
-          name="cars"
+          name="auto"
           v-model="checkedCategoryCars"
-          value="Premium"
+          value="60b943492aed9a0b9b7ed335"
         />
-        <label for="cars">Премиум</label>
+        <label for="auto">Премиум</label>
       </div>
 
       <!-- <BaseRadio
@@ -61,12 +59,29 @@
         value="Premium"
         label="Премиум"
       /> -->
+
+      <!-- <BaseRadio
+        v-model="checkedCategoryCars"
+        value="Premium"
+        label="Премиум"
+        name="cars"
+      />
+      <BaseRadio
+        v-model="checkedCategoryCars"
+        value="Econom"
+        label="Эконом"
+        name="cars"
+      /> -->
     </div>
     <ul class="cars-list">
       <li class="cars__item" v-for="car in filteredCars" :key="car.id">
-        <p class="cars__model">{{ car.model }}</p>
-        <p class="cars__price">{{ car.pricemin }} - {{ car.pricemin }}</p>
-        <img :src="car.img" alt="автомобиль" />
+        <p class="cars__model">{{ car.name }}</p>
+        <p class="cars__price">{{ car.priceMin }} - {{ car.priceMax }} руб.</p>
+        <img
+          class="cars__img"
+          :src="car.thumbnail.path"
+          :alt="car.thumbnail.originalname"
+        />
       </li>
     </ul>
   </div>
@@ -74,6 +89,8 @@
 
 <script>
 // import BaseRadio from "@/components/base-radio.vue";
+// import { mapState } from "vuex"; //LOCAL
+import { mapActions, mapGetters } from "vuex"; //API
 
 export default {
   name: "order-model",
@@ -83,69 +100,112 @@ export default {
   data() {
     return {
       // radioButtons: ["Все модели", "Эконом", "Премиум"],
-      cars: [
-        {
-          id: "1",
-          img: require("../assets/car_elantra.jpg"),
-          model: "ELANTRA",
-          pricemin: "12 000",
-          pricemax: "25 000",
-          category: "Econom",
-        },
-        {
-          id: "2",
-          img: require("../assets/car_i30n.jpg"),
-          model: "i30 N",
-          pricemin: "18 000",
-          pricemax: "32 000",
-          category: "Premium",
-        },
-        {
-          id: "3",
-          img: require("../assets/car_creta.jpg"),
-          model: "CRETA",
-          pricemin: "12 000",
-          pricemax: "25 000",
-          category: "Econom",
-        },
-        {
-          id: "4",
-          img: require("../assets/car_sonata.jpg"),
-          model: "SONATA",
-          pricemin: "18 000",
-          pricemax: "32 000",
-          category: "Premium",
-        },
-        {
-          id: "5",
-          img: require("../assets/car_elantra.jpg"),
-          model: "ELANTRA",
-          pricemin: "12 000",
-          pricemax: "25 000",
-          category: "Econom",
-        },
-        {
-          id: "6",
-          img: require("../assets/car_i30n.jpg"),
-          model: "i30 N",
-          pricemin: "18 000",
-          pricemax: "32 000",
-          category: "Premium",
-        },
-      ],
+      // cars: [
+      //   {
+      //     id: "1",
+      //     thumbnail: {
+      //       originalname: "auto picture",
+      //       path: require("../assets/car_elantra.jpg"),
+      //     },
+      //     name: "ELANTRA",
+      //     priceMin: "12 000",
+      //     priceMax: "25 000",
+      //     categoryId: "Econom",
+      //   },
+      //   {
+      //     id: "2",
+      //     thumbnail: {
+      //       originalname: "auto picture",
+      //       path: require("../assets/car_i30n.jpg"),
+      //     },
+      //     name: "i30 N",
+      //     priceMin: "18 000",
+      //     priceMax: "32 000",
+      //     categoryId: "Premium",
+      //   },
+      //   {
+      //     id: "3",
+      //     thumbnail: {
+      //       originalname: "auto picture",
+      //       path: require("../assets/car_creta.jpg"),
+      //     },
+      //     name: "CRETA",
+      //     priceMin: "12 000",
+      //     priceMax: "25 000",
+      //     categoryId: "Econom",
+      //   },
+      //   {
+      //     id: "4",
+      //     thumbnail: {
+      //       originalname: "auto picture",
+      //       path: require("../assets/car_sonata.jpg"),
+      //     },
+      //     name: "SONATA",
+      //     priceMin: "18 000",
+      //     priceMax: "32 000",
+      //     categoryId: null,
+      //   },
+      //   {
+      //     id: "5",
+      //     thumbnail: {
+      //       originalname: "auto picture",
+      //       path: require("../assets/car_elantra.jpg"),
+      //     },
+      //     name: "ELANTRA",
+      //     priceMin: "12 000",
+      //     priceMax: "25 000",
+      //     categoryId: "Econom",
+      //   },
+      //   {
+      //     id: "6",
+      //     thumbnail: {
+      //       originalname: "auto picture",
+      //       path: require("../assets/car_i30n.jpg"),
+      //     },
+      //     name: "i30 N",
+      //     priceMin: "18 000",
+      //     priceMax: "32 000",
+      //     categoryId: null,
+      //   },
+      // ],
       checkedCategoryCars: null,
     };
   },
+  created() {
+    //API
+    this.GET_CARLIST_FROM_API();
+  },
   computed: {
+    //API
+    ...mapGetters(["CARLIST"]),
+
     filteredCars() {
       if (!this.checkedCategoryCars) {
-        return this.cars;
+        return this.CARLIST;
       } else {
-        return this.cars.filter((car) =>
-          car.category.includes(this.checkedCategoryCars)
-        );
+        return this.CARLIST.filter((car) => {
+          if (car?.categoryId?.id) {
+            car.categoryId.id.includes(this.checkedCategoryCars);
+          }
+        });
       }
     },
+
+    //LOCAL
+    // filteredCars() {
+    //   if (!this.checkedCategoryCars) {
+    //     return this.cars;
+    //   } else {
+    //     return this.cars.filter((car) => {
+    //       if (this.cars && this.cars.categoryId)
+    //         car.categoryId.includes(this.checkedCategoryCars);
+    //     });
+    // }
+    // },
+  },
+  methods: {
+    //API
+    ...mapActions(["GET_CARLIST_FROM_API"]),
   },
 };
 </script>
@@ -176,6 +236,7 @@ export default {
 }
 
 .cars__item {
+  width: 370px;
   list-style: none;
   border: 1px solid $color-grey-light;
   box-sizing: border-box;
@@ -207,7 +268,8 @@ export default {
 }
 
 .cars__img {
-  margin-left: 50px;
-  overflow: hidden;
+  // margin-left: 50px;
+  // overflow: hidden;
+  max-width: 100%;
 }
 </style>

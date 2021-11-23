@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="input-block">
-      <!-- <DropdownList /> -->
       <VDropdown
         label="Город"
         name="city"
@@ -29,7 +28,6 @@
 </template>
 
 <script>
-// import DropdownList from "@/components/dropdown-list.vue";
 import VDropdown from "@/components/v-dropdown.vue";
 import { mapState } from "vuex"; //LOCAL
 import { mapActions, mapGetters } from "vuex"; //API
@@ -37,7 +35,6 @@ import { mapActions, mapGetters } from "vuex"; //API
 export default {
   name: "order-place",
   components: {
-    // DropdownList,
     VDropdown,
   },
   created() {
@@ -66,6 +63,7 @@ export default {
     },
     resetSelectedCity() {
       this.$store.commit("RESET_SELECTEDCITY");
+      this.$store.commit("RESET_SELECTEDPOINT"); //сбрасываем также ранее выбранный пункт выдачи (если он был выбран)
     },
     //POINT
     setSelectedPoint(chosenItem) {
@@ -74,13 +72,6 @@ export default {
     resetSelectedPoint() {
       this.$store.commit("RESET_SELECTEDPOINT");
     },
-
-    // updateSelectedPoint(chosenItem) {
-    //   this.$store.state.selectedPoint = chosenItem;
-    // },
-    // resetSelectedPoint() {
-    //   this.$store.state.selectedPoint = {};
-    // },
   },
 };
 </script>

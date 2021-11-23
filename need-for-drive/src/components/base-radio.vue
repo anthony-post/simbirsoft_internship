@@ -9,8 +9,18 @@
       v-bind="$attrs"
       @change="$emit('update:modelValue', value)"
     /> -->
-    <input class="radio__input" type="radio" name="cars" />
-    <label for="cars" v-if="label">{{ label }}</label>
+
+    <input
+      class="radio__input"
+      type="radio"
+      :name="name"
+      :value="value"
+      @change="$emit('updateCheckedCategoryCars')"
+    />
+    <!-- <label :for="name" v-if="label">{{ label }}</label> -->
+
+    <!-- <input class="radio__input" type="radio" name="cars" />
+    <label for="cars" v-if="label">{{ label }}</label> -->
   </div>
 </template>
 
@@ -21,6 +31,10 @@ export default {
       type: String,
       default: "",
     },
+    name: {
+      type: String,
+      required: true,
+    },
     // modelValue: {
     //   type: [String, Number],
     //   default: "",
@@ -29,10 +43,11 @@ export default {
     //   type: [String, Number],
     //   required: true,
     // },
-    checkedCategoryCars: {
-      type: String,
-      required: true,
-    },
+
+    // checkedCategoryCars: {
+    //   type: String,
+    //   required: true,
+    // },
     value: {
       type: String,
       required: true,

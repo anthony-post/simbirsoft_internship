@@ -72,8 +72,19 @@ export default {
       selectedPoint: (state) => state.selectedPoint,
     }),
 
+    //проверка объектов selectedCity и selectedPoint пустой или нет
+    // areItemsSelected() {
+    //   if (
+    //     Object.keys(this.selectedCity).length === 0 &&
+    //     Object.keys(this.selectedPoint).length === 0
+    //   ) {
+    //     return false;
+    //   }
+    //   return true;
+    // },
+
     filledUpData() {
-      if (this.selectedCity && this.selectedPoint) {
+      if (this.selectedCity.name && this.selectedPoint.name) {
         const arr = [...this.tabs];
         arr[this.selectedId].isDisabled = false;
         arr[this.selectedId + 1].isDisabled = false;

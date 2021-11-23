@@ -16,8 +16,8 @@
     <button
       class="total__button"
       v-if="this.selectedTab === 'order-place'"
-      :class="{ total__button_active: selectedCity && selectedPoint }"
-      :disabled="!selectedCity && !selectedPoint"
+      :class="{ total__button_active: selectedCity.id && selectedPoint.id }"
+      :disabled="!selectedCity.id && !selectedPoint.id"
       @click="changeSelectedTab"
     >
       Выбрать модель
@@ -53,14 +53,6 @@ export default {
       selectedCity: (state) => state.selectedCity,
       selectedPoint: (state) => state.selectedPoint,
     }),
-
-    //LOCAL
-    // chosenCityName() {
-    //   return this.$store.state.city.name;
-    // },
-    // chosenAddress() {
-    //   return this.$store.state.city.address;
-    // },
   },
   // TO DO переключение на следующую вкладку
   methods: {

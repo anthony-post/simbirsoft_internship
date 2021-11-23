@@ -9,9 +9,11 @@ export default new Vuex.Store({
     //API
     cityList: [],
     pointList: [],
+    carList: [],
     //SELECTED
     selectedCity: {},
     selectedPoint: {},
+    selectedCar: {},
   },
   mutations: {
     //API
@@ -20,6 +22,9 @@ export default new Vuex.Store({
     },
     SET_POINTLIST_TO_STATE: (state, pointList) => {
       state.pointList = pointList.data.data;
+    },
+    SET_CARLIST_TO_STATE: (state, carList) => {
+      state.carList = carList.data.data;
     },
     //CITY
     SET_SELECTEDCITY(state, selectedCity) {
@@ -70,6 +75,22 @@ export default new Vuex.Store({
           return error;
         });
     },
+    GET_CARLIST_FROM_API({ commit }) {
+      axios("https://api-factory.simbirsoft1.com/api/db/car", {
+        method: "GET",
+        headers: {
+          "X-Api-Factory-Application-Id": "5e25c641099b810b946c5d5b",
+        },
+      })
+        .then((carList) => {
+          commit("SET_CARLIST_TO_STATE", carList);
+          return carList;
+        })
+        .catch((error) => {
+          console.log(error);
+          return error;
+        });
+    },
   },
   getters: {
     CITYLIST(state) {
@@ -82,6 +103,9 @@ export default new Vuex.Store({
       return state.pointList.filter((point) =>
         point.cityId.id.includes(state.selectedCity.id)
       );
+    },
+    CARLIST(state) {
+      return state.carList;
     },
   },
   modules: {},
