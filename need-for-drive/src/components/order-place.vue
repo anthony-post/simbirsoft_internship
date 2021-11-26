@@ -86,26 +86,6 @@ export default {
   align-items: flex-end;
 }
 
-.input-wrp {
-  padding: 7px 0;
-}
-
-.input-block__label {
-  font-family: $ff;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 14px;
-  line-height: 16px;
-  color: $color;
-  margin: 0 5px 0 0;
-}
-
-.input-block__input {
-  width: 224px;
-  border: none;
-  border-bottom: 1px solid $color-grey;
-}
-
 .place__text {
   font-family: $ff;
   font-style: normal;

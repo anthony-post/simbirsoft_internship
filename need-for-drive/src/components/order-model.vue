@@ -47,6 +47,16 @@
         />
         <label for="auto">Премиум</label>
       </div>
+      <div class="radio__item">
+        <input
+          class="radio__input"
+          type="radio"
+          name="auto"
+          v-model="checkedCategoryCars"
+          value="5fd91add935d4e0be16a3c4b"
+        />
+        <label for="auto">Спорт</label>
+      </div>
 
       <!-- <BaseRadio
         v-model="checkedCategoryCars"
@@ -73,6 +83,11 @@
         name="cars"
       /> -->
     </div>
+    <!-- <ul class="cars-list">
+      <li class="cars__item" v-for="car in filteredCars" :key="car.id">
+        <CarsRadio :car="car" v-model="MySelectedValue" />
+      </li>
+    </ul> -->
     <ul class="cars-list">
       <li class="cars__item" v-for="car in filteredCars" :key="car.id">
         <p class="cars__model">{{ car.name }}</p>
@@ -89,6 +104,7 @@
 
 <script>
 // import BaseRadio from "@/components/base-radio.vue";
+// import CarsRadio from "@/components/cars-radio.vue";
 // import { mapState } from "vuex"; //LOCAL
 import { mapActions, mapGetters } from "vuex"; //API
 
@@ -96,79 +112,13 @@ export default {
   name: "order-model",
   components: {
     // BaseRadio,
+    // CarsRadio,
   },
   data() {
     return {
       // radioButtons: ["Все модели", "Эконом", "Премиум"],
-      // cars: [
-      //   {
-      //     id: "1",
-      //     thumbnail: {
-      //       originalname: "auto picture",
-      //       path: require("../assets/car_elantra.jpg"),
-      //     },
-      //     name: "ELANTRA",
-      //     priceMin: "12 000",
-      //     priceMax: "25 000",
-      //     categoryId: "Econom",
-      //   },
-      //   {
-      //     id: "2",
-      //     thumbnail: {
-      //       originalname: "auto picture",
-      //       path: require("../assets/car_i30n.jpg"),
-      //     },
-      //     name: "i30 N",
-      //     priceMin: "18 000",
-      //     priceMax: "32 000",
-      //     categoryId: "Premium",
-      //   },
-      //   {
-      //     id: "3",
-      //     thumbnail: {
-      //       originalname: "auto picture",
-      //       path: require("../assets/car_creta.jpg"),
-      //     },
-      //     name: "CRETA",
-      //     priceMin: "12 000",
-      //     priceMax: "25 000",
-      //     categoryId: "Econom",
-      //   },
-      //   {
-      //     id: "4",
-      //     thumbnail: {
-      //       originalname: "auto picture",
-      //       path: require("../assets/car_sonata.jpg"),
-      //     },
-      //     name: "SONATA",
-      //     priceMin: "18 000",
-      //     priceMax: "32 000",
-      //     categoryId: null,
-      //   },
-      //   {
-      //     id: "5",
-      //     thumbnail: {
-      //       originalname: "auto picture",
-      //       path: require("../assets/car_elantra.jpg"),
-      //     },
-      //     name: "ELANTRA",
-      //     priceMin: "12 000",
-      //     priceMax: "25 000",
-      //     categoryId: "Econom",
-      //   },
-      //   {
-      //     id: "6",
-      //     thumbnail: {
-      //       originalname: "auto picture",
-      //       path: require("../assets/car_i30n.jpg"),
-      //     },
-      //     name: "i30 N",
-      //     priceMin: "18 000",
-      //     priceMax: "32 000",
-      //     categoryId: null,
-      //   },
-      // ],
       checkedCategoryCars: null,
+      // MySelectedValue: null,
     };
   },
   created() {
@@ -179,29 +129,36 @@ export default {
     //API
     ...mapGetters(["CARLIST"]),
 
+    // filteredCars() {
+    //   if (!this.checkedCategoryCars) {
+    //     return this.CARLIST;
+    //   } else {
+    //     return this.CARLIST.filter((car) => {
+    //       if (car?.categoryId?.id) {
+    //         car.categoryId.id.includes(this.checkedCategoryCars);
+    //       }
+    //     });
+    //   }
+    // },
+
     filteredCars() {
+      const result = [];
+      const length = this.CARLIST.length;
+
       if (!this.checkedCategoryCars) {
         return this.CARLIST;
       } else {
-        return this.CARLIST.filter((car) => {
-          if (car?.categoryId?.id) {
-            car.categoryId.id.includes(this.checkedCategoryCars);
+        for (var i = 0; i < length; i++) {
+          if (
+            this.CARLIST[i]?.categoryId?.id.indexOf(this.checkedCategoryCars) !=
+            -1
+          ) {
+            result.push(this.CARLIST[i]);
           }
-        });
+        }
+        return result;
       }
     },
-
-    //LOCAL
-    // filteredCars() {
-    //   if (!this.checkedCategoryCars) {
-    //     return this.cars;
-    //   } else {
-    //     return this.cars.filter((car) => {
-    //       if (this.cars && this.cars.categoryId)
-    //         car.categoryId.includes(this.checkedCategoryCars);
-    //     });
-    // }
-    // },
   },
   methods: {
     //API
