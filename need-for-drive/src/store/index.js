@@ -40,6 +40,10 @@ export default new Vuex.Store({
     RESET_SELECTEDPOINT(state) {
       state.selectedPoint = {};
     },
+    //CAR
+    SET_SELECTEDCAR(state, selectedCar) {
+      state.selectedCar = selectedCar;
+    },
   },
   actions: {
     //API

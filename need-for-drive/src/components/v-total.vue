@@ -4,13 +4,13 @@
     <p class="total-wrp">
       <span class="total__text">Пункт выдачи</span>
       <span class="dots"></span>
-      <span class="total__city">{{ selectedCity.name }}</span>
-      <span class="total__city">{{ selectedPoint.name }}</span>
+      <span class="total__chosen-item">{{ selectedCity.name }}</span>
+      <span class="total__chosen-item">{{ selectedPoint.name }}</span>
     </p>
     <p class="total-wrp" v-if="this.selectedTab === 'order-model'">
       <span class="total__text">Модель</span>
       <span class="dots"></span>
-      <span class="total__city"></span>
+      <span class="total__chosen-item">{{ selectedCar.name }}</span>
     </p>
     <p class="total__price">Цена:</p>
     <button
@@ -52,6 +52,7 @@ export default {
     ...mapState({
       selectedCity: (state) => state.selectedCity,
       selectedPoint: (state) => state.selectedPoint,
+      selectedCar: (state) => state.selectedCar,
     }),
   },
   // TO DO переключение на следующую вкладку
@@ -131,7 +132,7 @@ export default {
   color: $color-title;
 }
 
-.total__city {
+.total__chosen-item {
   font-family: $ff;
   font-style: normal;
   font-weight: 300;

@@ -1,22 +1,9 @@
 <template>
   <div>
     <div class="radio-list">
-      <!-- <ul>
-        <li
-          class="radio__item"
-          v-for="(radio, index) in radioButtons"
-          :key="index"
-        >
-          <input
-            class="radio__input"
-            type="radio"
-            name="cars"
-            v-model="checkedCategoryCars"
-            :value="car.category"
-          />
-          <label for="cars">{{ radio }}</label>
-        </li>
-      </ul> -->
+      <!-- <Vradio label="Foo" value="foo" v-model="MySelectedValue" />
+      <Vradio label="Bar" value="bar" v-model="MySelectedValue" />
+      <Vradio label="Baz" value="baz" v-model="MySelectedValue" /> -->
 
       <div class="radio__item">
         <input
@@ -83,13 +70,15 @@
         name="cars"
       /> -->
     </div>
-    <!-- <ul class="cars-list">
-      <li class="cars__item" v-for="car in filteredCars" :key="car.id">
-        <CarsRadio :car="car" v-model="MySelectedValue" />
-      </li>
-    </ul> -->
+
     <ul class="cars-list">
-      <li class="cars__item" v-for="car in filteredCars" :key="car.id">
+      <li
+        class="cars__item"
+        v-for="car in filteredCars"
+        :key="car.id"
+        :class="{ cars__item_active: selectedModelId === car.id }"
+        @click="setSelectedCar(car)"
+      >
         <p class="cars__model">{{ car.name }}</p>
         <p class="cars__price">{{ car.priceMin }} - {{ car.priceMax }} руб.</p>
         <img
@@ -103,22 +92,23 @@
 </template>
 
 <script>
+// import Vradio from "@/components/v-radio.vue";
 // import BaseRadio from "@/components/base-radio.vue";
-// import CarsRadio from "@/components/cars-radio.vue";
-// import { mapState } from "vuex"; //LOCAL
+import { mapState } from "vuex"; //LOCAL
 import { mapActions, mapGetters } from "vuex"; //API
 
 export default {
   name: "order-model",
   components: {
+    // Vradio,
     // BaseRadio,
-    // CarsRadio,
   },
   data() {
     return {
+      MySelectedValue: "",
       // radioButtons: ["Все модели", "Эконом", "Премиум"],
       checkedCategoryCars: null,
-      // MySelectedValue: null,
+      selectedModelId: null,
     };
   },
   created() {
@@ -128,6 +118,10 @@ export default {
   computed: {
     //API
     ...mapGetters(["CARLIST"]),
+
+    ...mapState({
+      selectedCar: (state) => state.selectedCar,
+    }),
 
     // filteredCars() {
     //   if (!this.checkedCategoryCars) {
@@ -163,6 +157,11 @@ export default {
   methods: {
     //API
     ...mapActions(["GET_CARLIST_FROM_API"]),
+
+    setSelectedCar(chosenCar) {
+      this.selectedModelId = chosenCar.id;
+      this.$store.commit("SET_SELECTEDCAR", chosenCar);
+    },
   },
 };
 </script>
@@ -200,7 +199,11 @@ export default {
   padding: 16px;
 }
 
-.cars__item:active {
+// .cars__item:active {
+//   border: 1px solid $color-text;
+// }
+
+.cars__item_active {
   border: 1px solid $color-text;
 }
 
