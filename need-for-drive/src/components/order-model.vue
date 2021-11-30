@@ -1,74 +1,22 @@
 <template>
   <div>
     <div class="radio-list">
-      <!-- <Vradio label="Foo" value="foo" v-model="MySelectedValue" />
-      <Vradio label="Bar" value="bar" v-model="MySelectedValue" />
-      <Vradio label="Baz" value="baz" v-model="MySelectedValue" /> -->
-
-      <div class="radio__item">
-        <input
-          class="radio__input"
-          type="radio"
-          name="auto"
-          v-model="checkedCategoryCars"
-        />
-        <label for="auto">Все модели</label>
-      </div>
-      <div class="radio__item">
-        <input
-          class="radio__input"
-          type="radio"
-          name="auto"
-          v-model="checkedCategoryCars"
-          value="600598a3ad015e0bb699774c"
-        />
-        <label for="auto">Эконом</label>
-      </div>
-      <div class="radio__item">
-        <input
-          class="radio__input"
-          type="radio"
-          name="auto"
-          v-model="checkedCategoryCars"
-          value="60b943492aed9a0b9b7ed335"
-        />
-        <label for="auto">Премиум</label>
-      </div>
-      <div class="radio__item">
-        <input
-          class="radio__input"
-          type="radio"
-          name="auto"
-          v-model="checkedCategoryCars"
-          value="5fd91add935d4e0be16a3c4b"
-        />
-        <label for="auto">Спорт</label>
-      </div>
-
-      <!-- <BaseRadio
-        v-model="checkedCategoryCars"
-        :value="cars.category"
-        label="Все модели"
-      />
-      <BaseRadio v-model="checkedCategoryCars" value="Econom" label="Эконом" />
-      <BaseRadio
-        v-model="checkedCategoryCars"
-        value="Premium"
-        label="Премиум"
-      /> -->
-
-      <!-- <BaseRadio
-        v-model="checkedCategoryCars"
-        value="Premium"
-        label="Премиум"
-        name="cars"
-      />
-      <BaseRadio
-        v-model="checkedCategoryCars"
-        value="Econom"
+      <Vradio label="Все модели" v-model="checkedCategoryCars" />
+      <Vradio
         label="Эконом"
-        name="cars"
-      /> -->
+        value="600598a3ad015e0bb699774c"
+        v-model="checkedCategoryCars"
+      />
+      <Vradio
+        label="Премиум"
+        value="60b943492aed9a0b9b7ed335"
+        v-model="checkedCategoryCars"
+      />
+      <Vradio
+        label="Спорт"
+        value="5fd91add935d4e0be16a3c4b"
+        v-model="checkedCategoryCars"
+      />
     </div>
 
     <ul class="cars-list">
@@ -92,22 +40,18 @@
 </template>
 
 <script>
-// import Vradio from "@/components/v-radio.vue";
-// import BaseRadio from "@/components/base-radio.vue";
-import { mapState } from "vuex"; //LOCAL
+import Vradio from "@/components/v-radio.vue";
+import { mapState } from "vuex"; //SELECTED
 import { mapActions, mapGetters } from "vuex"; //API
 
 export default {
   name: "order-model",
   components: {
-    // Vradio,
-    // BaseRadio,
+    Vradio,
   },
   data() {
     return {
-      MySelectedValue: "",
-      // radioButtons: ["Все модели", "Эконом", "Премиум"],
-      checkedCategoryCars: null,
+      checkedCategoryCars: "",
       selectedModelId: null,
     };
   },
@@ -116,12 +60,12 @@ export default {
     this.GET_CARLIST_FROM_API();
   },
   computed: {
-    //API
-    ...mapGetters(["CARLIST"]),
-
+    //SELECTED
     ...mapState({
       selectedCar: (state) => state.selectedCar,
     }),
+    //API
+    ...mapGetters(["CARLIST"]),
 
     // filteredCars() {
     //   if (!this.checkedCategoryCars) {
@@ -157,11 +101,16 @@ export default {
   methods: {
     //API
     ...mapActions(["GET_CARLIST_FROM_API"]),
+    //TO DO последовательную загрузку по мере скроллинга
 
     setSelectedCar(chosenCar) {
       this.selectedModelId = chosenCar.id;
       this.$store.commit("SET_SELECTEDCAR", chosenCar);
     },
+    //TO DO сброс выбранного авто
+    // resetSelectedCar() {
+    //   this.$store.commit("RESET_SELECTEDCAR");
+    // },
   },
 };
 </script>
@@ -171,16 +120,6 @@ export default {
 
 .radio-list {
   display: flex;
-}
-
-.radio__item {
-  font-family: $ff;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 14px;
-  line-height: 16px;
-  color: $color-grey;
-  margin-right: 10px;
 }
 
 .cars-list {
@@ -199,9 +138,9 @@ export default {
   padding: 16px;
 }
 
-// .cars__item:active {
-//   border: 1px solid $color-text;
-// }
+.cars__item:hover {
+  border: 1px solid $color-grey;
+}
 
 .cars__item_active {
   border: 1px solid $color-text;
@@ -228,8 +167,6 @@ export default {
 }
 
 .cars__img {
-  // margin-left: 50px;
-  // overflow: hidden;
   max-width: 100%;
 }
 </style>

@@ -29,7 +29,7 @@
 
 <script>
 import VDropdown from "@/components/v-dropdown.vue";
-import { mapState } from "vuex"; //LOCAL
+import { mapState } from "vuex"; //SELECTED
 import { mapActions, mapGetters } from "vuex"; //API
 
 export default {
@@ -47,7 +47,7 @@ export default {
     ...mapGetters(["CITYLIST"]),
     ...mapGetters(["POINTLIST"]),
     ...mapGetters(["FILTERED_POINTLIST"]),
-
+    //SELECTED
     ...mapState({
       selectedCity: (state) => state.selectedCity,
       selectedPoint: (state) => state.selectedPoint,
@@ -64,6 +64,7 @@ export default {
     resetSelectedCity() {
       this.$store.commit("RESET_SELECTEDCITY");
       this.$store.commit("RESET_SELECTEDPOINT"); //сбрасываем также ранее выбранный пункт выдачи (если он был выбран)
+      this.$store.commit("RESET_SELECTEDCAR");
     },
     //POINT
     setSelectedPoint(chosenItem) {
@@ -71,6 +72,7 @@ export default {
     },
     resetSelectedPoint() {
       this.$store.commit("RESET_SELECTEDPOINT");
+      this.$store.commit("RESET_SELECTEDCAR");
     },
   },
 };

@@ -25,7 +25,7 @@
       </div>
       <VTotal
         :tabs="tabs"
-        :selectedId="selectedId"
+        :selectedId="selectedIndexTabs"
         :selectedTab="selectedTab"
         @updateSelectedTab="updateSelectedTab"
       />
@@ -40,7 +40,7 @@ import OrderModel from "@/components/order-model.vue";
 import OrderAdditional from "@/components/order-additional.vue";
 import OrderSummary from "@/components/order-summary.vue";
 import VTotal from "@/components/v-total.vue";
-import { mapState } from "vuex";
+import { mapState } from "vuex"; //SELECTED
 
 export default {
   name: "v-tabs",
@@ -60,26 +60,35 @@ export default {
         { label: "Дополнительно", id: "order-additional", isDisabled: true },
         { label: "Итого", id: "order-summary", isDisabled: true },
       ],
-      selectedId: 0,
+      selectedIndexTabs: 0,
       selectedTab: "order-place",
     };
   },
   //TO DO последовательное переключение вкладок
   computed: {
-    //получаем состояние объекта (в который записывается выбранный город) из store
+    //SELECTED получаем состояние объекта (в который записывается выбранный город) из store
     ...mapState({
       selectedCity: (state) => state.selectedCity,
       selectedPoint: (state) => state.selectedPoint,
+      selectedCar: (state) => state.selectedCar,
     }),
-
+    //проверка на заполняемость данных для навигации по вкладкам
     filledUpData() {
-      if (this.selectedCity.name && this.selectedPoint.name) {
-        const arr = [...this.tabs];
-        arr[this.selectedId].isDisabled = false;
-        arr[this.selectedId + 1].isDisabled = false;
+      const arr = [...this.tabs];
+
+      if (
+        Object.keys(this.selectedCity).length &&
+        Object.keys(this.selectedPoint).length !== 0
+      ) {
+        arr[this.selectedIndexTabs].isDisabled = false;
+        arr[this.selectedIndexTabs + 1].isDisabled = false;
         return arr;
       }
       //TO DO условие для вкладки Модель
+      if (Object.keys(this.selectedCar).length !== 0) {
+        arr[this.selectedIndexTabs + 2].isDisabled = false;
+        return arr;
+      }
       //TO DO условие для вкладки Дополнительно
       //TO DO условие для вкладки Итого
       return this.tabs;
@@ -88,6 +97,8 @@ export default {
   methods: {
     updateSelectedTab(newSelectedTab) {
       this.selectedTab = newSelectedTab;
+      //TO DO увеличение в зависимости от того, какая выбрана вкладка (вместо changeSelectedTabAdditional в компоненте v-total)
+      // this.selectedIndexTabs++;
     },
   },
 };

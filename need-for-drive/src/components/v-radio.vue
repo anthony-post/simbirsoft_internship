@@ -1,17 +1,15 @@
 <template>
-  <div>
-    <label class="wrapper flex items-center">
-      {{ label }}
-      <input
-        class="checkbox"
-        type="radio"
-        :checked="isChecked"
-        :value="value"
-        @change="$emit('change', $event.target.value)"
-      />
-      <span class="checkmark"></span>
-    </label>
-  </div>
+  <label class="radio-item">
+    {{ label }}
+    <input
+      class="radio__input"
+      type="radio"
+      :checked="isChecked"
+      :value="value"
+      @change="$emit('change', $event.target.value)"
+    />
+    <span class="checkmark"></span>
+  </label>
 </template>
 
 <script>
@@ -31,12 +29,12 @@ export default {
     },
     value: {
       type: String,
-      default: undefined,
+      default: "",
     },
   },
   computed: {
     isChecked() {
-      return this.modelValue == this.value;
+      return this.modelValue === this.value;
     },
   },
 };
@@ -46,22 +44,27 @@ export default {
 @import "@/assets/variables.scss";
 
 /* Customize the label (the wrapper) */
-.wrapper {
+.radio-item {
   display: block;
   position: relative;
-  /* padding-left: 35px; */
-  /* margin-bottom: 6px; */
+  padding-left: 20px;
   cursor: pointer;
-  /* font-size: 22px; */
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  /* font-size: 16px; */
+
+  font-family: $ff;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 16px;
+  color: $color-grey;
+  margin-right: 10px;
 }
 
 /* Hide the browser's default radio button */
-.wrapper input {
+.radio__input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -77,43 +80,17 @@ export default {
   height: 12px;
   width: 12px;
   border-radius: 50%;
-  /* background-color: #eee; */
   border: 1px solid $color-grey;
+  box-sizing: border-box;
 }
 
 /* On mouse-over, add a grey background color */
-.wrapper:hover input ~ .checkmark {
-  /* background-color: #ccc; */
-  box-sizing: border-box;
+.radio__input:hover ~ .checkmark {
   border: 1px solid gray;
 }
 
 /* When the radio button is checked, add a blue background */
-.wrapper input:checked ~ .checkmark {
-  /* background-color: #1CD4A7; */
-  box-sizing: border-box;
+.radio__input:checked ~ .checkmark {
   border: 3px solid $color-text;
 }
-
-/* Create the indicator (the dot/circle - hidden when not checked) */
-/*.checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}*/
-
-/* Show the indicator (dot/circle) when checked */
-/*.wrapper input:checked ~ .checkmark:after {
-  display: block;
-}*/
-
-/* Style the indicator (dot/circle) */
-/*.wrapper .checkmark:after {
-  top: 5px;
-  left: 6px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: white;
-}*/
 </style>

@@ -12,7 +12,13 @@
       <span class="dots"></span>
       <span class="total__chosen-item">{{ selectedCar.name }}</span>
     </p>
-    <p class="total__price">Цена:</p>
+    <p class="total__price">
+      Цена:
+      <!--TO DO цена ОТ и ДО должна высчитываться в зависимости от выбранных параметров-->
+      <span class="total__price total__price-thin" v-if="selectedCar.name"
+        >от {{ selectedCar.priceMin }} до {{ selectedCar.priceMax }} руб.</span
+      >
+    </p>
     <button
       class="total__button"
       v-if="this.selectedTab === 'order-place'"
@@ -22,7 +28,13 @@
     >
       Выбрать модель
     </button>
-    <button class="total__button" v-if="this.selectedTab === 'order-model'">
+    <button
+      class="total__button"
+      v-if="this.selectedTab === 'order-model'"
+      :class="{ total__button_active: selectedCar.name }"
+      :disabled="!selectedCar.name"
+      @click="changeSelectedTabAdditional"
+    >
       Дополнительно
     </button>
   </div>
@@ -59,6 +71,10 @@ export default {
   methods: {
     changeSelectedTab() {
       const newSelectedTab = this.tabs[this.selectedId + 1].id;
+      this.$emit("updateSelectedTab", newSelectedTab);
+    },
+    changeSelectedTabAdditional() {
+      const newSelectedTab = this.tabs[this.selectedId + 2].id;
       this.$emit("updateSelectedTab", newSelectedTab);
     },
   },
@@ -148,6 +164,10 @@ export default {
   font-size: 16px;
   line-height: 16px;
   color: $color-title;
+}
+
+.total__price-thin {
+  font-weight: 400;
 }
 
 .total__button {
