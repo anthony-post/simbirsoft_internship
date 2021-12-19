@@ -85,14 +85,50 @@ export default {
         return arr;
       }
       //TO DO условие для вкладки Модель
-      if (Object.keys(this.selectedCar).length !== 0) {
-        arr[this.selectedIndexTabs + 2].isDisabled = false;
-        return arr;
-      }
+      // if (Object.keys(this.selectedCar).length !== 0) {
+      //   arr[this.selectedIndexTabs + 2].isDisabled = false;
+      //   return arr;
+      // }
       //TO DO условие для вкладки Дополнительно
       //TO DO условие для вкладки Итого
-      return this.tabs;
+      return arr;
     },
+
+    //Вариант с геттером и сеттером
+    // filledUpData: {
+    //   //getter
+    //   get: function () {
+    //     const arr = [...this.tabs];
+    //     if (
+    //       Object.keys(this.selectedCity).length &&
+    //       Object.keys(this.selectedPoint).length !== 0
+    //     ) {
+    //       // arr[this.selectedIndexTabs].isDisabled = false;
+    //       arr[this.selectedIndexTabs].isDisabled = false;
+    //       return arr;
+    //     }
+    //     //TO DO условие для вкладки Модель
+    //     if (Object.keys(this.selectedCar).length !== 0) {
+    //       arr[this.selectedIndexTabs].isDisabled = false;
+    //       return arr;
+    //     }
+    //     //TO DO условие для вкладки Дополнительно
+    //     //TO DO условие для вкладки Итого
+    //     return arr;
+    //   },
+    //   //setter
+    //   set: function () {
+    //     if (this.selectedTab === "order-place") {
+    //       this.selectedIndexTabs = 1;
+    //     }
+    //     if (this.selectedTab === "order-model") {
+    //       this.selectedIndexTabs = 2;
+    //     }
+    //     if (this.selectedTab === "order-additional") {
+    //       this.selectedIndexTabs = 3;
+    //     }
+    //   },
+    // },
   },
   methods: {
     updateSelectedTab(newSelectedTab) {

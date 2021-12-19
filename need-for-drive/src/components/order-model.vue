@@ -1,21 +1,28 @@
 <template>
   <div>
     <div class="radio-list">
-      <Vradio label="Все модели" v-model="checkedCategoryCars" />
-      <Vradio
+      <VRadio
+        label="Все модели"
+        v-model="checkedCategoryCars"
+        @change="resetSelectedCategoryCar"
+      />
+      <VRadio
         label="Эконом"
         value="600598a3ad015e0bb699774c"
         v-model="checkedCategoryCars"
+        @change="setSelectedCategoryCar"
       />
-      <Vradio
+      <VRadio
         label="Премиум"
         value="60b943492aed9a0b9b7ed335"
         v-model="checkedCategoryCars"
+        @change="setSelectedCategoryCar"
       />
-      <Vradio
+      <VRadio
         label="Спорт"
         value="5fd91add935d4e0be16a3c4b"
         v-model="checkedCategoryCars"
+        @change="setSelectedCategoryCar"
       />
     </div>
 
@@ -24,7 +31,7 @@
         class="cars__item"
         v-for="car in filteredCars"
         :key="car.id"
-        :class="{ cars__item_active: selectedModelId === car.id }"
+        :class="{ cars__item_active: selectedCar.id === car.id }"
         @click="setSelectedCar(car)"
       >
         <p class="cars__model">{{ car.name }}</p>
@@ -40,19 +47,19 @@
 </template>
 
 <script>
-import Vradio from "@/components/v-radio.vue";
+import VRadio from "@/components/v-radio.vue";
 import { mapState } from "vuex"; //SELECTED
 import { mapActions, mapGetters } from "vuex"; //API
 
 export default {
   name: "order-model",
   components: {
-    Vradio,
+    VRadio,
   },
   data() {
     return {
-      checkedCategoryCars: "",
-      selectedModelId: null,
+      // checkedCategoryCars: "",
+      // selectedModelId: null,
     };
   },
   created() {
@@ -63,40 +70,41 @@ export default {
     //SELECTED
     ...mapState({
       selectedCar: (state) => state.selectedCar,
+      checkedCategoryCars: (state) => state.checkedCategoryCars,
     }),
     //API
     ...mapGetters(["CARLIST"]),
 
-    // filteredCars() {
-    //   if (!this.checkedCategoryCars) {
-    //     return this.CARLIST;
-    //   } else {
-    //     return this.CARLIST.filter((car) => {
-    //       if (car?.categoryId?.id) {
-    //         car.categoryId.id.includes(this.checkedCategoryCars);
-    //       }
-    //     });
-    //   }
-    // },
-
     filteredCars() {
-      const result = [];
-      const length = this.CARLIST.length;
-
       if (!this.checkedCategoryCars) {
         return this.CARLIST;
       } else {
-        for (var i = 0; i < length; i++) {
-          if (
-            this.CARLIST[i]?.categoryId?.id.indexOf(this.checkedCategoryCars) !=
-            -1
-          ) {
-            result.push(this.CARLIST[i]);
+        return this.CARLIST.filter((car) => {
+          if (car?.categoryId?.id) {
+            return car.categoryId.id.includes(this.checkedCategoryCars);
           }
-        }
-        return result;
+        });
       }
     },
+
+    // filteredCars() {
+    //   const result = [];
+    //   const length = this.CARLIST.length;
+
+    //   if (!this.checkedCategoryCars) {
+    //     return this.CARLIST;
+    //   } else {
+    //     for (var i = 0; i < length; i++) {
+    //       if (
+    //         this.CARLIST[i]?.categoryId?.id.indexOf(this.checkedCategoryCars) !=
+    //         -1
+    //       ) {
+    //         result.push(this.CARLIST[i]);
+    //       }
+    //     }
+    //     return result;
+    //   }
+    // },
   },
   methods: {
     //API
@@ -104,13 +112,19 @@ export default {
     //TO DO последовательную загрузку по мере скроллинга
 
     setSelectedCar(chosenCar) {
-      this.selectedModelId = chosenCar.id;
+      // this.selectedModelId = chosenCar.id;
       this.$store.commit("SET_SELECTEDCAR", chosenCar);
     },
     //TO DO сброс выбранного авто
     // resetSelectedCar() {
     //   this.$store.commit("RESET_SELECTEDCAR");
     // },
+    setSelectedCategoryCar(chosenCategoryCar) {
+      this.$store.commit("SET_CHECKEDCATEGORYCAR", chosenCategoryCar);
+    },
+    resetSelectedCategoryCar() {
+      this.$store.commit("RESET_CHECKEDCATEGORYCAR");
+    },
   },
 };
 </script>

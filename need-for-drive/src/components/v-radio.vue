@@ -61,6 +61,7 @@ export default {
   line-height: 16px;
   color: $color-grey;
   margin-right: 10px;
+  // margin-bottom: 10px;
 }
 
 /* Hide the browser's default radio button */
@@ -84,12 +85,12 @@ export default {
   box-sizing: border-box;
 }
 
-/* On mouse-over, add a grey background color */
+/* On mouse-over */
 .radio__input:hover ~ .checkmark {
   border: 1px solid gray;
 }
 
-/* When the radio button is checked, add a blue background */
+/* When the radio button is checked */
 .radio__input:checked ~ .checkmark {
   border: 3px solid $color-text;
 }
