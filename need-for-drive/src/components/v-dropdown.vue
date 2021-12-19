@@ -36,7 +36,7 @@
 
 <script>
 export default {
-  name: "dropdown-list",
+  name: "v-dropdown",
   props: {
     itemList: {
       type: Array,
@@ -71,14 +71,12 @@ export default {
     },
   },
   methods: {
-    //обнуляем состояние объекта props selectedItem при клике на input
+    //передаем событие родительскому компоненту где обнуляем состояние объекта при клике на input
     resetSelection() {
-      // this.selectedItem = {};
       this.$emit("on-item-reset");
     },
-    //записываем выбранный объект в props selectedItem
+    //передаем событие и выбранный объект родительскому компоненту где записываем выбранный объект в selectedItem
     selectItem(chosenItem) {
-      // this.selectedItem = chosenItem;
       this.inputValue = ""; //обнуляем для того, чтобы список городов полученный по API не отображался по-умолчанию
       this.$emit("on-item-selected", chosenItem);
     },
@@ -124,7 +122,8 @@ export default {
   width: 100%;
   max-height: 500px;
   margin-top: 4px;
-  overflow-y: auto;
+  // overflow-y: auto;
+  z-index: 1;
   background: #ffffff;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -133,7 +132,7 @@ export default {
 
 .dropdown-item {
   display: flex;
-  width: 100%;
+  // width: 100%;
   padding: 11px 16px;
   cursor: pointer;
 }

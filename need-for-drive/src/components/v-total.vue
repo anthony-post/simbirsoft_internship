@@ -1,29 +1,95 @@
 <template>
   <div class="total">
     <p class="total__title">Ваш заказ:</p>
+    <!--Пункт выдачи-->
     <p class="total-wrp">
       <span class="total__text">Пункт выдачи</span>
       <span class="dots"></span>
-      <span class="total__city">{{ selectedCity.name }}</span>
-      <span class="total__city">{{ selectedPoint.name }}</span>
+      <span class="total__chosen-item">{{ selectedCity.name }}</span>
+      <span class="total__chosen-item">{{ selectedPoint.name }}</span>
     </p>
-    <p class="total-wrp" v-if="this.selectedTab === 'order-model'">
+    <!--Модель-->
+    <p
+      class="total-wrp"
+      v-if="
+        this.selectedTab === 'order-model' ||
+        this.selectedTab === 'order-additional'
+      "
+    >
       <span class="total__text">Модель</span>
       <span class="dots"></span>
-      <span class="total__city"></span>
+      <span class="total__chosen-item">{{ selectedCar.name }}</span>
     </p>
-    <p class="total__price">Цена:</p>
+    <!--Цвет-->
+    <p class="total-wrp" v-if="this.selectedTab === 'order-additional'">
+      <span class="total__text">Цвет</span>
+      <span class="dots"></span>
+      <span class="total__chosen-item">{{ selectedColor }}</span>
+    </p>
+    <!--Длительность аренды-->
+    <p class="total-wrp" v-if="this.selectedTab === 'order-additional'">
+      <span class="total__text">Длительность аренды</span>
+      <span class="dots"></span>
+      <span class="total__chosen-item"></span>
+    </p>
+    <!--Тариф-->
+    <p class="total-wrp" v-if="this.selectedTab === 'order-additional'">
+      <span class="total__text">Тариф</span>
+      <span class="dots"></span>
+      <span class="total__chosen-item">{{ selectedRate }}</span>
+    </p>
+    <!--Полный бак-->
+    <p class="total-wrp" v-if="this.selectedTab === 'order-additional'">
+      <span class="total__text">Полный бак</span>
+      <span class="dots"></span>
+      <span class="total__chosen-item" v-if="selectedTank">Да</span>
+    </p>
+    <!--Детское кресло-->
+    <p class="total-wrp" v-if="this.selectedTab === 'order-additional'">
+      <span class="total__text">Детское кресло</span>
+      <span class="dots"></span>
+      <span class="total__chosen-item" v-if="selectedBabyChair">Да</span>
+    </p>
+    <!--Правый руль-->
+    <p class="total-wrp" v-if="this.selectedTab === 'order-additional'">
+      <span class="total__text">Правый руль</span>
+      <span class="dots"></span>
+      <span class="total__chosen-item" v-if="selectedRightHandDrive">Да</span>
+    </p>
+    <!--Цена-->
+    <p class="total__price">
+      Цена:
+      <!--TO DO цена ОТ и ДО должна высчитываться в зависимости от выбранных параметров-->
+      <span class="total__price total__price-thin" v-if="selectedCar.name"
+        >от {{ selectedCar.priceMin }} до {{ selectedCar.priceMax }} руб.</span
+      >
+    </p>
+    <!--Кнопка Выбрать модель-->
     <button
       class="total__button"
       v-if="this.selectedTab === 'order-place'"
-      :class="{ total__button_active: selectedCity && selectedPoint }"
-      :disabled="!selectedCity && !selectedPoint"
+      :class="{ total__button_active: selectedCity.id && selectedPoint.id }"
+      :disabled="!selectedCity.id && !selectedPoint.id"
       @click="changeSelectedTab"
     >
       Выбрать модель
     </button>
-    <button class="total__button" v-if="this.selectedTab === 'order-model'">
+    <!--Кнопка Дополнительно-->
+    <button
+      class="total__button"
+      v-if="this.selectedTab === 'order-model'"
+      :class="{ total__button_active: selectedCar.name }"
+      :disabled="!selectedCar.name"
+      @click="changeSelectedTabAdditional"
+    >
       Дополнительно
+    </button>
+    <!--Кнопка Итого-->
+    <button
+      class="total__button"
+      v-if="this.selectedTab === 'order-additional'"
+    >
+      Итого
     </button>
   </div>
 </template>
@@ -52,20 +118,22 @@ export default {
     ...mapState({
       selectedCity: (state) => state.selectedCity,
       selectedPoint: (state) => state.selectedPoint,
+      selectedCar: (state) => state.selectedCar,
+      selectedColor: (state) => state.selectedColor,
+      selectedRate: (state) => state.selectedRate,
+      selectedTank: (state) => state.selectedTank,
+      selectedBabyChair: (state) => state.selectedBabyChair,
+      selectedRightHandDrive: (state) => state.selectedRightHandDrive,
     }),
-
-    //LOCAL
-    // chosenCityName() {
-    //   return this.$store.state.city.name;
-    // },
-    // chosenAddress() {
-    //   return this.$store.state.city.address;
-    // },
   },
   // TO DO переключение на следующую вкладку
   methods: {
     changeSelectedTab() {
       const newSelectedTab = this.tabs[this.selectedId + 1].id;
+      this.$emit("updateSelectedTab", newSelectedTab);
+    },
+    changeSelectedTabAdditional() {
+      const newSelectedTab = this.tabs[this.selectedId + 2].id;
       this.$emit("updateSelectedTab", newSelectedTab);
     },
   },
@@ -139,7 +207,7 @@ export default {
   color: $color-title;
 }
 
-.total__city {
+.total__chosen-item {
   font-family: $ff;
   font-style: normal;
   font-weight: 300;
@@ -155,6 +223,10 @@ export default {
   font-size: 16px;
   line-height: 16px;
   color: $color-title;
+}
+
+.total__price-thin {
+  font-weight: 400;
 }
 
 .total__button {

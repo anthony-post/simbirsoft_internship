@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="input-block">
-      <!-- <DropdownList /> -->
       <VDropdown
         label="Город"
         name="city"
@@ -29,15 +28,13 @@
 </template>
 
 <script>
-// import DropdownList from "@/components/dropdown-list.vue";
 import VDropdown from "@/components/v-dropdown.vue";
-import { mapState } from "vuex"; //LOCAL
+import { mapState } from "vuex"; //SELECTED
 import { mapActions, mapGetters } from "vuex"; //API
 
 export default {
   name: "order-place",
   components: {
-    // DropdownList,
     VDropdown,
   },
   created() {
@@ -50,7 +47,7 @@ export default {
     ...mapGetters(["CITYLIST"]),
     ...mapGetters(["POINTLIST"]),
     ...mapGetters(["FILTERED_POINTLIST"]),
-
+    //SELECTED
     ...mapState({
       selectedCity: (state) => state.selectedCity,
       selectedPoint: (state) => state.selectedPoint,
@@ -66,6 +63,8 @@ export default {
     },
     resetSelectedCity() {
       this.$store.commit("RESET_SELECTEDCITY");
+      this.$store.commit("RESET_SELECTEDPOINT"); //сбрасываем также ранее выбранный пункт выдачи (если он был выбран)
+      this.$store.commit("RESET_SELECTEDCAR");
     },
     //POINT
     setSelectedPoint(chosenItem) {
@@ -73,14 +72,8 @@ export default {
     },
     resetSelectedPoint() {
       this.$store.commit("RESET_SELECTEDPOINT");
+      this.$store.commit("RESET_SELECTEDCAR");
     },
-
-    // updateSelectedPoint(chosenItem) {
-    //   this.$store.state.selectedPoint = chosenItem;
-    // },
-    // resetSelectedPoint() {
-    //   this.$store.state.selectedPoint = {};
-    // },
   },
 };
 </script>
@@ -93,26 +86,6 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-}
-
-.input-wrp {
-  padding: 7px 0;
-}
-
-.input-block__label {
-  font-family: $ff;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 14px;
-  line-height: 16px;
-  color: $color;
-  margin: 0 5px 0 0;
-}
-
-.input-block__input {
-  width: 224px;
-  border: none;
-  border-bottom: 1px solid $color-grey;
 }
 
 .place__text {
