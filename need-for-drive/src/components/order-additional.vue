@@ -157,7 +157,7 @@ export default {
     },
   },
   methods: {
-    //SELECTED
+    //SELECTED COLOR
     setSelectedColor(checkedColorCar) {
       this.$store.commit("SET_SELECTEDCOLOR", checkedColorCar);
     },
@@ -165,6 +165,7 @@ export default {
     resetSelectedColor() {
       this.$store.commit("RESET_SELECTEDCOLOR");
     },
+    //SELECTED DATE FROM
     setSelectedDateFrom(chosenDateFrom) {
       this.selectedFrom = chosenDateFrom.value;
       this.$store.commit("SET_SELECTEDDATEFROM", chosenDateFrom.value);
@@ -173,7 +174,7 @@ export default {
       this.selectedFrom = "Введите дату и время...";
       this.$store.commit("RESET_SELECTEDDATEFROM");
     },
-
+    //SELECTED DATE TO
     setSelectedDateTo(chosenDateTo) {
       this.selectedDate = chosenDateTo.value;
       this.$store.commit("SET_SELECTEDDATETO", chosenDateTo.value);
