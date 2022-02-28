@@ -1,11 +1,10 @@
-<!--TO DO-->
 <template>
-  <div>
+  <div class="additional-wrp">
     <p class="additional__text">Цвета</p>
     <div class="radio-list">
       <VRadio
         label="Любой"
-        v-model="selectedColor"
+        v-model="checkedColor"
         @change="resetSelectedColor"
       />
       <VRadio
@@ -13,7 +12,7 @@
         :key="color"
         :label="color"
         :value="color"
-        v-model="selectedColor"
+        v-model="checkedColor"
         @change="setSelectedColor"
       />
     </div>
@@ -24,7 +23,7 @@
           :options="dateFrom"
           @select="setSelectedDateFrom"
           @reset="resetSelectedDateFrom"
-          :selected="selectedFrom"
+          :selected="selectedDateFrom"
           pretext="C"
         />
       </p>
@@ -36,8 +35,8 @@
           @select="setSelectedDateTo"
           @select2="setSelectedTimeTo"
           @reset="resetSelectedTo"
-          :selected="selectedDate"
-          :selected2="selectedTime"
+          :selected="selectedDateTo"
+          :selected2="selectedTimeTo"
           pretext="По"
         />
       </p>
@@ -45,17 +44,13 @@
     <p class="additional__text">Тариф</p>
     <div class="tarif-wrp">
       <VRadio
-        class="tarif__radiobutton"
-        label="Поминутно, 7Р/мин"
-        value="Поминутно"
-        v-model="selectedRate"
-        @change="setSelectedRate"
-      />
-      <VRadio
-        class="tarif__radiobutton"
-        label="На сутки, 1999Р/сутки"
-        value="На сутки"
-        v-model="selectedRate"
+        v-for="rate in RATELIST"
+        :key="rate.id"
+        :label="
+          rate.rateTypeId.name + ', ' + rate.price + 'Р/' + rate.rateTypeId.unit
+        "
+        :value="rate.id"
+        v-model="checkedRate"
         @change="setSelectedRate"
       />
     </div>
@@ -65,19 +60,19 @@
       <VCheckbox
         label="Полный бак, 500р"
         value="Да"
-        v-model="selectedTank"
+        v-model="checkedTank"
         @change="setSelectedTank"
       />
       <VCheckbox
         label="Детское кресло, 200р"
         value="Да"
-        v-model="selectedBabyChair"
+        v-model="checkedBabyChair"
         @change="setSelectedBabyChair"
       />
       <VCheckbox
         label="Правый руль, 1600р"
         value="Да"
-        v-model="selectedRightHandDrive"
+        v-model="checkedRightHandDrive"
         @change="setSelectedRightHandDrive"
       />
     </div>
@@ -90,6 +85,8 @@ import VSelect from "@/components/v-select.vue";
 import VSelectCopy from "@/components/v-select copy.vue";
 import VCheckbox from "@/components/v-checkbox.vue";
 import { mapState } from "vuex"; //SELECTED
+import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "order-additional",
@@ -101,27 +98,22 @@ export default {
   },
   data() {
     return {
-      selectedFrom: "Введите дату и время...",
       dateFrom: [
-        { value: "01.12.2021 9:00", id: 1 },
-        { value: "01.12.2021 10:00", id: 2 },
-        { value: "01.12.2021 11:00", id: 3 },
+        { value: "12.01.2021 9:00", id: 1 },
+        { value: "12.01.2021 10:00", id: 2 },
+        { value: "12.01.2021 11:00", id: 3 },
       ],
-      // selectedTo: "Введите дату и время...",
-      // dateTo: [
-      //   { value: "02.12.2021 9:00", id: 1 },
-      //   { value: "02.12.2021 10:00", id: 2 },
-      //   { value: "02.12.2021 11:00", id: 3 },
-      // ],
-      selectedDate: "Введите дату/время",
       dateTo: [
-        { value: "01.12.2021", id: 1 },
-        { value: "02.12.2021", id: 2 },
-        { value: "03.12.2021", id: 3 },
-        { value: "04.12.2021", id: 4 },
-        { value: "05.12.2021", id: 5 },
+        { value: "12.01.2021", id: 1 },
+        { value: "12.02.2021", id: 2 },
+        { value: "12.03.2021", id: 3 },
+        { value: "12.04.2021", id: 4 },
+        { value: "12.05.2021", id: 5 },
+        { value: "12.08.2021", id: 6 },
+        { value: "12.09.2021", id: 7 },
+        { value: "01.01.2022", id: 8 },
+        { value: "01.02.2022", id: 9 },
       ],
-      selectedTime: "",
       timeTo: [
         { value: "9:00", id: 1 },
         { value: "10:00", id: 2 },
@@ -135,6 +127,9 @@ export default {
       ],
     };
   },
+  created() {
+    this.GET_RATE_FROM_API();
+  },
   computed: {
     //SELECTED
     ...mapState({
@@ -143,11 +138,14 @@ export default {
       selectedDateFrom: (state) => state.selectedDateFrom,
       selectedDateTo: (state) => state.selectedDateTo,
       selectedTimeTo: (state) => state.selectedTimeTo,
+      dateStateFrom: (state) => state.dateFrom,
+      dateStateTo: (state) => state.dateTo,
       selectedRate: (state) => state.selectedRate,
       selectedTank: (state) => state.selectedTank,
       selectedBabyChair: (state) => state.selectedBabyChair,
       selectedRightHandDrive: (state) => state.selectedRightHandDrive,
     }),
+    ...mapGetters(["RATELIST"]),
     //TO DO удалить дубли цветов из полученного массива цветов
     getCarColors() {
       if (this.selectedCar?.colors) {
@@ -155,8 +153,49 @@ export default {
       }
       return this.selectedCar.colors;
     },
+    checkedColor: {
+      get() {
+        return this.selectedColor;
+      },
+      set(checkedColorCar) {
+        this.$store.commit("SET_SELECTEDCOLOR", checkedColorCar);
+      },
+    },
+    checkedRate: {
+      get() {
+        return this.selectedRate;
+      },
+      set(checkedRateCar) {
+        this.$store.commit("SET_SELECTEDRATE", checkedRateCar);
+      },
+    },
+    checkedTank: {
+      get() {
+        return this.selectedTank;
+      },
+      set(checkedTankCar) {
+        this.$store.commit("SET_SELECTEDTANK", checkedTankCar);
+      },
+    },
+    checkedBabyChair: {
+      get() {
+        return this.selectedBabyChair;
+      },
+      set(checkedBabyChairCar) {
+        this.$store.commit("SET_SELECTEDBABYCHAIR", checkedBabyChairCar);
+      },
+    },
+    checkedRightHandDrive: {
+      get() {
+        return this.selectedRightHandDrive;
+      },
+      set(checkedRightHandDriveCar) {
+        this.$store.commit("SET_SELECTEDBABYCHAIR", checkedRightHandDriveCar);
+      },
+    },
   },
   methods: {
+    ...mapActions(["GET_RATE_FROM_API"]),
     //SELECTED COLOR
     setSelectedColor(checkedColorCar) {
       this.$store.commit("SET_SELECTEDCOLOR", checkedColorCar);
@@ -167,35 +206,35 @@ export default {
     },
     //SELECTED DATE FROM
     setSelectedDateFrom(chosenDateFrom) {
-      this.selectedFrom = chosenDateFrom.value;
       this.$store.commit("SET_SELECTEDDATEFROM", chosenDateFrom.value);
     },
     resetSelectedDateFrom() {
-      this.selectedFrom = "Введите дату и время...";
       this.$store.commit("RESET_SELECTEDDATEFROM");
+      this.$store.commit("RESET_SELECTEDDATETO");
+      this.$store.commit("RESET_SELECTEDTIMETO");
+      this.$store.commit("RESET_RENTALDURATION");
     },
     //SELECTED DATE TO
     setSelectedDateTo(chosenDateTo) {
-      this.selectedDate = chosenDateTo.value;
       this.$store.commit("SET_SELECTEDDATETO", chosenDateTo.value);
     },
     resetSelectedDateTo() {
-      this.selectedDate = "Введите дату/время";
       this.$store.commit("RESET_SELECTEDDATETO");
+      this.$store.commit("RESET_SELECTEDTIMETO");
+      this.$store.commit("RESET_RENTALDURATION");
     },
     setSelectedTimeTo(chosenTimeTo) {
-      this.selectedTime = chosenTimeTo.value;
       this.$store.commit("SET_SELECTEDTIMETO", chosenTimeTo.value);
+      this.$store.commit("SET_RENTALDURATION");
     },
     resetSelectedTimeTo() {
-      this.selectedTime = "";
       this.$store.commit("RESET_SELECTEDTIMETO");
+      this.$store.commit("RESET_RENTALDURATION");
     },
     resetSelectedTo() {
-      this.selectedDate = "Введите дату/время";
       this.$store.commit("RESET_SELECTEDDATETO");
-      this.selectedTime = "";
       this.$store.commit("RESET_SELECTEDTIMETO");
+      this.$store.commit("RESET_RENTALDURATION");
     },
     //SELECTED RATE
     setSelectedRate(checkedRate) {
@@ -232,6 +271,11 @@ export default {
 <style lang="scss">
 @import "@/assets/variables.scss";
 
+.additional-wrp {
+  overflow: scroll;
+  height: 40vh;
+}
+
 .radio-list {
   display: flex;
   margin-bottom: 30px;
@@ -245,6 +289,13 @@ export default {
   line-height: 16px;
   color: $color;
   margin-top: 0;
+}
+
+.additional-input__wrp {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: fit-content;
 }
 
 .additional-input__wrp,

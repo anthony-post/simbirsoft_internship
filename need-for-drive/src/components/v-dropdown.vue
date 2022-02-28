@@ -84,7 +84,8 @@ export default {
     itemVisible(item) {
       let currentName = item.name.toLowerCase();
       let currentInput = this.inputValue.toLowerCase();
-      return currentName.includes(currentInput);
+      // return currentName.includes(currentInput);
+      return currentName.startsWith(currentInput);
     },
   },
 };

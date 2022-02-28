@@ -12,7 +12,28 @@
         <p class="slider-text">
           {{ slide.text }}
         </p>
-        <button class="slider-button">Подробнее</button>
+        <button class="slider-button" v-if="slide.id === 1">Подробнее</button>
+        <button
+          class="slider-button"
+          v-if="slide.id === 2"
+          :class="{ button_insurance: slide.id === 2 }"
+        >
+          Подробнее
+        </button>
+        <button
+          class="slider-button"
+          v-if="slide.id === 3"
+          :class="{ button_petrol: slide.id === 3 }"
+        >
+          Подробнее
+        </button>
+        <button
+          class="slider-button"
+          v-if="slide.id === 4"
+          :class="{ button_service: slide.id === 4 }"
+        >
+          Подробнее
+        </button>
       </div>
     </slider-item>
   </slider>
@@ -42,24 +63,28 @@ export default {
           backgroundImage: `url(${require("../assets/slide_parking.jpg")})`,
           title: "Бесплатная парковка",
           text: "Оставляйте машину на платных городских парковках и разрешенных местах, не нарушая ПДД, а также в аэропортах.",
+          id: 1,
         },
         {
           ...BASE_SLIDER_ITEM,
           backgroundImage: `url(${require("../assets/slide_insurance.jpg")})`,
           title: "Страховка",
           text: "Полная страховка страховка автомобиля",
+          id: 2,
         },
         {
           ...BASE_SLIDER_ITEM,
           backgroundImage: `url(${require("../assets/slide_petrol.jpg")})`,
           title: "Бензин",
           text: "Полный бак на любой заправке города за наш счёт",
+          id: 3,
         },
         {
           ...BASE_SLIDER_ITEM,
           backgroundImage: `url(${require("../assets/slide_service.jpg")})`,
           title: "Обслуживание",
           text: "Автомобиль проходит еженедельное ТО",
+          id: 4,
         },
       ],
     };
@@ -117,5 +142,17 @@ export default {
   border: none;
   padding: 1em 2em;
   cursor: pointer;
+}
+
+.button_insurance {
+  background: linear-gradient(90deg, #132949 0%, #0c7b67 100%);
+}
+
+.button_petrol {
+  background: linear-gradient(90deg, #493013 0%, #7b0c3b 100%);
+}
+
+.button_service {
+  background: linear-gradient(90deg, #281349 0%, #720c7b 100%);
 }
 </style>

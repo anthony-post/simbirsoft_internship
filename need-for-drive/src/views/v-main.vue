@@ -12,7 +12,7 @@
       </div>
       <footer class="footer">
         <p class="footer__copyright">&#169; 2016-2019 «Need for drive»</p>
-        <p class="footer__phone">8 (495) 234-22-44</p>
+        <p class="footer__phone"><a href="#">8 (495) 234-22-44</a></p>
       </footer>
     </div>
     <div class="right-wrp">
@@ -36,6 +36,7 @@ export default {
 
 <style lang="scss">
 @import "@/assets/variables.scss";
+
 .main-wrp {
   display: flex;
   flex-direction: row;
@@ -63,7 +64,7 @@ export default {
 }
 
 .about__title {
-  font-family: "Roboto", sans-serif;
+  font-family: $ff;
   font-style: normal;
   font-weight: bold;
   font-size: 70px;
@@ -77,24 +78,24 @@ export default {
 }
 
 .about__text {
-  font-family: "Roboto", sans-serif;
+  font-family: $ff;
   font-style: normal;
   font-weight: 300;
   font-size: 26px;
   line-height: 30px;
-  color: #999999;
+  color: $color-grey;
   padding: 1em 0 2em 0;
   margin: 0 64px;
 }
 
 .about__button {
-  font-family: "Roboto", sans-serif;
+  font-family: $ff;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
   line-height: 21px;
   text-align: center;
-  color: #ffffff;
+  color: $color-white;
   background: linear-gradient(90deg, #0ec261 2.61%, #039f67 112.6%);
   background-blend-mode: darken;
   border-radius: 8px;
@@ -102,6 +103,15 @@ export default {
   padding: 1em 3em;
   margin: 0 64px;
   cursor: pointer;
+}
+
+.about__button:hover,
+.about__button:focus {
+  background: linear-gradient(90deg, #0b934a 2.61%, #026e47 112.6%);
+}
+
+.about__button:active {
+  background: linear-gradient(90deg, #076432 2.61%, #013c27 112.6%);
 }
 
 .footer {
@@ -112,23 +122,35 @@ export default {
 }
 
 .footer__copyright {
-  font-family: "Roboto", sans-serif;
+  font-family: $ff;
   font-style: normal;
   font-weight: normal;
   font-size: 13px;
   line-height: 15px;
-  color: #999999;
+  color: $color-grey;
   margin: 0 0 32px 64px;
 }
 
 .footer__phone {
-  font-family: "Roboto", sans-serif;
+  margin: 0 64px 32px 0;
+}
+
+.footer__phone a {
+  font-family: $ff;
   font-style: normal;
   font-weight: normal;
   font-size: 13px;
   line-height: 15px;
-  color: #121212;
-  margin: 0 64px 32px 0;
+  color: $color-title;
+}
+
+.footer__phone a {
+  text-decoration: none;
+}
+
+.footer__phone a:hover,
+.footer__phone a:active {
+  color: $color-text;
 }
 
 @media #{$media} and (min-width: 1024px) and (max-width: 1439px) {
@@ -197,20 +219,25 @@ export default {
   }
 
   .footer {
-    background: #151b1f;
+    background: $color;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
   }
 
   .footer__copyright {
-    color: #eeeeee;
+    color: $color-grey-light;
     order: 1;
   }
 
-  .footer__phone {
-    color: #0ec261;
+  .footer__phone a {
+    color: $color-text;
     order: 0;
+  }
+
+  .footer__phone a:hover,
+  .footer__phone a:active {
+    color: $color-grey-light;
   }
 
   .footer__copyright {

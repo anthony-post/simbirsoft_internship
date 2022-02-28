@@ -2,18 +2,26 @@
   <div class="order-wrp">
     <vheader class="order-center" />
     <vtabs />
+    <!--Pop up confirm-->
+    <popUp v-if="popUpConfirm" />
   </div>
 </template>
 
 <script>
 import Vheader from "@/components/v-header.vue";
 import Vtabs from "@/components/v-tabs.vue";
+import { mapState } from "vuex";
+import popUp from "@/components/pop-up.vue";
 
 export default {
   name: "v-order",
   components: {
     Vheader,
     Vtabs,
+    popUp,
+  },
+  computed: {
+    ...mapState({ popUpConfirm: (state) => state.popUpConfirm }),
   },
 };
 </script>
