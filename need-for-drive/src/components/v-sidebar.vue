@@ -21,7 +21,8 @@
         /></a>
       </div>
     </slide>
-    <button class="sidebar__button">Eng</button>
+    <button class="sidebar__button" v-if="lang" @click="switchLang">Eng</button>
+    <button class="sidebar__button" v-else @click="switchLang">Рус</button>
   </div>
 </template>
 
@@ -44,13 +45,25 @@ export default {
         { title: "Бензин", href: "#" },
         { title: "Обслуживание", href: "#" },
       ],
+      lang: true,
     };
+  },
+  methods: {
+    switchLang() {
+      if (this.lang) {
+        this.lang = false;
+        return this.lang;
+      }
+      this.lang = true;
+      return this.lang;
+    },
   },
 };
 </script>
 
 <style lang="scss">
 @import "@/assets/variables.scss";
+
 .sidebar {
   position: relative;
   background: #151b1f;
@@ -156,17 +169,32 @@ svg {
 }
 
 .sidebar__button {
-  font-family: "Roboto", sans-serif;
+  font-family: $ff;
   font-style: normal;
   font-weight: bold;
   font-size: 13px;
   line-height: 15px;
   color: $color-text;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border: none;
   background-color: transparent;
   cursor: pointer;
-  margin: 0 0 32px 0;
+  margin: 0 0 20px 0;
+
+  width: 48px;
+  height: 48px;
+  border: 1px solid $color-title;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.sidebar__button:hover {
+  color: $color-grey-light;
+  border: 1px solid $color-grey-light;
+}
+
+.sidebar__button:active {
+  border: 1px solid $color-grey-light;
+  color: $color-text;
 }
 
 @media #{$media} and (min-width: 1024px) and (max-width: 1439px) {

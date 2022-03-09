@@ -1,7 +1,7 @@
 <template>
   <div class="tabs">
     <div class="tabs__border">
-      <ul class="tab-list order-center">
+      <ul class="tab-list order-center" v-if="!confirmOrderNumber">
         <li class="tab__item">
           <button
             class="tab__item-btn"
@@ -10,6 +10,7 @@
             :class="{ tab__item_active: selectedTab === tab.id }"
             :disabled="tab.isDisabled"
             @click="selectedTab = tab.id"
+            @on-tab-reset="resetTabs"
           >
             {{ tab.label }}
             <span class="tab__item-icon">
@@ -18,6 +19,7 @@
           </button>
         </li>
       </ul>
+      <p v-else>Заказ номер</p>
     </div>
     <div class="order">
       <div class="order__window">
@@ -62,6 +64,7 @@ export default {
       ],
       selectedIndexTabs: 0,
       selectedTab: "order-place",
+      confirmOrderNumber: null,
     };
   },
   //TO DO последовательное переключение вкладок
@@ -71,70 +74,103 @@ export default {
       selectedCity: (state) => state.selectedCity,
       selectedPoint: (state) => state.selectedPoint,
       selectedCar: (state) => state.selectedCar,
+      selectedColor: (state) => state.selectedColor,
+      selectedDateFrom: (state) => state.selectedDateFrom,
+      dateStateFrom: (state) => state.dateFrom,
+      dateStateTo: (state) => state.dateTo,
+      rentalDuration: (state) => state.rentalDuration,
+      selectedRate: (state) => state.selectedRate,
     }),
     //проверка на заполняемость данных для навигации по вкладкам
     filledUpData() {
-      const arr = [...this.tabs];
-
+      const arr = this.tabs.slice();
+      // TO DO условие для вкладки Местоположение
       if (
         Object.keys(this.selectedCity).length &&
-        Object.keys(this.selectedPoint).length !== 0
+        Object.keys(this.selectedPoint).length !== 0 &&
+        this.selectedTab === "order-place"
       ) {
         arr[this.selectedIndexTabs].isDisabled = false;
         arr[this.selectedIndexTabs + 1].isDisabled = false;
         return arr;
       }
       //TO DO условие для вкладки Модель
-      // if (Object.keys(this.selectedCar).length !== 0) {
-      //   arr[this.selectedIndexTabs + 2].isDisabled = false;
-      //   return arr;
-      // }
+      if (
+        Object.keys(this.selectedCar).length !== 0 &&
+        this.selectedTab === "order-model"
+      ) {
+        arr[this.selectedIndexTabs + 2].isDisabled = false;
+        return arr;
+      }
       //TO DO условие для вкладки Дополнительно
-      //TO DO условие для вкладки Итого
+      if (
+        this.selectedColor &&
+        this.dateStateFrom &&
+        this.dateStateTo &&
+        this.selectedRate &&
+        this.selectedTab === "order-additional"
+      ) {
+        arr[this.selectedIndexTabs + 3].isDisabled = false;
+        return arr;
+      }
       return arr;
     },
 
-    //Вариант с геттером и сеттером
+    // Вариант с геттером и сеттером
     // filledUpData: {
     //   //getter
     //   get: function () {
-    //     const arr = [...this.tabs];
-    //     if (
-    //       Object.keys(this.selectedCity).length &&
-    //       Object.keys(this.selectedPoint).length !== 0
-    //     ) {
-    //       // arr[this.selectedIndexTabs].isDisabled = false;
-    //       arr[this.selectedIndexTabs].isDisabled = false;
-    //       return arr;
-    //     }
-    //     //TO DO условие для вкладки Модель
-    //     if (Object.keys(this.selectedCar).length !== 0) {
-    //       arr[this.selectedIndexTabs].isDisabled = false;
-    //       return arr;
-    //     }
+    //     const arr = this.tabs.slice();
+    //     // arr[this.selectedIndexTabs].isDisabled = false;
+    //     // TO DO условие для вкладки Местоположение
+    //     // if (
+    //     //   Object.keys(this.selectedCity).length &&
+    //     //   Object.keys(this.selectedPoint).length !== 0 &&
+    //     //   this.selectedTab === "order-place"
+    //     // ) {
+    //     //   arr[this.selectedIndexTabs].isDisabled = false;
+    //     //   arr[this.selectedIndexTabs + 1].isDisabled = false;
+    //     //   return arr;
+    //     // }
+    //     // TO DO условие для вкладки Модель
+    //     // if (
+    //     //   Object.keys(this.selectedCar).length !== 0 &&
+    //     //   this.selectedTab === "order-model"
+    //     // ) {
+    //     //   arr[this.selectedIndexTabs + 2].isDisabled = false;
+    //     //   return arr;
+    //     // }
     //     //TO DO условие для вкладки Дополнительно
-    //     //TO DO условие для вкладки Итого
+
     //     return arr;
     //   },
     //   //setter
-    //   set: function () {
-    //     if (this.selectedTab === "order-place") {
-    //       this.selectedIndexTabs = 1;
-    //     }
-    //     if (this.selectedTab === "order-model") {
-    //       this.selectedIndexTabs = 2;
-    //     }
-    //     if (this.selectedTab === "order-additional") {
-    //       this.selectedIndexTabs = 3;
-    //     }
+    //   set: function (newValue) {
+    //     this.selectedIndexTabs = newValue;
+    //     // if (this.selectedTab === "order-place") {
+    //     //   this.selectedIndexTabs = 1;
+    //     // }
+    //     // if (this.selectedTab === "order-model") {
+    //     //   this.selectedIndexTabs = 2;
+    //     // }
+    //     // if (this.selectedTab === "order-additional") {
+    //     //   this.selectedIndexTabs = 3;
+    //     // }
     //   },
     // },
   },
   methods: {
     updateSelectedTab(newSelectedTab) {
       this.selectedTab = newSelectedTab;
-      //TO DO увеличение в зависимости от того, какая выбрана вкладка (вместо changeSelectedTabAdditional в компоненте v-total)
-      // this.selectedIndexTabs++;
+    },
+    resetTabs() {
+      alert("ooops");
+      // for (let i = 0; i < this.tabs.length; i++) {
+      //   this.tabs[i].isDisabled = true;
+      // }
+      // this.tabs.forEach((element) => {
+      //   element.isDisabled = true;
+      // });
     },
   },
 };

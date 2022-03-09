@@ -42,6 +42,10 @@ export default {
     this.GET_CITYLIST_FROM_API();
     this.GET_POINTLIST_FROM_API();
   },
+  mounted() {
+    //API
+    this.GET_CARLIST_FROM_API();
+  },
   computed: {
     //API
     ...mapGetters(["CITYLIST"]),
@@ -57,14 +61,26 @@ export default {
     //API
     ...mapActions(["GET_CITYLIST_FROM_API"]),
     ...mapActions(["GET_POINTLIST_FROM_API"]),
+    ...mapActions(["GET_CARLIST_FROM_API"]),
     //CITY
     setSelectedCity(chosenItem) {
       this.$store.commit("SET_SELECTEDCITY", chosenItem);
     },
     resetSelectedCity() {
       this.$store.commit("RESET_SELECTEDCITY");
-      this.$store.commit("RESET_SELECTEDPOINT"); //сбрасываем также ранее выбранный пункт выдачи (если он был выбран)
+      this.$store.commit("RESET_SELECTEDPOINT");
+      this.$store.commit("RESET_CHECKEDCATEGORYCAR");
       this.$store.commit("RESET_SELECTEDCAR");
+      this.$store.commit("RESET_SELECTEDCOLOR");
+      this.$store.commit("RESET_SELECTEDDATEFROM");
+      this.$store.commit("RESET_SELECTEDDATETO");
+      this.$store.commit("RESET_SELECTEDTIMETO");
+      this.$store.commit("RESET_RENTALDURATION");
+      this.$store.commit("RESET_SELECTEDRATE");
+      this.$store.commit("RESET_SELECTEDTANK");
+      this.$store.commit("RESET_SELECTEDBABYCHAIR");
+      this.$store.commit("RESET_SELECTEDRIGHTHANDDRIVE");
+      this.$emit("on-tab-reset");
     },
     //POINT
     setSelectedPoint(chosenItem) {
@@ -72,7 +88,17 @@ export default {
     },
     resetSelectedPoint() {
       this.$store.commit("RESET_SELECTEDPOINT");
+      this.$store.commit("RESET_CHECKEDCATEGORYCAR");
       this.$store.commit("RESET_SELECTEDCAR");
+      this.$store.commit("RESET_SELECTEDCOLOR");
+      this.$store.commit("RESET_SELECTEDDATEFROM");
+      this.$store.commit("RESET_SELECTEDDATETO");
+      this.$store.commit("RESET_SELECTEDTIMETO");
+      this.$store.commit("RESET_RENTALDURATION");
+      this.$store.commit("RESET_SELECTEDRATE");
+      this.$store.commit("RESET_SELECTEDTANK");
+      this.$store.commit("RESET_SELECTEDBABYCHAIR");
+      this.$store.commit("RESET_SELECTEDRIGHTHANDDRIVE");
     },
   },
 };
