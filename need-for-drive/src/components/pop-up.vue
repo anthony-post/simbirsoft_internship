@@ -6,7 +6,6 @@
           <div class="modal-body">
             <slot name="body"> Подтвердить заказ </slot>
           </div>
-
           <div class="modal-footer">
             <slot name="footer">
               <router-link
@@ -45,7 +44,6 @@ export default {
   },
   methods: {
     ...mapActions(["PUT_CONFIRM_ORDERID_TO_API"]),
-    //TO DO confirm order
     confirmOrder() {
       this.PUT_CONFIRM_ORDERID_TO_API();
     },
@@ -77,7 +75,6 @@ export default {
 }
 
 .modal-container {
-  width: 400px;
   margin: 0 auto;
   transition: all 0.3s ease;
 }
@@ -127,17 +124,7 @@ export default {
 .button-colored {
   background: linear-gradient(90deg, #493013 0%, #7b0c3b 100%);
   border-radius: 4px;
-  margin: 0 0 0 8px;
 }
-
-/*
- * The following styles are auto-applied to elements with
- * transition="modal" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
 
 .modal-enter {
   opacity: 0;

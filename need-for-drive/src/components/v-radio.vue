@@ -61,7 +61,6 @@ export default {
   line-height: 16px;
   color: $color-grey;
   margin-right: 10px;
-  // margin-bottom: 10px;
 }
 
 /* Hide the browser's default radio button */

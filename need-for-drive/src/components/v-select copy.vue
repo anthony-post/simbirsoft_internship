@@ -111,10 +111,7 @@ export default {
 
 .select {
   position: relative;
-  // width: 167px;
-  // width: 50%;
   cursor: pointer;
-  // padding: 0 5px;
   display: flex;
 }
 

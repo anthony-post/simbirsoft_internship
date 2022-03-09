@@ -354,34 +354,15 @@ export default new Vuex.Store({
     POINTLIST(state) {
       return state.pointList;
     },
-
-    // FILTERED_POINTLIST(state) {
-    //   if (!state.selectedCity.id) {
-    //     return state.pointList;
-    //   } else {
-    //     return state.pointList.filter((point) => {
-    //       if (point?.cityId?.id) {
-    //         point.cityId.id.includes(state.selectedCity.id);
-    //       }
-    //     });
-    //   }
-    // },
-
     FILTERED_POINTLIST(state) {
-      const resultPointList = [];
-      const length = state.pointList.length;
-
       if (!state.selectedCity.id) {
-        return resultPointList;
+        return state.pointList;
       } else {
-        for (var i = 0; i < length; i++) {
-          if (
-            state.pointList[i]?.cityId?.id.indexOf(state.selectedCity.id) != -1
-          ) {
-            resultPointList.push(state.pointList[i]);
+        return state.pointList.filter((point) => {
+          if (point?.cityId?.id) {
+            return point.cityId.id.includes(state.selectedCity.id);
           }
-        }
-        return resultPointList;
+        });
       }
     },
     CARLIST(state) {

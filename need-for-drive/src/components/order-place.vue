@@ -80,7 +80,7 @@ export default {
       this.$store.commit("RESET_SELECTEDTANK");
       this.$store.commit("RESET_SELECTEDBABYCHAIR");
       this.$store.commit("RESET_SELECTEDRIGHTHANDDRIVE");
-      this.$emit("on-tab-reset");
+      this.$emit("on-tab-reset", "order-place");
     },
     //POINT
     setSelectedPoint(chosenItem) {
@@ -99,6 +99,7 @@ export default {
       this.$store.commit("RESET_SELECTEDTANK");
       this.$store.commit("RESET_SELECTEDBABYCHAIR");
       this.$store.commit("RESET_SELECTEDRIGHTHANDDRIVE");
+      this.$emit("on-tab-reset", "order-place");
     },
   },
 };

@@ -30,7 +30,6 @@ export default {
       if (this.modelValue instanceof Array) {
         return this.modelValue.includes(this.value);
       }
-      // Note that `true-value` and `false-value` are camelCase in the JS
       return this.modelValue === this.trueValue;
     },
   },
@@ -55,7 +54,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/variables.scss";
-/* Customize the label (the wrapper) */
 .checkbox-item {
   display: block;
   position: relative;
@@ -74,7 +72,6 @@ export default {
   line-height: 16px;
   color: $color-grey;
 }
-/* Hide the browser's default checkbox */
 .checkbox__input {
   position: absolute;
   opacity: 0;
@@ -82,36 +79,28 @@ export default {
   height: 0;
   width: 0;
 }
-/* Create a custom checkbox */
 .checkmark-box {
   position: absolute;
   top: 0;
   left: 0;
   height: 12px;
   width: 12px;
-  //   border-radius: 2px;
-  //   background-color: #eee;
   border: 1px solid $color-grey;
 }
-/* On mouse-over, add a grey background color */
 .checkbox-item:hover input ~ .checkmark-box {
   border: 1px solid $color-text;
 }
-/* When the checkbox is checked, add a blue background */
 .checkbox__input:checked ~ .checkmark-box {
   border: 1px solid $color-text;
 }
-/* Create the checkmark/indicator (hidden when not checked) */
 .checkmark-box:after {
   content: "";
   position: absolute;
   display: none;
 }
-/* Show the checkmark when checked */
 .checkbox__input:checked ~ .checkmark-box:after {
   display: block;
 }
-/* Style the checkmark/indicator */
 .checkbox-item .checkmark-box:after {
   left: 5px;
   top: -3px;

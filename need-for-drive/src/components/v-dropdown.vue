@@ -84,8 +84,8 @@ export default {
     itemVisible(item) {
       let currentName = item.name.toLowerCase();
       let currentInput = this.inputValue.toLowerCase();
-      // return currentName.includes(currentInput);
-      return currentName.startsWith(currentInput);
+      // return currentName.includes(currentInput); //поиск по введенным символам
+      return currentName.startsWith(currentInput); //поиск с начала ввода
     },
   },
 };
@@ -133,7 +133,6 @@ export default {
 
 .dropdown-item {
   display: flex;
-  // width: 100%;
   padding: 11px 16px;
   cursor: pointer;
 }

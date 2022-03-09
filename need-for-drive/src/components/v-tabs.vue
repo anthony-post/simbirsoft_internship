@@ -7,10 +7,12 @@
             class="tab__item-btn"
             v-for="tab in filledUpData"
             :key="tab.id"
-            :class="{ tab__item_active: selectedTab === tab.id }"
+            :class="{
+              tab__item_active: selectedTab === tab.id,
+              tab__item_filled: !tab.isDisabled,
+            }"
             :disabled="tab.isDisabled"
             @click="selectedTab = tab.id"
-            @on-tab-reset="resetTabs"
           >
             {{ tab.label }}
             <span class="tab__item-icon">
@@ -23,7 +25,7 @@
     </div>
     <div class="order">
       <div class="order__window">
-        <component :is="selectedTab"></component>
+        <component :is="selectedTab" @on-tab-reset="resetTabs"></component>
       </div>
       <VTotal
         :tabs="tabs"
@@ -67,7 +69,6 @@ export default {
       confirmOrderNumber: null,
     };
   },
-  //TO DO последовательное переключение вкладок
   computed: {
     //SELECTED получаем состояние объекта (в который записывается выбранный город) из store
     ...mapState({
@@ -115,62 +116,27 @@ export default {
       }
       return arr;
     },
-
-    // Вариант с геттером и сеттером
-    // filledUpData: {
-    //   //getter
-    //   get: function () {
-    //     const arr = this.tabs.slice();
-    //     // arr[this.selectedIndexTabs].isDisabled = false;
-    //     // TO DO условие для вкладки Местоположение
-    //     // if (
-    //     //   Object.keys(this.selectedCity).length &&
-    //     //   Object.keys(this.selectedPoint).length !== 0 &&
-    //     //   this.selectedTab === "order-place"
-    //     // ) {
-    //     //   arr[this.selectedIndexTabs].isDisabled = false;
-    //     //   arr[this.selectedIndexTabs + 1].isDisabled = false;
-    //     //   return arr;
-    //     // }
-    //     // TO DO условие для вкладки Модель
-    //     // if (
-    //     //   Object.keys(this.selectedCar).length !== 0 &&
-    //     //   this.selectedTab === "order-model"
-    //     // ) {
-    //     //   arr[this.selectedIndexTabs + 2].isDisabled = false;
-    //     //   return arr;
-    //     // }
-    //     //TO DO условие для вкладки Дополнительно
-
-    //     return arr;
-    //   },
-    //   //setter
-    //   set: function (newValue) {
-    //     this.selectedIndexTabs = newValue;
-    //     // if (this.selectedTab === "order-place") {
-    //     //   this.selectedIndexTabs = 1;
-    //     // }
-    //     // if (this.selectedTab === "order-model") {
-    //     //   this.selectedIndexTabs = 2;
-    //     // }
-    //     // if (this.selectedTab === "order-additional") {
-    //     //   this.selectedIndexTabs = 3;
-    //     // }
-    //   },
-    // },
   },
   methods: {
     updateSelectedTab(newSelectedTab) {
       this.selectedTab = newSelectedTab;
     },
-    resetTabs() {
-      alert("ooops");
-      // for (let i = 0; i < this.tabs.length; i++) {
-      //   this.tabs[i].isDisabled = true;
-      // }
-      // this.tabs.forEach((element) => {
-      //   element.isDisabled = true;
-      // });
+    resetTabs(idTab) {
+      if (idTab === "order-place") {
+        for (var i = 0; i < this.tabs.length; i++) {
+          this.tabs[i].isDisabled = true;
+        }
+      }
+      if (idTab === "order-model") {
+        for (var j = 1; j < this.tabs.length; j++) {
+          this.tabs[j].isDisabled = true;
+        }
+      }
+      if (idTab === "order-additional") {
+        for (var k = 2; k < this.tabs.length; k++) {
+          this.tabs[k].isDisabled = true;
+        }
+      }
     },
   },
 };
@@ -207,12 +173,21 @@ export default {
   padding: 0;
 }
 
+.tab__item-btn:last-child svg {
+  width: 0;
+  height: 0;
+}
+
 .tab__item-icon {
   padding: 0 0 0 20px;
 }
 
 .tab__item_active {
   color: $color-text;
+}
+
+.tab__item_filled {
+  color: $color-title;
 }
 
 .order {

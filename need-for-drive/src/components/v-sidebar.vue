@@ -72,8 +72,6 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-
-  position: fixed;
   height: 100vh;
 }
 
@@ -226,7 +224,6 @@ svg {
 @media #{$media} and (min-width: 320px) and (max-width: 767px) {
   .sidebar {
     flex-basis: 0%;
-    position: relative;
   }
 
   //Наименование стилей заданы в библиотеке v-burger-menu

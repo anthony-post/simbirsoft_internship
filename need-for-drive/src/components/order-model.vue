@@ -1,38 +1,20 @@
 <template>
   <div>
     <div class="radio-list">
-      <!--TO DO через v-for из полученного по API списка категорий-->
       <VRadio
         label="Все модели"
         v-model="categoryCars"
         @change="resetSelectedCategoryCar"
       />
-      <!-- <VRadio
-        label="Эконом"
-        value="600598a3ad015e0bb699774c"
-        v-model="checkedCategoryCars"
-        @change="setSelectedCategoryCar"
-      /> -->
       <VRadio
-        label="Эконом"
-        value="600598a3ad015e0bb699774c"
-        v-model="categoryCars"
-        @change="setSelectedCategoryCar"
-      />
-      <VRadio
-        label="Премиум"
-        value="60b943492aed9a0b9b7ed335"
-        v-model="categoryCars"
-        @change="setSelectedCategoryCar"
-      />
-      <VRadio
-        label="Спорт"
-        value="5fd91add935d4e0be16a3c4b"
+        v-for="category in categories"
+        :key="category.id"
+        :label="category.name"
+        :value="category.id"
         v-model="categoryCars"
         @change="setSelectedCategoryCar"
       />
     </div>
-
     <ul class="cars-list">
       <li
         class="cars__item"
@@ -64,9 +46,15 @@ export default {
   components: {
     VRadio,
   },
-  // created() {
-  //   this.GET_CARLIST_FROM_API();
-  // },
+  data() {
+    return {
+      categories: [
+        { id: "600598a3ad015e0bb699774c", name: "Эконом" },
+        { id: "60b943492aed9a0b9b7ed335", name: "Премиум" },
+        { id: "5fd91add935d4e0be16a3c4b", name: "Спорт" },
+      ],
+    };
+  },
   computed: {
     //SELECTED
     ...mapState({
@@ -88,28 +76,18 @@ export default {
       }
     },
     categoryCars: {
-      // геттер:
       get: function () {
         return this.checkedCategoryCars;
       },
-      // сеттер:
       set: function (chosenCategoryCar) {
         this.$store.commit("SET_CHECKEDCATEGORYCAR", chosenCategoryCar);
       },
     },
   },
   methods: {
-    //API
-    // ...mapActions(["GET_CARLIST_FROM_API"]),
-    //TO DO последовательную загрузку по мере скроллинга
-
     setSelectedCar(chosenCar) {
       this.$store.commit("SET_SELECTEDCAR", chosenCar);
     },
-    //TO DO сброс выбранного авто
-    // resetSelectedCar() {
-    //   this.$store.commit("RESET_SELECTEDCAR");
-    // },
     setSelectedCategoryCar(chosenCategoryCar) {
       this.$store.commit("SET_CHECKEDCATEGORYCAR", chosenCategoryCar);
     },
@@ -125,6 +103,7 @@ export default {
       this.$store.commit("RESET_SELECTEDTANK");
       this.$store.commit("RESET_SELECTEDBABYCHAIR");
       this.$store.commit("RESET_SELECTEDRIGHTHANDDRIVE");
+      this.$emit("on-tab-reset", "order-model");
     },
   },
 };
@@ -135,6 +114,8 @@ export default {
 
 .radio-list {
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .cars-list {
@@ -144,7 +125,7 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   overflow: scroll;
-  height: 40vh;
+  height: calc(100vh - 274px);
 }
 
 .cars__item {
@@ -185,5 +166,16 @@ export default {
 
 .cars__img {
   max-width: 100%;
+}
+
+@media #{$media} and (min-width: 320px) and (max-width: 767px) {
+  .cars-list {
+    overflow: scroll;
+    height: 40vh;
+  }
+
+  .cars__item {
+    width: 285px;
+  }
 }
 </style>

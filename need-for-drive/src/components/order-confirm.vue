@@ -95,7 +95,7 @@
           <p class="total__price">
             Цена:
             <span class="total__price total__price-thin"
-              >{{ ORDER.price }} руб.</span
+              >{{ ORDER.price }} &#8381;</span
             >
           </p>
           <!--Кнопка Отменить-->
@@ -189,16 +189,7 @@ export default {
 .order-wrp {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   width: 100vw;
-  margin: 0 0 0 60px;
-}
-
-@media #{$media} and (min-width: 320px) and (max-width: 767px) {
-  .order-wrp {
-    width: 100vw;
-    margin: 0;
-  }
 }
 
 .tabs__border {
@@ -350,7 +341,7 @@ export default {
   width: 288px;
   padding: 32px 64px 0 32px;
   border-left: 1px solid $color-grey-light;
-  // height: calc(100vh - 165px);
+  height: calc(100vh - 180px);
 }
 
 .total__title {
@@ -466,7 +457,6 @@ export default {
 .button-colored {
   background: linear-gradient(90deg, #493013 0%, #7b0c3b 100%);
   border-radius: 4px;
-  margin: 0 0 0 8px;
 }
 
 @media #{$media} and (min-width: 1024px) and (max-width: 1439px) {

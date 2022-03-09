@@ -46,10 +46,11 @@
     <p class="total__price" v-if="selectedCar.name">
       Цена:
       <span class="total__price total__price-thin" v-if="this.getPriceSummary"
-        >{{ this.getPriceSummary }} руб.</span
+        >{{ this.getPriceSummary }} &#8381;</span
       >
       <span class="total__price total__price-thin" v-else
-        >от {{ selectedCar.priceMin }} до {{ selectedCar.priceMax }} руб.</span
+        >от {{ selectedCar.priceMin }} до
+        {{ selectedCar.priceMax }} &#8381;</span
       >
     </p>
     <!--Кнопка Выбрать модель-->
@@ -289,7 +290,7 @@ export default {
   width: 288px;
   padding: 32px 64px 0 32px;
   border-left: 1px solid $color-grey-light;
-  // height: calc(100vh - 165px);
+  height: calc(100vh - 180px);
 }
 
 .total__title {
@@ -416,7 +417,6 @@ export default {
 .button-colored {
   background: linear-gradient(90deg, #493013 0%, #7b0c3b 100%);
   border-radius: 4px;
-  margin: 0 0 0 8px;
 }
 
 @media #{$media} and (min-width: 1024px) and (max-width: 1439px) {

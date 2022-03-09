@@ -190,7 +190,10 @@ export default {
         return this.selectedRightHandDrive;
       },
       set(checkedRightHandDriveCar) {
-        this.$store.commit("SET_SELECTEDBABYCHAIR", checkedRightHandDriveCar);
+        this.$store.commit(
+          "SET_SELECTEDRIGHTHANDDRIVE",
+          checkedRightHandDriveCar
+        );
       },
     },
   },
@@ -213,6 +216,11 @@ export default {
       this.$store.commit("RESET_SELECTEDDATETO");
       this.$store.commit("RESET_SELECTEDTIMETO");
       this.$store.commit("RESET_RENTALDURATION");
+      this.$store.commit("RESET_SELECTEDRATE");
+      this.$store.commit("RESET_SELECTEDTANK");
+      this.$store.commit("RESET_SELECTEDBABYCHAIR");
+      this.$store.commit("RESET_SELECTEDRIGHTHANDDRIVE");
+      this.$emit("on-tab-reset", "order-additional");
     },
     //SELECTED DATE TO
     setSelectedDateTo(chosenDateTo) {
@@ -235,6 +243,11 @@ export default {
       this.$store.commit("RESET_SELECTEDDATETO");
       this.$store.commit("RESET_SELECTEDTIMETO");
       this.$store.commit("RESET_RENTALDURATION");
+      this.$store.commit("RESET_SELECTEDRATE");
+      this.$store.commit("RESET_SELECTEDTANK");
+      this.$store.commit("RESET_SELECTEDBABYCHAIR");
+      this.$store.commit("RESET_SELECTEDRIGHTHANDDRIVE");
+      this.$emit("on-tab-reset", "order-additional");
     },
     //SELECTED RATE
     setSelectedRate(checkedRate) {
@@ -271,11 +284,6 @@ export default {
 <style lang="scss">
 @import "@/assets/variables.scss";
 
-.additional-wrp {
-  overflow: scroll;
-  height: 40vh;
-}
-
 .radio-list {
   display: flex;
   margin-bottom: 30px;
@@ -298,13 +306,23 @@ export default {
   width: fit-content;
 }
 
+.additional-input__wrp:first-child p {
+  margin: 0;
+}
+
 .additional-input__wrp,
 .tarif-wrp {
-  // text-align: right;
   margin-bottom: 30px;
 }
 
 .tarif__radiobutton {
   margin-bottom: 12px;
+}
+
+@media #{$media} and (min-width: 320px) and (max-width: 767px) {
+  .additional-wrp {
+    overflow: scroll;
+    height: 40vh;
+  }
 }
 </style>

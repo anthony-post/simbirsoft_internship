@@ -86,10 +86,7 @@ export default {
 
 .select {
   position: relative;
-  // width: 167px;
-  // width: 50%;
   cursor: pointer;
-  // paddin g: 0 5px;
   display: flex;
 }
 
@@ -98,7 +95,6 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   width: 224px;
   border: none;
   border-bottom: 1px solid $color-grey;
