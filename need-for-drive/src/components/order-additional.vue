@@ -20,7 +20,7 @@
     <div class="additional-input__wrp">
       <p>
         <VSelect
-          :options="dateFromMs"
+          :options="arrayDateFrom"
           @select="setSelectedDateFrom"
           @reset="resetSelectedDateFrom"
           :selected="selectedDateFrom"
@@ -29,7 +29,7 @@
       </p>
       <p>
         <!--альтернативный вариант выбора даты и время-->
-        <VSelectCopy
+        <VSelectDouble
           :options="arrayDate"
           :options2="arrayTime"
           @select="setSelectedDateTo"
@@ -81,7 +81,7 @@
 <script>
 import VRadio from "@/components/v-radio.vue";
 import VSelect from "@/components/v-select.vue";
-import VSelectCopy from "@/components/v-select copy.vue";
+import VSelectDouble from "@/components/v-selectdouble.vue";
 import VCheckbox from "@/components/v-checkbox.vue";
 import { mapState } from "vuex"; //SELECTED
 import { mapGetters } from "vuex";
@@ -92,43 +92,14 @@ export default {
   components: {
     VRadio,
     VSelect,
-    VSelectCopy,
+    VSelectDouble,
     VCheckbox,
   },
   data() {
     return {
-      // dateFrom: [
-      //   { value: "12.01.2021 9:00", id: 1 },
-      //   { value: "12.01.2021 10:00", id: 2 },
-      //   { value: "12.01.2021 11:00", id: 3 },
-      // ],
-      dateFromMs: [
-        { dateString: "15.03.2022 09:00", value: 1647324000000, id: 1 },
-      ],
+      arrayDateFrom: [],
       arrayDate: [],
       arrayTime: [],
-      // dateTo: [
-      //   { value: "12.01.2021", id: 1 },
-      //   { value: "12.02.2021", id: 2 },
-      //   { value: "12.03.2021", id: 3 },
-      //   { value: "12.04.2021", id: 4 },
-      //   { value: "12.05.2021", id: 5 },
-      //   { value: "12.08.2021", id: 6 },
-      //   { value: "12.09.2021", id: 7 },
-      //   { value: "01.01.2022", id: 8 },
-      //   { value: "01.02.2022", id: 9 },
-      // ],
-      // timeTo: [
-      //   { value: "9:00", id: 1 },
-      //   { value: "10:00", id: 2 },
-      //   { value: "11:00", id: 3 },
-      //   { value: "12:00", id: 4 },
-      //   { value: "13:00", id: 5 },
-      //   { value: "14:00", id: 6 },
-      //   { value: "15:00", id: 7 },
-      //   { value: "16:00", id: 8 },
-      //   { value: "17:00", id: 9 },
-      // ],
     };
   },
   created() {
@@ -138,6 +109,15 @@ export default {
     for (let i = 0; i < 30; i++) {
       dateObj.setDate(dateObj.getDate() + 1);
       let newDate = this.formatedDate(dateObj);
+
+      let dateFromString = newDate + " " + "00:00";
+      let newObjDateFrom = {
+        id: i,
+        value: dateObj.getTime(),
+        dateString: dateFromString,
+      };
+      this.arrayDateFrom.push(newObjDateFrom);
+
       let newObjDate = { id: i, value: dateObj.getTime(), dateString: newDate };
       this.arrayDate.push(newObjDate);
     }

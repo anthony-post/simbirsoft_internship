@@ -24,7 +24,6 @@
           @click="selectOption(option)"
         >
           <!--обработчик клика по опции из списка-->
-          <!-- {{ option.value }} -->
           {{ option.dateString }}
         </p>
       </div>
@@ -133,6 +132,8 @@ export default {
   background: #ffffff;
   text-align: center;
   z-index: 1;
+  overflow: scroll;
+  height: 20vh;
 }
 
 .select__options p {

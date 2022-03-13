@@ -157,7 +157,6 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
   overflow: scroll;
   height: 20vh;
 }

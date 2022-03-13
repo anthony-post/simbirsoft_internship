@@ -125,9 +125,6 @@ export default new Vuex.Store({
     },
     //RENTAL DURATION
     SET_RENTALDURATION(state) {
-      // state.dateFrom = Date.parse(state.selectedDateFrom);
-      // const concateDateTo = `${state.selectedDateTo} ${state.selectedTimeTo}`;
-      // state.dateTo = Date.parse(concateDateTo);
       function convertToDays(milliSeconds) {
         let days = Math.floor(milliSeconds / (86400 * 1000));
         milliSeconds -= days * (86400 * 1000);
@@ -144,8 +141,6 @@ export default new Vuex.Store({
       state.rentalDuration = convertToDays(duration);
     },
     RESET_RENTALDURATION(state) {
-      // state.dateFrom = 0;
-      // state.dateTo = 0;
       state.rentalDuration = "";
     },
     //RATE

@@ -148,7 +148,6 @@ export default {
     },
     getPriceSummary() {
       let priceCalculated;
-      // let duration = Math.round(this.dateStateTo - this.dateStateFrom);
       let duration = this.dateStateTo - this.dateStateFrom;
       let rateDayId = "60b958582aed9a0b9b7ed3d6";
       let rateWeekId = "60c614202aed9a0b9b84f543";
@@ -244,7 +243,7 @@ export default {
   },
   methods: {
     ...mapActions(["POST_ORDER_TO_API"]),
-    // TO DO переключение на следующую вкладку
+    //переключение на следующую вкладку
     changeSelectedTab() {
       const newSelectedTab = this.tabs[this.selectedId + 1].id;
       this.$emit("updateSelectedTab", newSelectedTab);
