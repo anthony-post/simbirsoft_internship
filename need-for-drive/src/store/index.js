@@ -22,11 +22,11 @@ export default new Vuex.Store({
     checkedCategoryCars: "",
     selectedCar: {},
     selectedColor: "",
-    selectedDateFrom: "Введите дату и время...",
-    selectedDateTo: "Введите дату и время",
-    selectedTimeTo: "",
-    dateFrom: 0,
-    dateTo: 0,
+    selectedDateFrom: "Введите дату и время...", //дата для отображения в инпуте
+    selectedDateTo: "Введите дату и время...", //дата для отображения в инпуте
+    selectedTimeTo: "", //время для отображения в инпуте
+    dateFrom: 0, //дата в миллисекундах
+    dateTo: 0, //дата в миллисекундах
     rentalDuration: "",
     selectedRate: "",
     selectedTank: false,
@@ -98,32 +98,36 @@ export default new Vuex.Store({
     },
     //DATEFROM
     SET_SELECTEDDATEFROM(state, selectedDateFrom) {
-      state.selectedDateFrom = selectedDateFrom;
+      state.selectedDateFrom = selectedDateFrom.dateString;
+      state.dateFrom = selectedDateFrom.value;
     },
     RESET_SELECTEDDATEFROM(state) {
       state.selectedDateFrom = "Введите дату и время...";
+      state.dateFrom = 0;
     },
     //DATETO
     SET_SELECTEDDATETO(state, selectedDateTo) {
-      state.selectedDateTo = selectedDateTo;
+      state.selectedDateTo = selectedDateTo.dateString;
+      state.dateTo = selectedDateTo.value;
     },
     RESET_SELECTEDDATETO(state) {
-      state.selectedDateTo = "Введите дату и время";
+      state.selectedDateTo = "Введите дату и время...";
+      state.dateTo = 0;
     },
     //TIMETO
     SET_SELECTEDTIMETO(state, selectedTimeTo) {
-      state.selectedTimeTo = selectedTimeTo;
+      state.selectedTimeTo = selectedTimeTo.dateString;
+      state.dateTo = state.dateTo + selectedTimeTo.value;
     },
     RESET_SELECTEDTIMETO(state) {
       state.selectedTimeTo = "";
+      state.dateTo = 0;
     },
     //RENTAL DURATION
     SET_RENTALDURATION(state) {
-      state.dateFrom = Date.parse(state.selectedDateFrom);
-      const concateDateTo = `${state.selectedDateTo} ${state.selectedTimeTo}`;
-      state.dateTo = Date.parse(concateDateTo);
-      const duration = state.dateTo - state.dateFrom;
-
+      // state.dateFrom = Date.parse(state.selectedDateFrom);
+      // const concateDateTo = `${state.selectedDateTo} ${state.selectedTimeTo}`;
+      // state.dateTo = Date.parse(concateDateTo);
       function convertToDays(milliSeconds) {
         let days = Math.floor(milliSeconds / (86400 * 1000));
         milliSeconds -= days * (86400 * 1000);
@@ -136,12 +140,12 @@ export default new Vuex.Store({
           minutes,
         };
       }
-
+      const duration = state.dateTo - state.dateFrom;
       state.rentalDuration = convertToDays(duration);
     },
     RESET_RENTALDURATION(state) {
-      state.dateFrom = 0;
-      state.dateTo = 0;
+      // state.dateFrom = 0;
+      // state.dateTo = 0;
       state.rentalDuration = "";
     },
     //RATE

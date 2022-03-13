@@ -24,7 +24,8 @@
           @click="selectOption(option)"
         >
           <!--обработчик клика по опции из списка-->
-          {{ option.value }}
+          <!-- {{ option.value }} -->
+          {{ option.dateString }}
         </p>
       </div>
     </div>

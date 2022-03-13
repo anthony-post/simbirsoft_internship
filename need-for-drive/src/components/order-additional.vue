@@ -20,7 +20,7 @@
     <div class="additional-input__wrp">
       <p>
         <VSelect
-          :options="dateFrom"
+          :options="dateFromMs"
           @select="setSelectedDateFrom"
           @reset="resetSelectedDateFrom"
           :selected="selectedDateFrom"
@@ -30,8 +30,8 @@
       <p>
         <!--альтернативный вариант выбора даты и время-->
         <VSelectCopy
-          :options="dateTo"
-          :options2="timeTo"
+          :options="arrayDate"
+          :options2="arrayTime"
           @select="setSelectedDateTo"
           @select2="setSelectedTimeTo"
           @reset="resetSelectedTo"
@@ -56,7 +56,6 @@
     </div>
     <p class="additional__text">Доп услуги</p>
     <div class="services-wrp">
-      <!--TO DO checkbox-->
       <VCheckbox
         label="Полный бак, 500р"
         value="Да"
@@ -98,36 +97,84 @@ export default {
   },
   data() {
     return {
-      dateFrom: [
-        { value: "12.01.2021 9:00", id: 1 },
-        { value: "12.01.2021 10:00", id: 2 },
-        { value: "12.01.2021 11:00", id: 3 },
+      // dateFrom: [
+      //   { value: "12.01.2021 9:00", id: 1 },
+      //   { value: "12.01.2021 10:00", id: 2 },
+      //   { value: "12.01.2021 11:00", id: 3 },
+      // ],
+      dateFromMs: [
+        { dateString: "15.03.2022 09:00", value: 1647324000000, id: 1 },
       ],
-      dateTo: [
-        { value: "12.01.2021", id: 1 },
-        { value: "12.02.2021", id: 2 },
-        { value: "12.03.2021", id: 3 },
-        { value: "12.04.2021", id: 4 },
-        { value: "12.05.2021", id: 5 },
-        { value: "12.08.2021", id: 6 },
-        { value: "12.09.2021", id: 7 },
-        { value: "01.01.2022", id: 8 },
-        { value: "01.02.2022", id: 9 },
-      ],
-      timeTo: [
-        { value: "9:00", id: 1 },
-        { value: "10:00", id: 2 },
-        { value: "11:00", id: 3 },
-        { value: "12:00", id: 4 },
-        { value: "13:00", id: 5 },
-        { value: "14:00", id: 6 },
-        { value: "15:00", id: 7 },
-        { value: "16:00", id: 8 },
-        { value: "17:00", id: 9 },
-      ],
+      arrayDate: [],
+      arrayTime: [],
+      // dateTo: [
+      //   { value: "12.01.2021", id: 1 },
+      //   { value: "12.02.2021", id: 2 },
+      //   { value: "12.03.2021", id: 3 },
+      //   { value: "12.04.2021", id: 4 },
+      //   { value: "12.05.2021", id: 5 },
+      //   { value: "12.08.2021", id: 6 },
+      //   { value: "12.09.2021", id: 7 },
+      //   { value: "01.01.2022", id: 8 },
+      //   { value: "01.02.2022", id: 9 },
+      // ],
+      // timeTo: [
+      //   { value: "9:00", id: 1 },
+      //   { value: "10:00", id: 2 },
+      //   { value: "11:00", id: 3 },
+      //   { value: "12:00", id: 4 },
+      //   { value: "13:00", id: 5 },
+      //   { value: "14:00", id: 6 },
+      //   { value: "15:00", id: 7 },
+      //   { value: "16:00", id: 8 },
+      //   { value: "17:00", id: 9 },
+      // ],
     };
   },
   created() {
+    //генерация массива с объектами дат
+    const dateObj = new Date();
+    dateObj.setHours(0, 0, 0);
+    for (let i = 0; i < 30; i++) {
+      dateObj.setDate(dateObj.getDate() + 1);
+      let newDate = this.formatedDate(dateObj);
+      let newObjDate = { id: i, value: dateObj.getTime(), dateString: newDate };
+      this.arrayDate.push(newObjDate);
+    }
+    //генерация массива с объектами времени
+    const time = [
+      "00:00",
+      "01:00",
+      "02:00",
+      "03:00",
+      "04:00",
+      "05:00",
+      "06:00",
+      "07:00",
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "19:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00",
+    ];
+    for (let j = 0; j < time.length; j++) {
+      let time_parts = time[j].split(":");
+      let millisecond = time_parts[0] * (60000 * 60) + time_parts[1] * 60000;
+      let newObjTime = { id: j, value: millisecond, dateString: time[j] };
+      this.arrayTime.push(newObjTime);
+    }
+    //получение списка доступных тарифов
     this.GET_RATE_FROM_API();
   },
   computed: {
@@ -207,9 +254,24 @@ export default {
     resetSelectedColor() {
       this.$store.commit("RESET_SELECTEDCOLOR");
     },
+    //FORMATED DATE
+    formatedDate(dateObj) {
+      let date =
+        dateObj.getDate().toString().length < 2
+          ? "0" + dateObj.getDate()
+          : dateObj.getDate();
+      let month =
+        dateObj.getMonth().toString().length < 2
+          ? "0" + (dateObj.getMonth() + 1)
+          : dateObj.getMonth() + 1;
+      let year = dateObj.getFullYear().toString();
+
+      return `${date}.${month}.${year}`;
+    },
     //SELECTED DATE FROM
     setSelectedDateFrom(chosenDateFrom) {
-      this.$store.commit("SET_SELECTEDDATEFROM", chosenDateFrom.value);
+      // this.$store.commit("SET_SELECTEDDATEFROM", chosenDateFrom.value);
+      this.$store.commit("SET_SELECTEDDATEFROM", chosenDateFrom);
     },
     resetSelectedDateFrom() {
       this.$store.commit("RESET_SELECTEDDATEFROM");
@@ -224,7 +286,9 @@ export default {
     },
     //SELECTED DATE TO
     setSelectedDateTo(chosenDateTo) {
-      this.$store.commit("SET_SELECTEDDATETO", chosenDateTo.value);
+      // this.$store.commit("SET_SELECTEDDATETO", chosenDateTo.value);
+      this.$store.commit("SET_SELECTEDDATETO", chosenDateTo);
+      this.$store.commit("SET_RENTALDURATION");
     },
     resetSelectedDateTo() {
       this.$store.commit("RESET_SELECTEDDATETO");
@@ -232,7 +296,8 @@ export default {
       this.$store.commit("RESET_RENTALDURATION");
     },
     setSelectedTimeTo(chosenTimeTo) {
-      this.$store.commit("SET_SELECTEDTIMETO", chosenTimeTo.value);
+      // this.$store.commit("SET_SELECTEDTIMETO", chosenTimeTo.value);
+      this.$store.commit("SET_SELECTEDTIMETO", chosenTimeTo);
       this.$store.commit("SET_RENTALDURATION");
     },
     resetSelectedTimeTo() {

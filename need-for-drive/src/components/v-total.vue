@@ -148,7 +148,8 @@ export default {
     },
     getPriceSummary() {
       let priceCalculated;
-      let duration = Math.round(this.dateStateTo - this.dateStateFrom);
+      // let duration = Math.round(this.dateStateTo - this.dateStateFrom);
+      let duration = this.dateStateTo - this.dateStateFrom;
       let rateDayId = "60b958582aed9a0b9b7ed3d6";
       let rateWeekId = "60c614202aed9a0b9b84f543";
       let rateMonthId = "6114e4a02aed9a0b9b850848";
@@ -170,7 +171,6 @@ export default {
               "Выберите, пожалуйста, другой тариф или укажите другой диапазон времени"
             );
           }
-          priceCalculated = duration * rateDayPrice;
           priceCalculated = this.calcAddService(
             priceCalculated,
             priceTank,
