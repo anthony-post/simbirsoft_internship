@@ -24,7 +24,7 @@
           @click="selectOption(option)"
         >
           <!--обработчик клика по опции из списка-->
-          {{ option.value }}
+          {{ option.dateString }}
         </p>
       </div>
     </div>
@@ -86,10 +86,7 @@ export default {
 
 .select {
   position: relative;
-  // width: 167px;
-  // width: 50%;
   cursor: pointer;
-  // paddin g: 0 5px;
   display: flex;
 }
 
@@ -98,7 +95,6 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   width: 224px;
   border: none;
   border-bottom: 1px solid $color-grey;
@@ -136,6 +132,8 @@ export default {
   background: #ffffff;
   text-align: center;
   z-index: 1;
+  overflow: scroll;
+  height: 20vh;
 }
 
 .select__options p {

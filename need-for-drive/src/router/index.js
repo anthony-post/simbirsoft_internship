@@ -1,9 +1,8 @@
-// TO DO переключение
 import Vue from "vue";
 import VueRouter from "vue-router";
-// import Home from "../views/Home.vue";
 import Vmain from "../views/v-main.vue";
 import Vorder from "../views/v-order.vue";
+import OrderConfirm from "@/components/order-confirm.vue";
 
 Vue.use(VueRouter);
 
@@ -17,6 +16,11 @@ const routes = [
     path: "/order",
     name: "v-order",
     component: Vorder,
+  },
+  {
+    path: "/order_:id",
+    name: "v-orderid",
+    component: OrderConfirm,
   },
 ];
 

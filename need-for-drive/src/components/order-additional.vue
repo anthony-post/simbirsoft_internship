@@ -1,11 +1,10 @@
-<!--TO DO-->
 <template>
-  <div>
+  <div class="additional-wrp">
     <p class="additional__text">Цвета</p>
     <div class="radio-list">
       <VRadio
         label="Любой"
-        v-model="selectedColor"
+        v-model="checkedColor"
         @change="resetSelectedColor"
       />
       <VRadio
@@ -13,7 +12,7 @@
         :key="color"
         :label="color"
         :value="color"
-        v-model="selectedColor"
+        v-model="checkedColor"
         @change="setSelectedColor"
       />
     </div>
@@ -21,23 +20,23 @@
     <div class="additional-input__wrp">
       <p>
         <VSelect
-          :options="dateFrom"
+          :options="arrayDateFrom"
           @select="setSelectedDateFrom"
           @reset="resetSelectedDateFrom"
-          :selected="selectedFrom"
+          :selected="selectedDateFrom"
           pretext="C"
         />
       </p>
       <p>
         <!--альтернативный вариант выбора даты и время-->
-        <VSelectCopy
-          :options="dateTo"
-          :options2="timeTo"
+        <VSelectDouble
+          :options="arrayDate"
+          :options2="arrayTime"
           @select="setSelectedDateTo"
           @select2="setSelectedTimeTo"
           @reset="resetSelectedTo"
-          :selected="selectedDate"
-          :selected2="selectedTime"
+          :selected="selectedDateTo"
+          :selected2="selectedTimeTo"
           pretext="По"
         />
       </p>
@@ -45,39 +44,34 @@
     <p class="additional__text">Тариф</p>
     <div class="tarif-wrp">
       <VRadio
-        class="tarif__radiobutton"
-        label="Поминутно, 7Р/мин"
-        value="Поминутно"
-        v-model="selectedRate"
-        @change="setSelectedRate"
-      />
-      <VRadio
-        class="tarif__radiobutton"
-        label="На сутки, 1999Р/сутки"
-        value="На сутки"
-        v-model="selectedRate"
+        v-for="rate in RATELIST"
+        :key="rate.id"
+        :label="
+          rate.rateTypeId.name + ', ' + rate.price + 'Р/' + rate.rateTypeId.unit
+        "
+        :value="rate.id"
+        v-model="checkedRate"
         @change="setSelectedRate"
       />
     </div>
     <p class="additional__text">Доп услуги</p>
     <div class="services-wrp">
-      <!--TO DO checkbox-->
       <VCheckbox
         label="Полный бак, 500р"
         value="Да"
-        v-model="selectedTank"
+        v-model="checkedTank"
         @change="setSelectedTank"
       />
       <VCheckbox
         label="Детское кресло, 200р"
         value="Да"
-        v-model="selectedBabyChair"
+        v-model="checkedBabyChair"
         @change="setSelectedBabyChair"
       />
       <VCheckbox
         label="Правый руль, 1600р"
         value="Да"
-        v-model="selectedRightHandDrive"
+        v-model="checkedRightHandDrive"
         @change="setSelectedRightHandDrive"
       />
     </div>
@@ -87,53 +81,81 @@
 <script>
 import VRadio from "@/components/v-radio.vue";
 import VSelect from "@/components/v-select.vue";
-import VSelectCopy from "@/components/v-select copy.vue";
+import VSelectDouble from "@/components/v-selectdouble.vue";
 import VCheckbox from "@/components/v-checkbox.vue";
 import { mapState } from "vuex"; //SELECTED
+import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "order-additional",
   components: {
     VRadio,
     VSelect,
-    VSelectCopy,
+    VSelectDouble,
     VCheckbox,
   },
   data() {
     return {
-      selectedFrom: "Введите дату и время...",
-      dateFrom: [
-        { value: "01.12.2021 9:00", id: 1 },
-        { value: "01.12.2021 10:00", id: 2 },
-        { value: "01.12.2021 11:00", id: 3 },
-      ],
-      // selectedTo: "Введите дату и время...",
-      // dateTo: [
-      //   { value: "02.12.2021 9:00", id: 1 },
-      //   { value: "02.12.2021 10:00", id: 2 },
-      //   { value: "02.12.2021 11:00", id: 3 },
-      // ],
-      selectedDate: "Введите дату/время",
-      dateTo: [
-        { value: "01.12.2021", id: 1 },
-        { value: "02.12.2021", id: 2 },
-        { value: "03.12.2021", id: 3 },
-        { value: "04.12.2021", id: 4 },
-        { value: "05.12.2021", id: 5 },
-      ],
-      selectedTime: "",
-      timeTo: [
-        { value: "9:00", id: 1 },
-        { value: "10:00", id: 2 },
-        { value: "11:00", id: 3 },
-        { value: "12:00", id: 4 },
-        { value: "13:00", id: 5 },
-        { value: "14:00", id: 6 },
-        { value: "15:00", id: 7 },
-        { value: "16:00", id: 8 },
-        { value: "17:00", id: 9 },
-      ],
+      arrayDateFrom: [],
+      arrayDate: [],
+      arrayTime: [],
     };
+  },
+  created() {
+    //генерация массива с объектами дат
+    const dateObj = new Date();
+    dateObj.setHours(0, 0, 0);
+    for (let i = 0; i < 30; i++) {
+      dateObj.setDate(dateObj.getDate() + 1);
+      let newDate = this.formatedDate(dateObj);
+
+      let dateFromString = newDate + " " + "00:00";
+      let newObjDateFrom = {
+        id: i,
+        value: dateObj.getTime(),
+        dateString: dateFromString,
+      };
+      this.arrayDateFrom.push(newObjDateFrom);
+
+      let newObjDate = { id: i, value: dateObj.getTime(), dateString: newDate };
+      this.arrayDate.push(newObjDate);
+    }
+    //генерация массива с объектами времени
+    const time = [
+      "00:00",
+      "01:00",
+      "02:00",
+      "03:00",
+      "04:00",
+      "05:00",
+      "06:00",
+      "07:00",
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "19:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00",
+    ];
+    for (let j = 0; j < time.length; j++) {
+      let time_parts = time[j].split(":");
+      let millisecond = time_parts[0] * (60000 * 60) + time_parts[1] * 60000;
+      let newObjTime = { id: j, value: millisecond, dateString: time[j] };
+      this.arrayTime.push(newObjTime);
+    }
+    //получение списка доступных тарифов
+    this.GET_RATE_FROM_API();
   },
   computed: {
     //SELECTED
@@ -143,11 +165,14 @@ export default {
       selectedDateFrom: (state) => state.selectedDateFrom,
       selectedDateTo: (state) => state.selectedDateTo,
       selectedTimeTo: (state) => state.selectedTimeTo,
+      dateStateFrom: (state) => state.dateFrom,
+      dateStateTo: (state) => state.dateTo,
       selectedRate: (state) => state.selectedRate,
       selectedTank: (state) => state.selectedTank,
       selectedBabyChair: (state) => state.selectedBabyChair,
       selectedRightHandDrive: (state) => state.selectedRightHandDrive,
     }),
+    ...mapGetters(["RATELIST"]),
     //TO DO удалить дубли цветов из полученного массива цветов
     getCarColors() {
       if (this.selectedCar?.colors) {
@@ -155,9 +180,53 @@ export default {
       }
       return this.selectedCar.colors;
     },
+    checkedColor: {
+      get() {
+        return this.selectedColor;
+      },
+      set(checkedColorCar) {
+        this.$store.commit("SET_SELECTEDCOLOR", checkedColorCar);
+      },
+    },
+    checkedRate: {
+      get() {
+        return this.selectedRate;
+      },
+      set(checkedRateCar) {
+        this.$store.commit("SET_SELECTEDRATE", checkedRateCar);
+      },
+    },
+    checkedTank: {
+      get() {
+        return this.selectedTank;
+      },
+      set(checkedTankCar) {
+        this.$store.commit("SET_SELECTEDTANK", checkedTankCar);
+      },
+    },
+    checkedBabyChair: {
+      get() {
+        return this.selectedBabyChair;
+      },
+      set(checkedBabyChairCar) {
+        this.$store.commit("SET_SELECTEDBABYCHAIR", checkedBabyChairCar);
+      },
+    },
+    checkedRightHandDrive: {
+      get() {
+        return this.selectedRightHandDrive;
+      },
+      set(checkedRightHandDriveCar) {
+        this.$store.commit(
+          "SET_SELECTEDRIGHTHANDDRIVE",
+          checkedRightHandDriveCar
+        );
+      },
+    },
   },
   methods: {
-    //SELECTED
+    ...mapActions(["GET_RATE_FROM_API"]),
+    //SELECTED COLOR
     setSelectedColor(checkedColorCar) {
       this.$store.commit("SET_SELECTEDCOLOR", checkedColorCar);
     },
@@ -165,36 +234,65 @@ export default {
     resetSelectedColor() {
       this.$store.commit("RESET_SELECTEDCOLOR");
     },
+    //FORMATED DATE
+    formatedDate(dateObj) {
+      let date =
+        dateObj.getDate().toString().length < 2
+          ? "0" + dateObj.getDate()
+          : dateObj.getDate();
+      let month =
+        dateObj.getMonth().toString().length < 2
+          ? "0" + (dateObj.getMonth() + 1)
+          : dateObj.getMonth() + 1;
+      let year = dateObj.getFullYear().toString();
+
+      return `${date}.${month}.${year}`;
+    },
+    //SELECTED DATE FROM
     setSelectedDateFrom(chosenDateFrom) {
-      this.selectedFrom = chosenDateFrom.value;
-      this.$store.commit("SET_SELECTEDDATEFROM", chosenDateFrom.value);
+      // this.$store.commit("SET_SELECTEDDATEFROM", chosenDateFrom.value);
+      this.$store.commit("SET_SELECTEDDATEFROM", chosenDateFrom);
     },
     resetSelectedDateFrom() {
-      this.selectedFrom = "Введите дату и время...";
       this.$store.commit("RESET_SELECTEDDATEFROM");
+      this.$store.commit("RESET_SELECTEDDATETO");
+      this.$store.commit("RESET_SELECTEDTIMETO");
+      this.$store.commit("RESET_RENTALDURATION");
+      this.$store.commit("RESET_SELECTEDRATE");
+      this.$store.commit("RESET_SELECTEDTANK");
+      this.$store.commit("RESET_SELECTEDBABYCHAIR");
+      this.$store.commit("RESET_SELECTEDRIGHTHANDDRIVE");
+      this.$emit("on-tab-reset", "order-additional");
     },
-
+    //SELECTED DATE TO
     setSelectedDateTo(chosenDateTo) {
-      this.selectedDate = chosenDateTo.value;
-      this.$store.commit("SET_SELECTEDDATETO", chosenDateTo.value);
+      // this.$store.commit("SET_SELECTEDDATETO", chosenDateTo.value);
+      this.$store.commit("SET_SELECTEDDATETO", chosenDateTo);
+      this.$store.commit("SET_RENTALDURATION");
     },
     resetSelectedDateTo() {
-      this.selectedDate = "Введите дату/время";
       this.$store.commit("RESET_SELECTEDDATETO");
+      this.$store.commit("RESET_SELECTEDTIMETO");
+      this.$store.commit("RESET_RENTALDURATION");
     },
     setSelectedTimeTo(chosenTimeTo) {
-      this.selectedTime = chosenTimeTo.value;
-      this.$store.commit("SET_SELECTEDTIMETO", chosenTimeTo.value);
+      // this.$store.commit("SET_SELECTEDTIMETO", chosenTimeTo.value);
+      this.$store.commit("SET_SELECTEDTIMETO", chosenTimeTo);
+      this.$store.commit("SET_RENTALDURATION");
     },
     resetSelectedTimeTo() {
-      this.selectedTime = "";
       this.$store.commit("RESET_SELECTEDTIMETO");
+      this.$store.commit("RESET_RENTALDURATION");
     },
     resetSelectedTo() {
-      this.selectedDate = "Введите дату/время";
       this.$store.commit("RESET_SELECTEDDATETO");
-      this.selectedTime = "";
       this.$store.commit("RESET_SELECTEDTIMETO");
+      this.$store.commit("RESET_RENTALDURATION");
+      this.$store.commit("RESET_SELECTEDRATE");
+      this.$store.commit("RESET_SELECTEDTANK");
+      this.$store.commit("RESET_SELECTEDBABYCHAIR");
+      this.$store.commit("RESET_SELECTEDRIGHTHANDDRIVE");
+      this.$emit("on-tab-reset", "order-additional");
     },
     //SELECTED RATE
     setSelectedRate(checkedRate) {
@@ -246,13 +344,30 @@ export default {
   margin-top: 0;
 }
 
+.additional-input__wrp {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: fit-content;
+}
+
+.additional-input__wrp:first-child p {
+  margin: 0;
+}
+
 .additional-input__wrp,
 .tarif-wrp {
-  // text-align: right;
   margin-bottom: 30px;
 }
 
 .tarif__radiobutton {
   margin-bottom: 12px;
+}
+
+@media #{$media} and (min-width: 320px) and (max-width: 767px) {
+  .additional-wrp {
+    overflow: scroll;
+    height: 40vh;
+  }
 }
 </style>

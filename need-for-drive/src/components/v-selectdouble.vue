@@ -1,13 +1,16 @@
 <template>
   <div class="select">
-    <div>{{ pretext }}</div>
+    <div class="select__text pretext">{{ pretext }}</div>
     <div>
-      <p class="select__title text">
+      <p
+        class="select__title select__text"
+        :class="{ placeholder: selected === 'Введите дату и время...' }"
+      >
         <!--делает видимым/скрытым список с опциями-->
         <span @click="areOptionsVisible = !areOptionsVisible"
           >{{ selected }} {{ selected2 }}</span
         >
-        <span v-if="selected !== 'Введите дату/время'" @click="resetOption"
+        <span v-if="selected !== 'Введите дату и время...'" @click="resetOption"
           ><vicon icon-id="icon-cross" width="8" height="8"
         /></span>
       </p>
@@ -21,7 +24,7 @@
             @click="selectOption(option)"
           >
             <!--обработчик клика по опции из списка-->
-            {{ option.value }}
+            {{ option.dateString }}
           </p>
         </div>
         <div>
@@ -31,7 +34,7 @@
             @click="selectOption2(option2)"
           >
             <!--обработчик клика по опции из списка-->
-            {{ option2.value }}
+            {{ option2.dateString }}
           </p>
         </div>
       </div>
@@ -108,10 +111,7 @@ export default {
 
 .select {
   position: relative;
-  // width: 167px;
-  // width: 50%;
   cursor: pointer;
-  // padding: 0 5px;
   display: flex;
 }
 
@@ -124,6 +124,24 @@ export default {
   width: 224px;
   border: none;
   border-bottom: 1px solid $color-grey;
+}
+
+.select__text {
+  font-family: $ff;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 16px;
+  color: $color;
+}
+
+.pretext {
+  margin-right: 10px;
+}
+
+.placeholder {
+  margin-left: 0;
+  color: $color-grey;
 }
 
 .select__options {
@@ -139,6 +157,8 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  overflow: scroll;
+  height: 20vh;
 }
 
 .select__options p {
